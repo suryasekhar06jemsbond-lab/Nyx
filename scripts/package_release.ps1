@@ -5,8 +5,17 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+$repoRoot = Split-Path -Parent $PSScriptRoot
 
-if (-not (Test-Path $OutDir)) {
+if (-not [System.IO.Path]::IsPathRooted($BinaryPath)) {
+    $BinaryPath = Join-Path $repoRoot $BinaryPath
+}
+
+if (-not [System.IO.Path]::IsPathRooted($OutDir)) {
+    $OutDir = Join-Path $repoRoot $OutDir
+}
+
+if (-not (Test-Path -LiteralPath $OutDir)) {
     New-Item -ItemType Directory -Path $OutDir | Out-Null
 }
 
@@ -23,29 +32,32 @@ try {
     # Copy scripts
     $scriptsDir = Join-Path $tmpDir 'scripts'
     New-Item -ItemType Directory -Path $scriptsDir | Out-Null
-    Copy-Item -LiteralPath 'scripts/nypm.ps1' -Destination $scriptsDir
-    Copy-Item -LiteralPath 'scripts/nyfmt.ps1' -Destination $scriptsDir
-    Copy-Item -LiteralPath 'scripts/nylint.ps1' -Destination $scriptsDir
-    Copy-Item -LiteralPath 'scripts/nydbg.ps1' -Destination $scriptsDir
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'scripts/nypm.ps1') -Destination $scriptsDir
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'scripts/nyfmt.ps1') -Destination $scriptsDir
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'scripts/nylint.ps1') -Destination $scriptsDir
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'scripts/nydbg.ps1') -Destination $scriptsDir
     
     # Copy stdlib
     $stdlibDir = Join-Path $tmpDir 'stdlib'
     New-Item -ItemType Directory -Path $stdlibDir | Out-Null
-    Copy-Item -LiteralPath 'stdlib/types.ny' -Destination $stdlibDir
-    Copy-Item -LiteralPath 'stdlib/class.ny' -Destination $stdlibDir
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'stdlib/types.ny') -Destination $stdlibDir
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'stdlib/class.ny') -Destination $stdlibDir
 
     # Copy compiler
     $compilerDir = Join-Path $tmpDir 'compiler'
     New-Item -ItemType Directory -Path $compilerDir | Out-Null
-    Copy-Item -LiteralPath 'compiler/bootstrap.ny' -Destination $compilerDir
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'compiler/bootstrap.ny') -Destination $compilerDir
     
     # Copy examples
     $examplesDir = Join-Path $tmpDir 'examples'
     New-Item -ItemType Directory -Path $examplesDir | Out-Null
-    Copy-Item -LiteralPath 'examples/fibonacci.ny' -Destination $examplesDir
+    Copy-Item -LiteralPath (Join-Path $repoRoot 'examples/fibonacci.ny') -Destination $examplesDir
 
-    # Copy README
-    Copy-Item -LiteralPath 'README.md' -Destination $tmpDir
+    # README is optional in some branches/tags.
+    $readmePath = Join-Path $repoRoot 'README.md'
+    if (Test-Path -LiteralPath $readmePath) {
+        Copy-Item -LiteralPath $readmePath -Destination $tmpDir
+    }
 
     if (Test-Path $zipPath) { Remove-Item $zipPath }
     Compress-Archive -Path "$tmpDir\*" -DestinationPath $zipPath
