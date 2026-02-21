@@ -19,22 +19,32 @@ else
 fi
 
 echo "[v0] test: main script via launcher"
-out1=$("$runtime" main.ny)
+tmpd=$(mktemp -d)
+shim_dir=$(mktemp -d)
+trap 'rm -rf "$tmpd" "$shim_dir"' EXIT
+
+cat >"$tmpd/main.ny" <<'EOF'
+print(3);
+EOF
+
+out1=$("$runtime" "$tmpd/main.ny")
 [ "$out1" = "3" ] || {
   echo "FAIL: expected '3', got '$out1'"
   exit 1
 }
 
 echo "[v0] test: direct executable .ny"
-chmod +x ./main.ny
-shim_dir=$(mktemp -d)
-trap 'rm -rf "$shim_dir"' EXIT
+cat >"$tmpd/entry.ny" <<'EOF'
+#!/usr/bin/env nyx
+print(3);
+EOF
+chmod +x "$tmpd/entry.ny"
 cat >"$shim_dir/nyx" <<EOF
 #!/usr/bin/env sh
 exec "$ROOT_DIR/$runtime" "\$@"
 EOF
 chmod +x "$shim_dir/nyx"
-out2=$(PATH="$shim_dir:$ROOT_DIR:$PATH" ./main.ny)
+out2=$(PATH="$shim_dir:$ROOT_DIR:$PATH" "$tmpd/entry.ny")
 [ "$out2" = "3" ] || {
   echo "FAIL: expected '3', got '$out2'"
   exit 1
@@ -43,7 +53,7 @@ out2=$(PATH="$shim_dir:$ROOT_DIR:$PATH" ./main.ny)
 echo "[v0] test: arithmetic precedence + print"
 tmpf=$(mktemp)
 tmpf2=$(mktemp)
-trap 'rm -rf "$shim_dir"; rm -f "$tmpf" "$tmpf2"' EXIT
+trap 'rm -rf "$tmpd" "$shim_dir"; rm -f "$tmpf" "$tmpf2"' EXIT
 cat >"$tmpf" <<'EOF'
 # v0 smoke
 print(2 + 3 * 4);
