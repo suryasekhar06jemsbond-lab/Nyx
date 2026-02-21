@@ -1,0 +1,30 @@
+# Nydoc Engine Package Configuration
+
+name = "Nydoc"
+version = "2.0.0"
+description = "Nyx Document Engine - LaTeX, PDF, Reports, Charts, Visualization"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nydoc"
+
+keywords = ["nyx", "document", "latex", "pdf", "reports", "charts", "visualization"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nydoc = "Nydoc:main"
+
+[modules]
+Nydoc = "Core document engine"
+latex = "LaTeX generation"
+pdf = "PDF generation"
+markdown = "Markdown processing"
+html = "HTML generation"
+charts = "Chart & graph generation"
+tables = "Table generation"
+templates = "Document templates"
+report = "Report builder"
+
+[platform]
+any = true

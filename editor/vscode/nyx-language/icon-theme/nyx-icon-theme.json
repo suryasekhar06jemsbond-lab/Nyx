@@ -1,0 +1,20 @@
+{
+  "$schema": "vscode://schemas/icon-theme",
+  "iconDefinitions": {
+    "_nyx_file": {
+      "iconPath": "../assets/nyx-logo.png"
+    }
+  },
+  "languageIds": {
+    "nyx": "_nyx_file"
+  },
+  "fileExtensions": {
+    "ny": "_nyx_file",
+    "nx": "_nyx_file"
+  },
+  "fileNames": {
+    "nyx.mod": "_nyx_file",
+    "ny.pkg": "_nyx_file",
+    "nyproject.toml": "_nyx_file"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "world_cells": 120000,
+  "primary_missions": 180,
+  "side_missions": 450,
+  "dynamic_events": 5000,
+  "characters": 1400,
+  "vehicles": 900,
+  "animation_clips": 85000,
+  "vo_lines": 600000,
+  "cinematic_shots": 25000,
+  "audio_events": 180000
+}

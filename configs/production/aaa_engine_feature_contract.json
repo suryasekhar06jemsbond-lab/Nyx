@@ -1,0 +1,357 @@
+{
+  "version": 1,
+  "description": "NYX high-end AAA engine feature contract. Each profile is validated at native sync time.",
+  "engines": {
+    "nycore": {
+      "core": [
+        "allocators",
+        "work_stealing",
+        "numa_aware",
+        "task_graph",
+        "ecs",
+        "platform_abstraction",
+        "lock_free_primitives",
+        "fiber_runtime",
+        "observability",
+        "resilience",
+        "serialization",
+        "deterministic_task_ordering",
+        "memory_fragmentation_metrics",
+        "simd_dispatch",
+        "runtime_schema_compiler",
+        "self_optimizing_runtime",
+        "self_validating_pipeline"
+      ],
+      "nocode": [
+        "visual_task_graph_designer",
+        "declarative_ecs_rules",
+        "runtime_schema_compiler",
+        "self_optimizing_runtime",
+        "self_validating_pipeline",
+        "runtime_system_hot_mutation",
+        "graph_based_orchestration",
+        "data_driven_behavior",
+        "automatic_performance_optimization"
+      ],
+      "production": [
+        "production_health",
+        "deterministic_task_ordering",
+        "memory_fragmentation_metrics",
+        "simd_dispatch",
+        "observability",
+        "resilience",
+        "platform_abstraction",
+        "numa_aware"
+      ]
+    },
+    "nyrender": {
+      "core": [
+        "spectral_pbr",
+        "energy_conserving_brdf",
+        "layered_materials",
+        "subsurface_scattering",
+        "thin_film",
+        "realtime_material_graph_compiler",
+        "neural_material_compression",
+        "hardware_rt_cores",
+        "hybrid_rt",
+        "rt_reflections",
+        "soft_shadows_rt",
+        "rt_transparency",
+        "path_tracing",
+        "neural_radiance_gi_cache",
+        "realtime_gi",
+        "voxel_cone_tracing",
+        "screen_space_gi",
+        "probe_gi_streaming",
+        "time_of_day_relighting",
+        "world_light_propagation",
+        "persistent_light_memory",
+        "virtual_geometry",
+        "per_triangle_culling",
+        "cluster_rendering",
+        "mesh_streaming",
+        "mesh_shader_integration",
+        "automatic_lod_generation",
+        "ai_mesh_decimation",
+        "geometry_compression",
+        "hdr_pipeline",
+        "aces_tonemap",
+        "auto_exposure",
+        "camera_simulation",
+        "vulkan_backend",
+        "directx12_backend",
+        "metal_backend_future",
+        "webgpu_backend_experimental",
+        "shader_hot_reload",
+        "shader_permutation_reduction",
+        "ai_shader_optimization",
+        "indirect_draw",
+        "compute_visibility",
+        "gpu_occlusion_culling",
+        "async_compute",
+        "frame_graph",
+        "denoising"
+      ],
+      "nocode": [
+        "node_material_graph_only",
+        "ai_material_generation",
+        "visual_pipeline_graph",
+        "auto_performance_tiering",
+        "declarative_render_pipeline",
+        "no_shader_authoring"
+      ],
+      "production": [
+        "production_health",
+        "gpu_residency_manager",
+        "adaptive_quality",
+        "gpu_diagnostics",
+        "frame_graph",
+        "denoising"
+      ]
+    },
+    "nyphysics": {
+      "core": [
+        "ccd",
+        "deterministic_mode",
+        "constraint_solvers",
+        "fem_softbody",
+        "softbody_realtime_deformation",
+        "breakable_topology",
+        "vehicle_dynamics",
+        "torque_distribution",
+        "suspension_geometry",
+        "weight_transfer",
+        "surface_grip",
+        "ml_vehicle_tuning",
+        "procedural_fracture",
+        "structural_stress",
+        "debris_lifecycle",
+        "gpu_fracture_solver",
+        "gpu_cloth",
+        "cloth_wind",
+        "cloth_collision",
+        "fft_ocean",
+        "buoyancy",
+        "wake_simulation",
+        "shoreline_interaction",
+        "broadphase_bvh_spatial_hash",
+        "gjk_epa",
+        "multithreaded_solver"
+      ],
+      "nocode": [
+        "visual_constraint_graph",
+        "physical_templates",
+        "ai_solver_tuning",
+        "rule_based_destruction",
+        "constraint_graph_runtime",
+        "no_manual_physics_code"
+      ],
+      "production": [
+        "production_health",
+        "cross_platform_determinism",
+        "rollback",
+        "replay",
+        "gpu_rigidbody_solver",
+        "region_activation",
+        "multithreaded_solver"
+      ]
+    },
+    "nyworld": {
+      "core": [
+        "partition_grid",
+        "hierarchical_zones",
+        "predictive_streaming",
+        "async_io",
+        "compression_aware_loading",
+        "ssd_optimized_layouts",
+        "procedural_terrain",
+        "biome_blending",
+        "runtime_terrain_modification",
+        "city_generation",
+        "traffic_aware_roads",
+        "ai_building_variation",
+        "navmesh_streaming",
+        "dynamic_navmesh_rebuild",
+        "sector_pathing",
+        "crowd_aware_routing",
+        "npc_scaling",
+        "behavioral_abstraction",
+        "memory_budgeting",
+        "predictive_eviction",
+        "gpu_memory_monitoring",
+        "world_persistence",
+        "climate_simulation"
+      ],
+      "nocode": [
+        "procedural_rule_designer",
+        "ai_streaming_prediction",
+        "declarative_economy_layer",
+        "world_behavior_authoring",
+        "no_manual_world_scripts"
+      ],
+      "production": [
+        "production_health",
+        "layered_world_simulation",
+        "streaming_heatmap",
+        "streaming_observability",
+        "systemic_events",
+        "replication_bridge",
+        "world_persistence",
+        "climate_simulation"
+      ]
+    },
+    "nyai": {
+      "core": [
+        "bt_goap_hybrid",
+        "hierarchical_pathfinding",
+        "dynamic_obstacle_avoidance",
+        "realtime_rerouting",
+        "crowd_simulation",
+        "local_avoidance",
+        "density_control",
+        "panic_models",
+        "police_system",
+        "heat_escalation",
+        "strategic_roadblocks",
+        "helicopter_tracking",
+        "combat_ai",
+        "cover_system",
+        "tactical_flanking",
+        "squad_communication",
+        "social_simulation",
+        "memory_model_per_npc",
+        "relationship_graphs",
+        "economy_interaction",
+        "rumor_propagation"
+      ],
+      "nocode": [
+        "intent_behavior_authoring",
+        "data_defined_memory_graph",
+        "ai_sandbox_simulation",
+        "no_behavior_tree_scripting"
+      ],
+      "production": [
+        "production_health",
+        "ai_budget_governor",
+        "persistent_memory",
+        "utility_ai",
+        "perception_stack",
+        "ai_observability"
+      ]
+    },
+    "nynet": {
+      "core": [
+        "authoritative_server",
+        "deterministic_sync",
+        "snapshot_interpolation",
+        "rewind_compensation",
+        "anti_cheat",
+        "kernel_validation",
+        "anomaly_detection",
+        "server_sanity_checks",
+        "regional_scaling",
+        "load_balancing",
+        "microservices_backend",
+        "transport_channels",
+        "matchmaking",
+        "secure_networking"
+      ],
+      "nocode": [
+        "replication_auto_discovery",
+        "automatic_interest_management",
+        "deterministic_desync_validation",
+        "no_manual_network_schema"
+      ],
+      "production": [
+        "production_health",
+        "adaptive_qos",
+        "failover_ops",
+        "determinism_validation",
+        "interest_management",
+        "server_partitioning"
+      ]
+    },
+    "nyaudio": {
+      "core": [
+        "hrtf",
+        "occlusion",
+        "doppler",
+        "convolution_reverb",
+        "dynamic_music",
+        "ai_ambience",
+        "mix_buses",
+        "dsp_chain",
+        "voice_chat",
+        "loudness_management",
+        "acoustic_propagation",
+        "backend_failover"
+      ],
+      "nocode": [
+        "visual_acoustic_graph",
+        "emotional_music_director",
+        "emotional_music_state_machine",
+        "no_manual_dsp_graph"
+      ],
+      "production": [
+        "production_health",
+        "audio_observability",
+        "audio_zones",
+        "acoustic_propagation",
+        "backend_failover"
+      ]
+    },
+    "nyanim": {
+      "core": [
+        "full_body_ik",
+        "motion_matching",
+        "facial_muscles",
+        "blend_trees",
+        "procedural_blend",
+        "ai_locomotion",
+        "learned_locomotion",
+        "retargeting",
+        "motion_warping",
+        "clip_streaming",
+        "anim_events"
+      ],
+      "nocode": [
+        "intent_motion_synthesis",
+        "physics_aware_adaptation",
+        "no_manual_state_machine"
+      ],
+      "production": [
+        "production_health",
+        "animation_network_sync",
+        "physics_animation_coupling",
+        "state_graph",
+        "clip_streaming"
+      ]
+    },
+    "nylogic": {
+      "core": [
+        "rule_dsl",
+        "declarative_runtime",
+        "graph_orchestration",
+        "ai_rule_generation",
+        "hot_mutation",
+        "self_validating_rules",
+        "automatic_optimization"
+      ],
+      "nocode": [
+        "visual_rule_authoring",
+        "intent_rule_generation",
+        "runtime_hot_mutation",
+        "no_imperative_scripting",
+        "self_validating_rules"
+      ],
+      "production": [
+        "production_health",
+        "automatic_optimization",
+        "self_validating_rules",
+        "logic_observability",
+        "determinism_rule_replay"
+      ]
+    }
+  }
+}

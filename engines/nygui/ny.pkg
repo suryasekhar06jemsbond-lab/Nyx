@@ -1,0 +1,24 @@
+# Nygui Engine Package Configuration
+
+name = "Nygui"
+version = "2.0.0"
+description = "Nyx GUI Framework - Windows, Widgets, Layouts"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nygui"
+
+keywords = ["nyx", "gui", "ui", "widgets", "desktop"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nygui = "Nygui:main"
+
+[modules]
+Nygui = "Main GUI framework"
+widgets = "UI widgets"
+layouts = "Layout managers"
+canvas = "Drawing canvas"
+menus = "Menu system"
+dialogs = "Dialog boxes"

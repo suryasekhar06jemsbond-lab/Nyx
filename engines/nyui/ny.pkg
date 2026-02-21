@@ -1,0 +1,36 @@
+# NYUI Package Configuration
+# Native UI Framework for Nyx
+
+{
+    name: "nyui",
+    version: "1.0.0",
+    description: "Native UI Framework - Web + Strict + Desktop orchestrated under one import",
+    author: "Nyx Team",
+    license: "MIT",
+    keywords: ["ui", "web", "framework", "vdom", "ssr", "reactive", "strict-mode"],
+    targets: [
+        { type: "library", output: "nyui" },
+        { type: "wasm", output: "nyui_wasm" }
+    ],
+    dependencies: {
+        nyweb: "*",
+        nygui: "*"
+    },
+    exports: [
+        "vnode",
+        "component", 
+        "router",
+        "events",
+        "forms",
+        "ssr",
+        "compiler",
+        "website",
+        "host",
+        "strict",
+        "pure",
+        "gui",
+        "desktop",
+        "nyui_strict",
+        "nygui"
+    ]
+}

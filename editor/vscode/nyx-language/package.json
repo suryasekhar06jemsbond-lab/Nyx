@@ -1,0 +1,90 @@
+{
+  "name": "nyx-language",
+  "displayName": "Nyx Language",
+  "description": "NYX syntax highlighting, snippets, and project authoring workflow support.",
+  "version": "3.3.3",
+  "publisher": "SuryaSekharRoy",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "main": "./extension.js",
+  "icon": "assets/nyx-logo.png",
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "nyx",
+    "ny",
+    "nx",
+    "language",
+    "runtime",
+    "compiler"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/suryasekhar06jemsbond-lab/NYX-language.git",
+    "directory": "editor/vscode/nyx-language"
+  },
+  "bugs": {
+    "url": "https://github.com/suryasekhar06jemsbond-lab/NYX-language/issues"
+  },
+  "homepage": "https://github.com/suryasekhar06jemsbond-lab/NYX-language",
+  "contributes": {
+    "languages": [
+      {
+        "id": "nyx",
+        "aliases": [
+          "Nyx",
+          "nyx"
+        ],
+        "extensions": [
+          ".ny",
+          ".nx"
+        ],
+        "icon": {
+          "light": "./assets/nyx-logo.png",
+          "dark": "./assets/nyx-logo.png"
+        },
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "nyx",
+        "scopeName": "source.nyx",
+        "path": "./syntaxes/nyx.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "nyx",
+        "path": "./snippets/nyx.json"
+      }
+    ],
+    "iconThemes": [
+      {
+        "id": "nyx-file-icons",
+        "label": "NYX File Icons",
+        "path": "./icon-theme/nyx-icon-theme.json"
+      }
+    ],
+    "configurationDefaults": {
+      "workbench.iconTheme": "nyx-file-icons"
+    }
+  },
+  "scripts": {
+    "package": "vsce package",
+    "publish": "vsce publish",
+    "publish:openvsx": "ovsx publish"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.13",
+    "@types/vscode": "1.85.0",
+    "@vscode/debugadapter": "^1.68.0",
+    "@vscode/debugprotocol": "^1.68.0",
+    "@vscode/vsce": "^3.6.2",
+    "ovsx": "^0.10.9",
+    "typescript": "^5.9.3"
+  }
+}

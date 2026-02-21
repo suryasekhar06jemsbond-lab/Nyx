@@ -1,0 +1,8 @@
+{
+  "ok": true,
+  "attempts": 100,
+  "limit": 20,
+  "accepted": 20,
+  "blocked": 80,
+  "bypass_success": false
+}

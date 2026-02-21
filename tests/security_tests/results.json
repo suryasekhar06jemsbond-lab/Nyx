@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "results": [
+    {
+      "name": "csrf_rotation_and_expiry",
+      "ok": true,
+      "details": "token rotated and expiry enforced"
+    },
+    {
+      "name": "json_schema_and_injection",
+      "ok": true,
+      "details": "schema enforcement active"
+    },
+    {
+      "name": "content_type_and_payload_limits",
+      "ok": true,
+      "details": "content type and payload caps enforced"
+    },
+    {
+      "name": "header_spoof_and_rate_limit_bypass",
+      "ok": true,
+      "details": "accepted=5 blocked=15"
+    }
+  ]
+}

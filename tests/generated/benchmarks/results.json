@@ -1,0 +1,28 @@
+{
+  "ok": true,
+  "generated_at": 1771661688,
+  "http": {
+    "total_requests": 5000,
+    "concurrency": 128,
+    "success": 5000,
+    "failed": 0,
+    "rps": 127.383,
+    "latency_ms": {
+      "p50": 998.428,
+      "p95": 1053.558,
+      "p99": 1081.559,
+      "avg": 991.002,
+      "max": 1575.9
+    },
+    "final_counter": 5000
+  },
+  "websocket": {
+    "simulated_connections": 10000,
+    "active_connections": 10000,
+    "broadcast_messages": 20,
+    "broadcasts_per_second": 2039.692,
+    "memory_before_mb": 40.469,
+    "memory_after_mb": 40.469,
+    "memory_delta_mb": 0.0
+  }
+}

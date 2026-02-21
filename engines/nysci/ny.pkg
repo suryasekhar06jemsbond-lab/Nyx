@@ -1,0 +1,33 @@
+# Nysci Engine Package Configuration
+
+name = "Nysci"
+version = "2.0.0"
+description = "Nyx Scientific Computing Engine - Tensors, ML, Linear Algebra, HPC"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nysci"
+
+keywords = ["nyx", "scientific-computing", "machine-learning", "tensors", "deep-learning", "hpc"]
+
+dependencies = ["nyx >= 2.0.0", "Nygpu >= 2.0.0"]
+
+[scripts]
+Nysci = "Nysci:main"
+
+[modules]
+Nysci = "Core scientific computing"
+tensor = "Multi-dimensional arrays"
+autograd = "Automatic differentiation"
+linalg = "Linear algebra operations"
+fft = "Fast Fourier transforms"
+optimize = "Optimization algorithms"
+stats = "Statistical functions"
+random = "Random number generation"
+ml = "Machine learning primitives"
+nn = "Neural network layers"
+data = "Data loading & preprocessing"
+dist = "Probability distributions"
+
+[platform]
+any = true

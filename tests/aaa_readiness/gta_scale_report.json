@@ -1,0 +1,94 @@
+{
+  "ok": true,
+  "program_rules": {
+    "minimum_horizon_years": 4,
+    "minimum_total_team_size": 700,
+    "minimum_content_targets": {
+      "primary_missions": 150,
+      "side_missions": 300,
+      "animation_clips": 50000,
+      "vo_lines": 300000,
+      "cinematic_shots": 15000
+    },
+    "required_suites": [
+      "engine_gates",
+      "platform_online_suite",
+      "content_pipeline",
+      "hardware_validation",
+      "scale_optimization"
+    ]
+  },
+  "structural_checks": {
+    "horizon_ok": true,
+    "team_ok": true,
+    "content_ok": true,
+    "current_team_size": 13,
+    "target_team_size": 820
+  },
+  "suite_results": [
+    {
+      "name": "native_hooks",
+      "ok": true,
+      "returncode": 0,
+      "command": "python3 scripts/generate_native_backend_stubs.py",
+      "stdout_tail": "Generated 112 hooks\n- native/backends/generated/native_hooks_inventory.json\n- native/backends/generated/native_hooks_inventory.md\n- native/backends/generated/nyx_native_hooks.h\n- native/backends/generated/nyx_native_hooks_stub.c\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "engine_gates",
+      "ok": true,
+      "returncode": 0,
+      "command": "python3 scripts/run_engine_gates.py --iterations 300",
+      "stdout_tail": "_build_hybrid_from_intent\": 0.000355,\n      \"native_nyai_run_sandbox\": 0.000426,\n      \"native_ai_frame_time_ms\": 0.000143,\n      \"native_nynet_checksum\": 0.000395,\n      \"native_nynet_validate_desync\": 0.000403,\n      \"native_nynet_tick_ms\": 0.000132,\n      \"native_nynet_packet_loss_pct\": 0.000119,\n      \"native_audio_play\": 0.000266,\n      \"native_audio_stop\": 0.000216,\n      \"native_audio_dsp_time_ms\": 0.000124,\n      \"native_nyaudio_resolve_music_state\": 0.000403,\n      \"native_nylogic_generate_rule\": 0.000372,\n      \"native_nylogic_decode_rule\": 0.000335,\n      \"native_nylogic_validate\": 0.000402,\n      \"native_nylogic_compile_graph\": 0.000504,\n      \"native_nylogic_execute\": 0.000336,\n      \"native_nylogic_profile_ms\": 0.000142\n    },\n    \"count\": {\n      \"native_render_boot\": 1,\n      \"native_nyrender_apply_tier\": 1,\n      \"native_physics_boot\": 1,\n      \"native_physics_set_float_mode\": 1,\n      \"native_audio_create_context\": 1,\n      \"native_audio_set_master_volume\": 1,\n      \"native_nyrender_compile_material_graph\": 600,\n      \"native_nyrender_compile_pipeline_graph\": 300,\n      \"native_render_query_gpu_time_ms\": 300,\n      \"native_physics_checksum\": 600,\n      \"native_nyphysics_auto_tune\": 300,\n      \"native_physics_query_step_ms\": 300,\n      \"native_physics_validate_frame\": 300,\n      \"native_nyai_build_hybrid_from_intent\": 300,\n      \"native_nyai_run_sandbox\": 300,\n      \"native_ai_frame_time_ms\": 300,\n      \"native_nynet_checksum\": 600,\n      \"native_nynet_validate_desync\": 300,\n      \"native_nynet_tick_ms\": 300,\n      \"native_nynet_packet_loss_pct\": 300,\n      \"native_audio_play\": 300,\n      \"native_audio_stop\": 300,\n      \"native_audio_dsp_time_ms\": 300,\n      \"native_nyaudio_resolve_music_state\": 300,\n      \"native_nylogic_generate_rule\": 300,\n      \"native_nylogic_decode_rule\": 300,\n      \"native_nylogic_validate\": 300,\n      \"native_nylogic_compile_graph\": 300,\n      \"native_nylogic_execute\": 300,\n      \"native_nylogic_profile_ms\": 300\n    }\n  }\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "platform_online_suite",
+      "ok": true,
+      "returncode": 0,
+      "command": "python3 scripts/run_platform_online_suite.py",
+      "stdout_tail": "{\n  \"ok\": true,\n  \"certification\": {\n    \"ok\": true,\n    \"pass_rate\": 1.0,\n    \"checks\": {\n      \"suspend_resume\": true,\n      \"memory_pressure\": true,\n      \"safe_save_load\": true,\n      \"network_disconnect_recovery\": true,\n      \"accessibility_controls\": true,\n      \"localization_fallback\": true\n    }\n  },\n  \"anti_cheat\": {\n    \"ok\": true,\n    \"samples\": 1500,\n    \"flagged\": 0,\n    \"flag_rate\": 0.0,\n    \"hard_violations\": 21\n  },\n  \"liveops\": {\n    \"ok\": true,\n    \"avg_wait_ms\": 1164.3333333333333,\n    \"failover_seconds\": 47,\n    \"reconnect_rate\": 0.012264227921445263,\n    \"regions\": [\n      {\n        \"region\": \"us-east\",\n        \"avg_wait_ms\": 1193,\n        \"matches\": 2177\n      },\n      {\n        \"region\": \"us-west\",\n        \"avg_wait_ms\": 1403,\n        \"matches\": 3631\n      },\n      {\n        \"region\": \"eu-central\",\n        \"avg_wait_ms\": 897,\n        \"matches\": 3895\n      }\n    ]\n  }\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "content_pipeline",
+      "ok": true,
+      "returncode": 0,
+      "command": "python3 scripts/run_content_pipeline.py",
+      "stdout_tail": "{\n  \"ok\": true,\n  \"assets_total\": 2,\n  \"used_mb\": 1.4422874450683594\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "hardware_validation",
+      "ok": true,
+      "returncode": 0,
+      "command": "python3 scripts/run_hardware_validation_cycles.py",
+      "stdout_tail": "{\n  \"ok\": true,\n  \"pass_rate\": 0.9791666666666666,\n  \"critical\": 0\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "scale_optimization",
+      "ok": true,
+      "returncode": 0,
+      "command": "python3 scripts/run_continuous_scale_optimization.py --days 180",
+      "stdout_tail": "{\n  \"ok\": true,\n  \"days\": 180,\n  \"ok_rate\": 1.0,\n  \"violations\": 0\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "multi_year_plan",
+      "ok": true,
+      "returncode": 0,
+      "command": "python3 scripts/plan_multi_year_production.py",
+      "stdout_tail": "{\n  \"ok\": true,\n  \"timeline_months\": 54,\n  \"target_team_size\": 820\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "massive_content_backlog",
+      "ok": true,
+      "returncode": 0,
+      "command": "python3 scripts/generate_massive_content_backlog.py",
+      "stdout_tail": "{\n  \"ok\": true,\n  \"primary_missions\": 180,\n  \"side_missions\": 450,\n  \"animation_clips\": 85000,\n  \"vo_lines\": 600000,\n  \"cinematic_shots\": 25000\n}\n",
+      "stderr_tail": ""
+    }
+  ]
+}

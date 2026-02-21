@@ -1,0 +1,33 @@
+# Nyautomate Engine Package Configuration
+
+name = "Nyautomate"
+version = "2.0.0"
+description = "Nyx Automation Engine - RPA, Scripting, System Tasks"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyautomate"
+
+keywords = ["nyx", "automation", "rpa", "scripting", "tasks"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyautomate = "Nyautomate:main"
+
+[modules]
+Nyautomate = "Main automation engine"
+rpa = "Robotic Process Automation"
+scheduler = "Task scheduling"
+workflow = "Workflow management"
+gui = "GUI automation"
+desktop = "Desktop integration"
+webauto = "Browser automation"
+excel = "Excel automation"
+pdf = "PDF processing"
+email = "Email automation"
+
+[platform]
+windows = true
+macos = true
+linux = true

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "targets": ["windows", "linux"],
+  "buildMode": "shipping",
+  "cooking": {
+    "deterministic": true,
+    "incremental": true,
+    "cacheDir": "build/cook_cache",
+    "outputDir": "build/cooked"
+  },
+  "validation": {
+    "enforceBudgets": true,
+    "enforceSchema": true,
+    "failOnMissingDependencies": true
+  },
+  "budgets": {
+    "textureMB": 4096,
+    "meshMB": 3072,
+    "audioMB": 1024,
+    "animationMB": 2048
+  }
+}

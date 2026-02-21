@@ -1,0 +1,1 @@
+from typing import List\n\n# Assuming Statement and Identifier are defined elsewhere\n\nclass Example:\n    def method(self) -> List[Statement]:  # Fixed type hint\n        pass\n\n    def another_method(self) -> List[Identifier]:  # Fixed type hint\n        pass\n

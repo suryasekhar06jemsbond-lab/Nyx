@@ -1,0 +1,3 @@
+from typing import List
+
+# Rest of the original content with List[SafeSubsetRule] updated as needed...

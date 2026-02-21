@@ -1,0 +1,57 @@
+name: VSCode Extension CI
+
+on:
+  push:
+    paths:
+      - 'editor/vscode/nyx-language/**'
+      - '.github/workflows/vscode_ci.yml'
+  pull_request:
+    paths:
+      - 'editor/vscode/nyx-language/**'
+      - '.github/workflows/vscode_ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            label: linux
+          - os: windows-latest
+            label: windows
+          - os: macos-latest
+            label: macos
+
+    runs-on: ${{ matrix.os }}
+
+    defaults:
+      run:
+        working-directory: editor/vscode/nyx-language
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: editor/vscode/nyx-language/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Package extension
+        run: npx @vscode/vsce package -o ../../../dist/nyx-language-${{ matrix.label }}.vsix
+
+      - name: Upload VSIX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nyx-language-${{ matrix.label }}-vsix
+          path: dist/nyx-language-${{ matrix.label }}.vsix
+          if-no-files-found: error

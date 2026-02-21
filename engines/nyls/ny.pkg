@@ -1,0 +1,141 @@
+# Nyls Engine Package Configuration
+# Production-grade Language Server Protocol implementation for Nyx
+
+name = "Nyls"
+version = "2.0.0"
+description = "Nyx Language Server Protocol Engine - Production LSP with Type System"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyls"
+
+keywords = ["nyx", "lsp", "language-server", "ide", "intellisense", "autocomplete", "diagnostics", "type-system", "semantic-analysis"]
+
+dependencies = ["nyx >= 2.0.0", "nynetwork >= 2.0.0"]
+
+[scripts]
+Nyls = "nyls:main"
+LanguageServer = "nyls:LanguageServer"
+
+[modules]
+# Protocol Layer
+protocol = "LSP protocol types (Position, Range, Location, etc.)"
+
+# Core
+LanguageServer = "Main LSP server implementation"
+TextDocument = "Text document with incremental sync"
+DocumentStore = "Document storage with indexing"
+
+# Parser
+parser = "Incremental parser and AST"
+Parser = "Main parser implementation"
+Node = "AST node"
+TypeInfo = "Type information"
+
+# Semantic Analysis
+semantic = "Semantic analysis and type system"
+SemanticAnalyzer = "Semantic analysis engine"
+SymbolTable = "Global symbol table"
+Symbol = "Symbol definition"
+Scope = "Symbol scope"
+
+# Providers
+CompletionProvider = "Smart autocomplete with context"
+DiagnosticsProvider = "Real-time diagnostics"
+HoverProvider = "Hover information"
+DefinitionProvider = "Go to definition"
+ReferencesProvider = "Find all references"
+FormattingProvider = "Code formatting"
+RenameProvider = "Rename refactoring"
+SignatureHelpProvider = "Function signature help"
+CodeActionProvider = "Quick fixes and refactorings"
+SymbolProvider = "Document and workspace symbols"
+
+# Protocol Types
+Position = "LSP Position"
+Range = "LSP Range"
+Location = "LSP Location"
+TextEdit = "Text document edit"
+Diagnostic = "Diagnostic message"
+CompletionItem = "Completion item"
+CompletionList = "Completion list"
+Hover = "Hover information"
+SignatureHelp = "Function signature help"
+SymbolInformation = "Symbol information"
+DocumentSymbol = "Document symbol tree"
+CodeAction = "Code action/quick fix"
+WorkspaceEdit = "Workspace edit"
+
+[platform]
+any = true
+
+[server]
+transport = "stdio"
+log_level = "info"
+
+[capabilities]
+# Text document sync
+textDocumentSync = 2  # Incremental
+
+# Completion
+completionProvider = true
+completionSnippets = true
+
+# Hover
+hoverProvider = true
+
+# Definition
+definitionProvider = true
+typeDefinitionProvider = true
+
+# References
+referencesProvider = true
+implementationProvider = true
+
+# Symbols
+documentSymbolProvider = true
+workspaceSymbolProvider = true
+
+# Refactoring
+renameProvider = true
+codeActionProvider = true
+
+# Formatting
+documentFormattingProvider = true
+documentRangeFormattingProvider = true
+
+# Signature
+signatureHelpProvider = true
+
+# Other
+documentHighlightProvider = true
+
+[features]
+default = ["completion", "hover", "definition", "diagnostics", "formatting", "semantic"]
+
+# Core LSP
+completion = "Code completion"
+hover = "Hover information"
+definition = "Go to definition"
+references = "Find references"
+typeDefinition = "Go to type definition"
+implementation = "Go to implementation"
+declaration = "Go to declaration"
+
+# Symbols
+documentSymbols = "Document symbols"
+workspaceSymbols = "Workspace symbols"
+documentHighlight = "Document highlighting"
+
+# Refactoring
+rename = "Rename refactoring"
+codeActions = "Code actions and quick fixes"
+formatting = "Document formatting"
+
+# Semantic Analysis (Advanced)
+semantic = "Full semantic analysis"
+typeChecking = "Type checking"
+incrementalParsing = "Incremental parsing"
+
+# Performance
+backgroundIndexing = "Background symbol indexing"

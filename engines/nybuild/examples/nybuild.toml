@@ -1,0 +1,76 @@
+# ============================================================
+# NYBUILD.TOML - Build Configuration
+# ============================================================
+# This is the build configuration for Nyx projects.
+# Used by NyBuild for compilation, testing, and release.
+
+[project]
+name = "myapp"
+version = "1.0.0"
+description = "My Nyx application"
+authors = ["Developer <dev@example.com>"]
+
+# Build configuration
+[build]
+profile = "release"           # debug or release
+output = "target"              # output directory
+cache = ".nybuild"             # cache directory
+parallel = 4                  # parallel jobs
+watch = false                  # watch mode
+
+# Build targets
+[target.app]
+type = "binary"
+name = "myapp"
+sources = ["src/**/*.ny"]
+dependencies = ["nyweb", "nydatabase"]
+output = "target/release/myapp"
+
+[target.lib]
+type = "library"
+name = "mylib"
+sources = ["lib/**/*.ny"]
+output = "target/release/libmylib.a"
+
+[target.wasm]
+type = "wasm"
+sources = ["src/**/*.ny"]
+output = "target/release/myapp.wasm"
+
+# Testing
+[test]
+pattern = "**/*_test.ny"
+coverage = true
+parallel = 4
+
+# Linting
+[lint]
+strict = false
+rules = [
+    "no-unused-vars",
+    "no-undef",
+    "prefer-const",
+    "no-console"
+]
+
+# Formatting
+[format]
+indent = 4
+line_length = 100
+semi = true
+
+# Release
+[release]
+channel = "stable"
+sign = true
+publish = true
+artifacts = [
+    "x86_64-unknown-linux-gnu",
+    "x86_64-pc-windows-msvc",
+    "aarch64-unknown-linux-gnu"
+]
+
+# Workspace (for monorepo)
+[workspace]
+members = ["packages/*"]
+exclude = ["packages/legacy/*"]

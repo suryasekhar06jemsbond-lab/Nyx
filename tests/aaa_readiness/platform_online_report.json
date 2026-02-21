@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "certification": {
+    "ok": true,
+    "pass_rate": 1.0,
+    "checks": {
+      "suspend_resume": true,
+      "memory_pressure": true,
+      "safe_save_load": true,
+      "network_disconnect_recovery": true,
+      "accessibility_controls": true,
+      "localization_fallback": true
+    }
+  },
+  "anti_cheat": {
+    "ok": true,
+    "samples": 1500,
+    "flagged": 0,
+    "flag_rate": 0.0,
+    "hard_violations": 21
+  },
+  "liveops": {
+    "ok": true,
+    "avg_wait_ms": 1164.3333333333333,
+    "failover_seconds": 47,
+    "reconnect_rate": 0.012264227921445263,
+    "regions": [
+      {
+        "region": "us-east",
+        "avg_wait_ms": 1193,
+        "matches": 2177
+      },
+      {
+        "region": "us-west",
+        "avg_wait_ms": 1403,
+        "matches": 3631
+      },
+      {
+        "region": "eu-central",
+        "avg_wait_ms": 897,
+        "matches": 3895
+      }
+    ]
+  }
+}

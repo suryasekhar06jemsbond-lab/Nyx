@@ -1,0 +1,23 @@
+# Nyx language files - don't analyze (prevents false detection as Common Lisp)
+*.nx linguist-vendored
+*.ny linguist-vendored
+
+# Exclude C runtime implementation
+native/* linguist-vendored
+compiler_stage* linguist-vendored
+output* linguist-vendored
+
+# Exclude build artifacts
+*.exe linguist-vendored
+*.vsix linguist-vendored
+*.zip linguist-vendored
+
+# Exclude build tools (Python, PowerShell, Shell)
+scripts/ linguist-vendored
+src/ linguist-vendored
+*.js linguist-vendored
+*.json linguist-vendored
+
+# Exclude documentation
+*.md linguist-vendored
+LICENSE linguist-vendored

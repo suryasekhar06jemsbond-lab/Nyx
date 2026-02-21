@@ -1,0 +1,18 @@
+{
+  "horizon_years": 5,
+  "phases": [
+    {"name": "foundation", "duration_months": 12, "focus": ["engine", "tooling", "core_gameplay"]},
+    {"name": "vertical_slice", "duration_months": 9, "focus": ["content_pipeline", "world_core", "missions"]},
+    {"name": "full_production", "duration_months": 24, "focus": ["content_scale", "optimization", "platform"]},
+    {"name": "cert_and_launch", "duration_months": 9, "focus": ["certification", "liveops", "launch"]}
+  ],
+  "target_headcount": {
+    "engine": 120,
+    "tools": 60,
+    "content": 350,
+    "qa": 180,
+    "online": 70,
+    "production": 40
+  },
+  "regional_studios": ["us", "eu", "asia"]
+}

@@ -1,0 +1,39 @@
+# Nypm - Nyx Package Manager
+# ===========================
+
+name = "Nypm"
+version = "3.0.0"
+description = "Nyx Package Manager - Reproducible builds, secure supply chain, fast resolution"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nypm"
+
+keywords = ["nyx", "package", "manager", "dependency", "registry", "build"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+nypm = "Nypm:main"
+
+[modules]
+Main = "Main package manager"
+types = "Core types (Manifest, Lockfile, Version)"
+semver = "Semantic versioning"
+resolver = "Dependency resolution engine"
+registry = "Package registry"
+security = "Security & supply chain"
+build = "Build system"
+workspace = "Workspace support"
+commands = "CLI commands"
+
+[features]
+default = ["cli"]
+
+[binaries]
+nypm = "bin/nypm"
+
+[examples]
+basic = "Basic package management"
+workspace = "Workspace example"
+security = "Security scanning"

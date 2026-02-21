@@ -1,0 +1,31 @@
+# NyQueue - Nyx Message Queue & Job Processing
+# ==============================================
+
+name = "NyQueue"
+version = "3.0.0"
+description = "Nyx Message Queue - Reliable job processing, event streaming, distributed messaging"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/NyQueue"
+
+keywords = ["nyx", "queue", "message", "job", "event", "streaming", "worker"]
+
+dependencies = ["nyx >= 2.0.0", "nyserver >= 2.0.0"]
+
+[scripts]
+NyQueue = "NyQueue:main"
+
+[modules]
+Main = "Main queue engine"
+types = "Core types (Message, Queue, Consumer)"
+queue = "Queue management"
+pubsub = "Publish/subscribe"
+stream = "Event streaming"
+worker = "Worker execution"
+scheduler = "Job scheduling"
+storage = "Persistence layer"
+cluster = "Distributed cluster"
+security = "Auth & permissions"
+metrics = "Observability"
+api = "HTTP API"

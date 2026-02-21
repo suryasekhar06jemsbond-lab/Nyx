@@ -1,0 +1,79 @@
+# Nyworld Engine Package Configuration
+
+name = "Nyworld"
+version = "1.0.0"
+description = "Nyx Open World Streaming Engine - partitioning, streaming, terrain, city, navmesh"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyworld"
+
+keywords = ["nyx", "world", "open-world", "streaming", "terrain", "city", "navmesh", "npc"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyworld = "nyworld:create_world_engine"
+
+[modules]
+partition = "Grid and hierarchical world partitioning"
+streaming = "Async compression-aware asset streaming"
+terrain = "Procedural terrain and biomes"
+city = "Rule-based and traffic-aware city generation"
+navmesh = "Sector navmesh streaming"
+npcscale = "LOD AI and distant simulation"
+memory = "Budget-aware loading and eviction"
+climate = "Weather, time-of-day, and seasons"
+persistence = "Persistent world save/load service"
+events = "World event bus and systemic simulation"
+replication = "Network replication bridge for streaming deltas"
+tooling = "Streaming metrics, overlay, stress harness"
+layered_sim = "Near/mid/far simulation layers"
+prediction = "Streaming heatmap and preload prediction"
+production = "World production health and SLO model"
+ProductionWorldProfile = "Production-ready world profile"
+WorldClassWorldSuite = "High-end world orchestration suite"
+WorldEngine = "Main world orchestrator"
+procedural_rules = "Declarative world rule designer"
+streaming_ai_predictor = "AI-based streaming prediction"
+economy_layer = "Declarative economy simulation layer"
+NoCodeWorldRuntime = "No-code world orchestration runtime"
+
+[platform]
+any = true
+
+[capabilities]
+predictive_streaming = "Velocity-based cell prediction"
+async_io = "Asynchronous asset loading"
+procedural_terrain = "Noise terrain and biome blending"
+city_generation = "Rule-driven city synthesis"
+navmesh_streaming = "Dynamic navmesh updates"
+npc_scaling = "Full/simplified/background AI LOD"
+memory_budgeting = "Budget-aware residency and eviction"
+climate_simulation = "Dynamic weather and seasonal model"
+world_persistence = "Autosave and persistent world state"
+systemic_events = "Traffic/economy world event simulation"
+replication_bridge = "Interest-driven world delta replication"
+streaming_observability = "Live streaming diagnostics"
+layered_world_simulation = "Distance-based layered world simulation"
+streaming_heatmap = "Player-heatmap based preload prediction"
+production_health = "World health telemetry and readiness"
+procedural_rule_designer = "Zone/crime/crowd rules without scripting"
+ai_streaming_prediction = "Player-pattern streaming preload prediction"
+declarative_economy_layer = "Supply-demand-job wealth simulation by data"
+no_manual_world_scripts = "No imperative world logic path"
+ai_building_variation = "AAA contract: ai building variation"
+behavioral_abstraction = "AAA contract: behavioral abstraction"
+biome_blending = "AAA contract: biome blending"
+compression_aware_loading = "AAA contract: compression aware loading"
+crowd_aware_routing = "AAA contract: crowd aware routing"
+dynamic_navmesh_rebuild = "AAA contract: dynamic navmesh rebuild"
+gpu_memory_monitoring = "AAA contract: gpu memory monitoring"
+hierarchical_zones = "AAA contract: hierarchical zones"
+partition_grid = "AAA contract: partition grid"
+predictive_eviction = "AAA contract: predictive eviction"
+runtime_terrain_modification = "AAA contract: runtime terrain modification"
+sector_pathing = "AAA contract: sector pathing"
+ssd_optimized_layouts = "AAA contract: ssd optimized layouts"
+traffic_aware_roads = "AAA contract: traffic aware roads"
+world_behavior_authoring = "AAA contract: world behavior authoring"

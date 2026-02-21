@@ -1,0 +1,352 @@
+/* =============================================================================
+ * Nyx Programming Language - EBNF Grammar Specification
+ * Version: 1.0
+ * =============================================================================
+ * This file defines the complete EBNF grammar for the Nyx programming language.
+ * Based on the ISO/IEC 14977 standard for EBNF notation.
+ * ============================================================================= */
+
+/* =============================================================================
+ * LEXICAL TOKENS
+ * ============================================================================= */
+
+/* Comments */
+comment-start   = "#" ;
+comment-char    = comment-start, { all characters - line break } ;
+comment         = comment-start, comment-char ;
+
+/* Whitespace */
+whitespace      = { " " | "\t" | "\n" | "\r" | comment } ;
+
+/* Identifiers */
+letter          = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" |
+                  "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" |
+                  "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" |
+                  "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" |
+                  "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" |
+                  "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" |
+                  "w" | "x" | "y" | "z" | "_" ;
+digit           = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+hex-digit       = digit | "A" | "B" | "C" | "D" | "E" | "F" | "a" | "b" | "c" | "d" | "e" | "f" ;
+octal-digit     = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" ;
+binary-digit    = "0" | "1" ;
+ident-start     = letter ;
+ident-part      = letter | digit ;
+identifier      = ident-start, { ident-part } ;
+
+/* Literals */
+integer-literal = digit, { digit }
+               | "0x", hex-digit, { hex-digit }
+               | "0o", octal-digit, { octal-digit }
+               | "0b", binary-digit, { binary-digit } ;
+
+float-literal   = digit, { digit }, ".", { digit }
+               | digit, { digit }, ( "e" | "E" ), [ "+" | "-" ], digit, { digit } ;
+
+string-literal  = '"', { string-character - '"' | escape-sequence }, '"'
+               | "'", { string-character - "'" | escape-sequence }, "'" ;
+
+escape-sequence = "\", ( "n" | "t" | "r" | "\" | '"' | "'" | "x", hex-digit, hex-digit ) ;
+
+boolean-literal = "true" | "false" ;
+
+null-literal    = "null" ;
+
+/* =============================================================================
+ * PROGRAM STRUCTURE
+ * ============================================================================= */
+
+program         = { statement } ;
+
+source-file     = { statement } ;
+
+/* =============================================================================
+ * STATEMENTS
+ * ============================================================================= */
+
+statement       = declaration-statement
+               | expression-statement
+               | control-flow-statement
+               | import-statement
+               | class-statement
+               | module-statement
+               | try-statement
+               | assert-statement
+               | with-statement
+               | async-statement
+               | labeled-statement
+               | yield-statement
+               | break-statement
+               | continue-statement
+               | pass-statement
+               | return-statement ;
+
+/* Declaration Statements */
+declaration-statement = variable-declaration
+                      | function-declaration
+                      | type-declaration ;
+variable-declaration = "let", identifier, [ ":", type-annotation ], "=", expression, ";" ;
+variable-mut-declaration = "let", "mut", identifier, [ ":", type-annotation ], "=", expression, ";" ;
+
+function-declaration = "fn", identifier, parameters, [ "->", type-annotation ], block-expression ;
+parameters          = "(", [ parameter-list ], ")" ;
+parameter-list      = parameter, { ",", parameter } ;
+parameter           = identifier, [ ":", type-annotation ] ;
+
+type-declaration    = "typealias", identifier, "=", type-annotation, ";" ;
+
+/* Expression Statement */
+expression-statement = expression, ";" ;
+
+/* Control Flow Statements */
+control-flow-statement = if-statement
+                      | switch-statement
+                      | while-statement
+                      | for-statement
+                      | break-statement
+                      | continue-statement
+                      | return-statement
+                      | yield-statement ;
+
+if-statement     = "if", "(", expression, ")", block-expression,
+                  { "else", "if", "(", expression, ")", block-expression },
+                  [ "else", block-expression ] ;
+
+switch-statement = "switch", "(", expression, ")", "{", { case-clause }, [ default-clause ], "}" ;
+case-clause     = "case", expression, ":", block-expression ;
+default-clause  = "default", ":", block-expression ;
+
+while-statement  = "while", "(", expression, ")", block-expression ;
+
+for-statement    = "for", "(", for-init, [ expression ], ";", [ expression ], ")", block-expression
+                 | for-in-statement ;
+for-init         = [ variable-declaration ] | expression ;
+for-in-statement = "for", "(", identifier, [ ",", identifier ], "in", expression, ")", block-expression ;
+
+return-statement  = "return", [ expression ], ";" ;
+break-statement   = "break", [ identifier ], ";" ;
+continue-statement = "continue", [ identifier ], ";" ;
+yield-statement   = "yield", [ expression ], ";" ;
+
+/* Import Statements */
+import-statement = "import", string-literal, ";"
+                | "from", string-literal, "import", import-list, ";"
+                | "from", string-literal, "import", "{", import-list, "}", ";" ;
+import-list      = identifier, { ",", identifier } ;
+
+/* Class Statements */
+class-statement  = "class", identifier, [ "extends", identifier ], "{", { class-member }, "}" ;
+class-member     = method-declaration
+                 | field-declaration ;
+method-declaration = "fn", identifier, parameters, [ "->", type-annotation ], block-expression ;
+field-declaration  = identifier, ":", type-annotation, ";" ;
+
+/* Module Statements */
+module-statement = "module", identifier, "{", { statement }, "}" ;
+
+/* Exception Handling */
+try-statement    = "try", block-expression, "catch", "(", identifier ")", block-expression,
+                  [ "finally", block-expression ] ;
+raise-statement  = "raise", expression, ";" ;
+
+/* Other Statements */
+assert-statement = "assert", expression, [ ",", expression ], ";" ;
+with-statement   = "with", "(", expression, ")", [ "as", identifier ], block-expression ;
+async-statement  = "async", ( function-declaration | block-expression | expression ) ;
+pass-statement   = "pass", ";" ;
+
+/* =============================================================================
+ * EXPRESSIONS
+ * ============================================================================= */
+
+expression       = assignment-expression ;
+
+assignment-expression = left-value, assignment-operator, expression
+                      | logical-or-expression ;
+assignment-operator = "=" | "+=" | "-=" | "*=" | "/=" | "%=" | "//=" ;
+
+logical-or-expression = logical-and-expression, { "||", logical-and-expression } ;
+logical-and-expression = bitwise-or-expression, { "&&", bitwise-or-expression } ;
+bitwise-or-expression = bitwise-xor-expression, { "|", bitwise-xor-expression } ;
+bitwise-xor-expression = bitwise-and-expression, { "^", bitwise-and-expression } ;
+bitwise-and-expression = equality-expression, { "&", equality-expression } ;
+equality-expression = relational-expression, { ( "==" | "!=" ), relational-expression } ;
+relational-expression = shift-expression, { ( "<" | ">" | "<=" | ">=" ), shift-expression } ;
+shift-expression   = additive-expression, { ( "<<" | ">>" ), additive-expression } ;
+additive-expression = multiplicative-expression, { ( "+" | "-" ), multiplicative-expression } ;
+multiplicative-expression = power-expression, { ( "*" | "/" | "%" | "//" ), power-expression } ;
+power-expression   = unary-expression, [ "**", power-expression ] ;
+
+unary-expression    = prefix-operator, unary-expression
+                    | postfix-expression ;
+prefix-operator     = "-" | "!" | "~" | "&" [ "mut" ] ;
+
+postfix-expression  = primary-expression
+                    | postfix-expression, arguments
+                    | postfix-expression, "[", expression, "]"
+                    | postfix-expression, ".", identifier
+                    | postfix-expression, "?" ;
+arguments           = "(", [ expression-list ], ")" ;
+
+primary-expression  = literal
+                    | identifier
+                    | block-expression
+                    | if-expression
+                    | switch-expression
+                    | function-literal
+                    | array-literal
+                    | object-literal
+                    | tuple-expression
+                    | group-expression
+                    | comprehension-expression
+                    | new-expression
+                    | super-expression
+                    | self-expression
+                    | await-expression ;
+
+literal          = integer-literal
+                 | float-literal
+                 | string-literal
+                 | boolean-literal
+                 | null-literal
+                 | array-literal
+                 | object-literal ;
+
+/* Function Literals */
+function-literal  = "fn", parameters, [ "->", type-annotation ], block-expression
+                 | "fn", identifier, parameters, [ "->", type-annotation ], block-expression
+                 | parameters, "=>", expression
+                 | parameters, "=>", block-expression ;
+
+/* Array Literals */
+array-literal     = "[", [ expression-list ], "]" ;
+array-literal     = "[", expression, "for", identifier, "in", expression, [ "if", expression ], "]" ;
+array-literal     = "[", expression, "for", identifier, ",", identifier, "in", expression, [ "if", expression ], "]" ;
+
+/* Object/Hash Literals */
+object-literal    = "{", [ key-value-list ], "}" ;
+key-value-list    = key-value-pair, { ",", key-value-pair } ;
+key-value-pair    = ( identifier | string-literal ), ":", expression ;
+
+/* Tuple Literals */
+tuple-expression  = "(", expression, ",", expression, { ",", expression }, ")" ;
+
+/* Grouping */
+group-expression  = "(", expression, ")" ;
+
+/* If Expression (as expression) */
+if-expression     = "if", "(", expression, ")", expression, [ "else", expression ] ;
+
+/* Switch Expression */
+switch-expression  = "switch", "(", expression, ")", "{", { case-expression }, [ default-expression ], "}" ;
+case-expression   = "case", expression, "=>", expression ;
+default-expression = "default", "=>", expression ;
+
+/* Comprehensions */
+comprehension-expression = "[", expression, comprehension-clauses, "]" ;
+comprehension-clauses   = comprehension-clause, { comprehension-clause } ;
+comprehension-clause    = "for", identifier, "in", expression
+                       | "if", expression ;
+
+/* Object Creation */
+new-expression    = "new", expression, [ arguments ] ;
+super-expression   = "super" ;
+self-expression    = "self" ;
+
+/* Async/Await */
+await-expression   = "await", expression ;
+
+/* =============================================================================
+ * TYPES
+ * ============================================================================= */
+
+type-annotation   = type
+                  | "fn", "(", [ type-list ], ")", "->", type
+                  | type, "?" ;
+type              = primitive-type
+                  | compound-type
+                  | reference-type
+                  | user-defined-type
+                  | generic-type
+                  | tuple-type
+                  | union-type ;
+primitive-type    = "int" | "i8" | "i16" | "i32" | "i64"
+                 | "u8" | "u16" | "u32" | "u64"
+                 | "f32" | "f64" | "bool" | "char" | "str"
+                 | "void" | "null" | "never" ;
+compound-type     = "[", type, "]"
+                 | "{" , [ type-member-list ], "}" ;
+type-member-list   = type-member, { ",", type-member } ;
+type-member        = identifier, ":", type ;
+reference-type    = "&", [ "mut" ], type ;
+user-defined-type = identifier, [ type-instantiation ] ;
+type-instantiation = "<", type-list, ">" ;
+type-list         = type, { ",", type } ;
+tuple-type        = "(", type, ",", type, { ",", type }, ")" ;
+union-type        = type, "|", type, { "|", type } ;
+generic-type      = identifier, "<", type-list, ">" ;
+
+/* =============================================================================
+ * OPERATOR PRECEDENCE (Highest to Lowest)
+ * ============================================================================= */
+
+/*
+ * Precedence 11 (Highest):  postfix (a.b, a[b], f())
+ * Precedence 10:           unary (-a, !a, &a, &mut a)
+ * Precedence 9:            power (a ** b)
+ * Precedence 8:            multiplicative (*, /, %, //)
+ * Precedence 7:            additive (+, -)
+ * Precedence 6:            shift (<<, >>)
+ * Precedence 5:            bitwise and (&)
+ * Precedence 4:            bitwise xor (^)
+ * Precedence 3:            bitwise or (|)
+ * Precedence 2:            relational (<, >, <=, >=)
+ * Precedence 1:           equality (==, !=)
+ * Precedence 0 (Lowest):   logical and (&&), logical or (||), assignment (=, +=, etc.)
+ */
+
+/* =============================================================================
+ * KEYWORDS (Reserved)
+ * ============================================================================= */
+
+/*
+ * Declaration Keywords:
+ *   fn, let, class, module, typealias
+ *
+ * Control Flow Keywords:
+ *   if, else, switch, case, default, while, for, in, break, continue, return
+ *
+ * Error Handling Keywords:
+ *   try, except, finally, raise, throw
+ *
+ * Object-Oriented Keywords:
+ *   new, self, super
+ *
+ * Concurrency Keywords:
+ *   async, await, yield
+ *
+ * Other Keywords:
+ *   null, true, false, pass, with, assert, import, from, as
+ */
+
+/* =============================================================================
+ * DELIMITERS
+ * ============================================================================= */
+
+/*
+ * Parentheses:       ( )
+ * Braces:            { }
+ * Brackets:         [ ]
+ * Angle Brackets:   < >
+ *
+ * Single Character:
+ *   ;  :  ,  .  @  =  +  -  *  /  %  !  ~  ^  &  |  ?
+ *
+ * Compound:
+ *   ==  !=  <=  >=  &&  ||  ++  --  ->  =>  ::  ::
+ *   <<  >>  +=  -=  *=  /=  %=  //  //=  &=  |=  ^=  <<=  >>=  **  **=
+ */
+
+/* =============================================================================
+ * END OF GRAMMAR
+ * ============================================================================= */

@@ -1,0 +1,47 @@
+version: 1
+panels:
+  - id: material_graph
+    engine: nyrender
+    inputs: [nygraph_material]
+    outputs: [runtime_blob]
+    validations: [acyclic_graph, node_type_check]
+  - id: render_pipeline_graph
+    engine: nyrender
+    inputs: [nygraph_pipeline]
+    outputs: [runtime_blob]
+    validations: [resource_dependency_check]
+  - id: physics_constraint_graph
+    engine: nyphysics
+    inputs: [nygraph_constraint]
+    outputs: [runtime_blob]
+    validations: [joint_connectivity_check]
+  - id: world_rule_designer
+    engine: nyworld
+    inputs: [nyrule_world]
+    outputs: [runtime_blob]
+    validations: [zone_rule_consistency]
+  - id: ai_intent_designer
+    engine: nyai
+    inputs: [nyprofile_ai]
+    outputs: [runtime_blob]
+    validations: [intent_parameter_ranges]
+  - id: net_replication_viewer
+    engine: nynet
+    inputs: [nyprofile_net]
+    outputs: [runtime_blob]
+    validations: [bandwidth_budget_check]
+  - id: acoustic_zone_graph
+    engine: nyaudio
+    inputs: [nygraph_audio]
+    outputs: [runtime_blob]
+    validations: [zone_connectivity]
+  - id: anim_intent_editor
+    engine: nyanim
+    inputs: [nyprofile_anim]
+    outputs: [runtime_blob]
+    validations: [motion_profile_bounds]
+  - id: logic_rule_workbench
+    engine: nylogic
+    inputs: [nyrule_logic]
+    outputs: [runtime_blob]
+    validations: [rule_completeness, trigger_integrity]

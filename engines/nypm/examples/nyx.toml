@@ -1,0 +1,68 @@
+# ============================================================
+# NYX.TOML - Package Manifest Format
+# ============================================================
+# This is the canonical package manifest for Nyx packages.
+# Used by Nypm for dependency management and building.
+
+[package]
+name = "myapp"
+version = "1.0.0"
+description = "My awesome Nyx application"
+authors = [
+    { name = "Developer", email = "dev@example.com" }
+]
+license = "MIT"
+homepage = "https://github.com/user/myapp"
+repository = "https://github.com/user/myapp"
+keywords = ["nyx", "example", "app"]
+categories = ["application", "web"]
+
+# Dependencies
+[dependencies]
+nyweb = ">=3.0"
+nydatabase = "^2.0"
+nyhttp = "~2.0"
+
+# Development dependencies
+[dev-dependencies]
+nytest = "1.0"
+
+# Optional dependencies
+[optional-dependencies]
+redis = ">=1.0"
+postgres = ">=2.0"
+
+# Feature flags
+[features]
+default = ["http", "db"]
+http = ["nyweb"]
+db = ["nydatabase"]
+redis = ["optional:redis"]
+postgres = ["optional:postgres"]
+
+# Build configuration
+[build]
+target = "native"
+optimize = true
+
+# Scripts
+[scripts]
+start = "ny myapp.ny"
+test = "nytest"
+build = "nyc build"
+serve = "nyserver start"
+
+# Distribution
+[[binaries]]
+name = "myapp"
+path = "bin/myapp.ny"
+
+# Platform targets
+[target]
+os = ["windows", "linux", "macos"]
+cpu = ["x86_64", "aarch64"]
+
+# Workspace (for monorepo)
+[workspace]
+members = ["packages/*"]
+exclude = ["packages/legacy/*"]

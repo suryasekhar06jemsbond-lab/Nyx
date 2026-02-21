@@ -1,0 +1,29 @@
+# NyBuild - Nyx Build System
+# ===========================
+
+name = "NyBuild"
+version = "3.0.0"
+description = "Nyx Build System - Deterministic builds, incremental compilation, testing, release automation"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/NyBuild"
+
+keywords = ["nyx", "build", "compiler", "test", "release", "ci"]
+
+dependencies = ["nyx >= 2.0.0", "nypm >= 3.0.0"]
+
+[scripts]
+NyBuild = "NyBuild:main"
+
+[modules]
+Main = "Main build engine"
+graph = "Dependency graph & DAG"
+cache = "Build cache"
+compiler = "Compilation"
+tester = "Testing system"
+formatter = "Code formatter"
+linter = "Linter"
+packager = "Release packaging"
+workspace = "Workspace support"
+analyzer = "Build analyzer"

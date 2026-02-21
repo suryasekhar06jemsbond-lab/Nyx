@@ -1,0 +1,52 @@
+# Nygame Engine Package Configuration
+
+name = "Nygame"
+version = "2.0.0"
+description = "Nyx Game Development Engine - Physics, AI, Characters, Multiplayer"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nygame"
+repository = "https://github.com/nyxlang/Nygame"
+
+keywords = ["nyx", "game", "game-engine", "physics", "ai", "multiplayer"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nygame = "Nygame:main"
+
+[modules]
+Nygame = "Main game engine"
+physics = "Physics simulation"
+ai = "AI and pathfinding"
+characters = "Character system"
+weapons = "Weapon system"
+vehicles = "Vehicle simulation"
+multiplayer = "Multiplayer networking"
+ui = "Game UI"
+animation = "Animation system"
+native_engine_sync = "Native sync layer for nycore/nyrender/nyphysics/nyworld/nyai/nynet/nyaudio/nyanim/nylogic"
+nycore_bridge = "Foundation sync bridge"
+nyrender_bridge = "Graphics sync bridge"
+nyphysics_bridge = "Physics sync bridge"
+nyworld_bridge = "World streaming sync bridge"
+nyai_bridge = "NPC intelligence sync bridge"
+nynet_bridge = "Multiplayer sync bridge"
+nyaudio_bridge = "3D audio sync bridge"
+nyanim_bridge = "Animation sync bridge"
+nylogic_bridge = "Declarative game-logic sync bridge"
+nocode_validation = "No-code capability validation layer"
+
+[platform]
+any = true
+
+[capabilities]
+native_stack_sync = "Sync nycore/nyrender/nyphysics/nyworld/nyai/nynet/nyaudio/nyanim/nylogic"
+worldclass_profile = "Profile-driven world-class engine orchestration"
+capability_validation = "Strict capability checks during sync"
+engine_telemetry = "Per-engine telemetry enablement"
+production_health_validation = "Strict production-health capability checks during sync"
+native_logic_sync = "Rule-driven nylogic runtime synchronization"
+declarative_authoring_stack = "Visual/declarative no-code engine stack integration"
+nocode_capability_validation = "Validation for no-code authoring capabilities"

@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "results": [
+    {
+      "name": "disk_write_interruption",
+      "ok": true,
+      "details": "value_after_failure=1"
+    },
+    {
+      "name": "worker_crash_isolation",
+      "ok": true,
+      "details": "worker_stats={'workers': 8, 'active': 0, 'queue_size': 0, 'queue_capacity': 256, 'utilization': 0.0, 'max_concurrent_requests': 64}"
+    },
+    {
+      "name": "plugin_crash_isolation",
+      "ok": true,
+      "details": "recorded_errors=1"
+    },
+    {
+      "name": "network_disconnect_isolation",
+      "ok": true,
+      "details": "bad connection isolated"
+    }
+  ]
+}

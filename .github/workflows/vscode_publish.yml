@@ -1,0 +1,47 @@
+name: Publish VS Code Extension
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g. 0.8.0)'
+        required: false
+        type: string
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    if: ${{ secrets.VSCE_PAT && secrets.VSCE_PAT != '' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: editor/vscode/nyx-language
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Update version
+        run: |
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            TAG="${{ github.event.release.tag_name }}"
+            VERSION="${TAG#v}"
+            npm version "$VERSION" --no-git-tag-version
+          elif [[ "${{ inputs.version }}" != "" ]]; then
+            npm version "${{ inputs.version }}" --no-git-tag-version
+          fi
+
+      - name: Publish extension to VS Code Marketplace
+        run: |
+          cp ../../../assets/nyx-logo.png .
+          cp ../../../README.md .
+          rm -rf node_modules package-lock.json
+          npm install
+          chmod +x node_modules/.bin/vsce
+          npm run publish -- -p "${{ secrets.VSCE_PAT }}"

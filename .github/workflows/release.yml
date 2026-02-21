@@ -1,0 +1,163 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-binaries:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: linux-x64
+          - os: windows-latest
+            target: windows-x64
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve language version (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            ver="${{ github.ref_name }}"
+            ver="${ver#v}"
+          else
+            ver="0.8.0"
+          fi
+          echo "NYX_LANG_VERSION=$ver" >> "$GITHUB_ENV"
+          echo "[release] NYX_LANG_VERSION=$ver"
+
+      - name: Resolve language version (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if ("${{ github.ref_type }}" -eq "tag") {
+            $ver = "${{ github.ref_name }}"
+            if ($ver.StartsWith('v')) { $ver = $ver.Substring(1) }
+          } else {
+            $ver = '0.8.0'
+          }
+          "NYX_LANG_VERSION=$ver" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Host ("[release] NYX_LANG_VERSION={0}" -f $ver)
+
+      - name: Ensure executable bits (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: chmod +x scripts/*.sh
+
+      - name: Ensure clang is available (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if (-not (Get-Command clang -ErrorAction SilentlyContinue)) {
+            choco install llvm -y --no-progress
+            "C:\Program Files\LLVM\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+            $env:Path += ';C:\Program Files\LLVM\bin'
+          }
+          clang --version
+
+      - name: Build runtime (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          make clean
+          make build/nyx NYX_LANG_VERSION="$NYX_LANG_VERSION"
+          actual="$(./build/nyx --version)"
+          if [ "$actual" != "$NYX_LANG_VERSION" ]; then
+            echo "version mismatch: expected $NYX_LANG_VERSION got $actual" >&2
+            exit 1
+          fi
+          ./build/nyx main.ny
+
+      - name: Build runtime (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          ./scripts/build_windows.ps1 -Output .\build\nyx.exe -SmokeTest -LangVersion $env:NYX_LANG_VERSION
+          $actual = (& .\build\nyx.exe --version | Out-String).Trim()
+          if ($actual -ne $env:NYX_LANG_VERSION) {
+            throw "version mismatch: expected $($env:NYX_LANG_VERSION) got $actual"
+          }
+
+      - name: Package release artifact (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          ./scripts/package_release.sh --target "${{ matrix.target }}" --binary "./build/nyx" --out-dir "./dist"
+
+      - name: Package release artifact (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          ./scripts/package_release.ps1 -Target "${{ matrix.target }}" -BinaryPath ".\build\nyx.exe" -OutDir ".\dist"
+
+      - name: Upload packaged artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.target }}
+          path: dist/*
+
+  build-vscode-extension:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Package VS Code extension
+        shell: bash
+        working-directory: editor/vscode/nyx-language
+        run: |
+          mkdir -p assets
+          cp ../../../assets/nyx-logo.png assets/
+          rm -rf node_modules package-lock.json
+          npm install
+          chmod +x node_modules/.bin/vsce
+          mkdir -p ../../../dist
+          npm run package -- -o ../../../dist/nyx-language.vsix
+
+      - name: Upload VS Code extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-vscode
+          path: dist/nyx-language.vsix
+
+  create-release:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs:
+      - build-binaries
+      - build-vscode-extension
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          merge-multiple: true
+          path: dist
+
+      - name: Show release payload
+        shell: bash
+        run: ls -la dist
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+          fail_on_unmatched_files: true

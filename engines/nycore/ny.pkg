@@ -1,0 +1,73 @@
+# Nycore Engine Package Configuration
+
+name = "Nycore"
+version = "1.0.0"
+description = "Nyx Foundation Engine - memory, scheduler, task graph, ECS, platform abstraction"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nycore"
+
+keywords = ["nyx", "core", "memory", "scheduler", "task-graph", "ecs", "platform"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nycore = "nycore:create_core"
+
+[modules]
+memory = "Arena, pool, and frame allocators"
+scheduler = "Job system and work stealing"
+taskgraph = "Dependency-aware task graph"
+ecs = "Data-oriented archetype ECS"
+platform = "Cross-platform runtime abstraction"
+lockfree = "Lock-free queue/ring primitives"
+fibers = "Fiber scheduler runtime"
+runtime_config = "Runtime config and hot reload"
+resources = "Resource registry and eviction policy"
+observability = "Tracing, metrics, structured logs"
+resilience = "Crash handling and watchdog runtime"
+serialization = "Schema-based serialization surface"
+deterministic_scheduler = "Frame-stable deterministic task scheduling"
+memory_telemetry = "Fragmentation and allocation telemetry"
+simd = "ISA-aware SIMD dispatch layer"
+production = "Core production health and SLO model"
+ProductionCoreProfile = "Production-ready core profile"
+WorldClassCoreSuite = "High-end core orchestration suite"
+CoreEngine = "Main foundation orchestrator"
+nocode_visual = "Visual task graph designer"
+nocode_ecs = "Declarative ECS rule binding"
+nocode_schema = "Runtime schema compiler"
+nocode_optimizer = "Self-optimizing runtime layer"
+NoCodeCoreRuntime = "No-code core orchestration runtime"
+
+[platform]
+any = true
+
+[capabilities]
+allocators = "Arena/pool/frame allocation"
+work_stealing = "Multithreaded work stealing"
+numa_aware = "NUMA-aware scheduling surface"
+task_graph = "Automatic dependency tracking"
+ecs = "Archetype-based cache-friendly ECS"
+platform_abstraction = "Windows/Linux/console/mobile targets"
+lock_free_primitives = "Low-contention lock-free structures"
+fiber_runtime = "Fiber-based task scheduling"
+hot_reload = "Runtime config and reload polling"
+resource_lifecycle = "Resource registration and eviction"
+observability = "Tracing metrics and JSON logs"
+resilience = "Crash capture and watchdog monitoring"
+serialization = "Typed schema serialization hooks"
+deterministic_task_ordering = "Frame-level deterministic task ordering"
+memory_fragmentation_metrics = "Per-frame memory fragmentation telemetry"
+simd_dispatch = "AVX/NEON/Scalar runtime dispatch"
+production_health = "Core health telemetry and readiness"
+visual_task_graph_designer = "Visual authoring for systems, dependencies, and resource flows"
+declarative_ecs_rules = "Rule-based ECS without imperative system loops"
+runtime_schema_compiler = "Schema-driven layout/serialization/replication generation"
+self_optimizing_runtime = "Auto parallelization, SIMD, and system merging"
+self_validating_pipeline = "Runtime pipeline validation hooks"
+automatic_performance_optimization = "AAA contract: automatic performance optimization"
+data_driven_behavior = "AAA contract: data driven behavior"
+graph_based_orchestration = "AAA contract: graph based orchestration"
+runtime_system_hot_mutation = "AAA contract: runtime system hot mutation"

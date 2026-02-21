@@ -1,0 +1,11 @@
+{
+  "platforms": [
+    {"id": "pc_min", "gpu_tier": "low", "cpu_tier": "low", "ram_gb": 16},
+    {"id": "pc_rec", "gpu_tier": "high", "cpu_tier": "high", "ram_gb": 32},
+    {"id": "console_gen_current_a", "gpu_tier": "console", "cpu_tier": "console", "ram_gb": 16},
+    {"id": "console_gen_current_b", "gpu_tier": "console", "cpu_tier": "console", "ram_gb": 16}
+  ],
+  "validation_cycles": 12,
+  "required_pass_rate": 0.95,
+  "max_critical_failures": 0
+}

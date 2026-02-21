@@ -1,0 +1,21 @@
+{
+  "name": "nyx-lang",
+  "version": "3.3.3",
+  "description": "Nyx Programming Language",
+  "main": "index.js",
+  "license": "PROPRIETARY",
+  "author": "Surya Sekhar Roy",
+  "copyright": "Copyright (c) 2026 Surya Sekhar Roy. All Rights Reserved.",
+  "repository": {
+    "type": "private",
+    "url": "https://github.com/suryasekhar06jemsbond-lab/cyber"
+  },
+  "keywords": [
+    "programming-language",
+    "compiler",
+    "interpreter",
+    "systems-programming",
+    "ml",
+    "ai"
+  ]
+}

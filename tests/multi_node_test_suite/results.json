@@ -1,0 +1,18 @@
+{
+  "ok": true,
+  "distributed_rate_limit": {
+    "attempts": 20,
+    "accepted": 10,
+    "blocked": 10,
+    "limit": 10
+  },
+  "distributed_replay": {
+    "first_status": 200,
+    "duplicate_status": 409,
+    "after_ttl_status": 200
+  },
+  "shared_state": {
+    "hits": 200
+  },
+  "coordination_path": "/mnt/c/Users/Pc/AppData/Local/Temp/nyx-multi-node-wl531_c1/coordination.json"
+}

@@ -1,0 +1,15 @@
+Marketplace upload files for release v2.0.webV
+
+Files generated:
+1) nyx-language-vscode-marketplace-v2.0.webV.vsix
+   Target: Visual Studio Code Marketplace upload
+
+2) nyx-language-openvsx-marketplace-v2.0.webV.vsix
+   Target: Open VSX registry upload
+
+3) nyx-language-VS studio-v2.0.webV.vsix
+   Target: VS studio naming request artifact (same package content)
+
+Release tag reference: v2.0.webV
+Package semantic version: 2.0.0-webV
+Generated from: editor/vscode/nyx-language

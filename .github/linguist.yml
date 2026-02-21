@@ -1,0 +1,40 @@
+# GitHub Linguist Configuration for Nyx Language
+# This defines Nyx as a custom language for this repository
+
+# Define Nyx language
+nyx:
+  type: programming
+  color: "#5e5086"
+  aliases: []
+  extensions:
+    - .ny
+    - .nx
+  filenames: []
+  language_id: 999999
+
+# Exclude these from language statistics
+exclude:
+  # Documentation
+  - "*.md"
+  - "LICENSE"
+  - "LICENSE.md"
+  
+  # Build artifacts
+  - "*.exe"
+  - "*.vsix"
+  - "*.zip"
+  - "compiler_stage*"
+  - "output*"
+  
+  # Runtime (C implementation)
+  - "native/**"
+  
+  # Scripts (not part of Nyx language)
+  - "scripts/*.ps1"
+  - "scripts/*.sh"
+  - "src/**"
+  - "*.js"
+  - "*.json"
+  
+  # Editor extension (separate project)
+  - "editor/**"

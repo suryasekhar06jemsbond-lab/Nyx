@@ -1,0 +1,31 @@
+Marketplace upload files for release v3.0.2
+
+Files to generate:
+1) nyx-language-vscode-marketplace-v3.0.2.vsix
+   Target: Visual Studio Code Marketplace upload
+
+2) nyx-language-openvsx-marketplace-v3.0.2.vsix
+   Target: Open VSX registry upload
+
+3) nyx-language-VS studio-v3.0.2.vsix
+   Target: VS studio naming request artifact (same package content)
+
+Release tag reference: v3.0.2
+Package semantic version: 3.0.2
+Major fixes in this release:
+- Added unified launcher (nyx_launcher.py) for cross-folder NYX file execution
+- Updated nyx.bat and created nyx.sh to route .ny files through nyx_runtime.py
+- Native .nx/non-.ny files continue to use native runtime
+- Working directory set to script location for consistent project-relative paths
+Generated from: editor/vscode/nyx-language
+
+To rebuild VSIX packages, run these commands:
+
+cd editor/vscode/nyx-language
+npm install   # if not already installed
+npx vsce package        # generates nyx-language-3.0.2.vsix
+npx vsce publish        # publishes to VS Code Marketplace (requires token)
+npx vsce publish -p @ovsx:token  # publishes to Open VSX
+
+Or use the scripts:
+powershell -File scripts/package_release.ps1

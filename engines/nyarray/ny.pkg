@@ -1,0 +1,28 @@
+# Nyarray Engine Package Configuration
+
+name = "Nyarray"
+version = "2.0.0"
+description = "Nyx Scientific Computing Engine - Arrays, Linear Algebra, Signal Processing"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyarray"
+
+keywords = ["nyx", "scientific-computing", "numerical", "arrays", "linear-algebra"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyarray = "Nyarray:main"
+
+[modules]
+Nyarray = "Core multi-dimensional arrays"
+nylinalg = "Linear algebra"
+nysignal = "Signal processing"
+nyoptimize = "Optimization"
+nystats = "Statistics"
+nysympy = "Symbolic mathematics"
+nybigmath = "Arbitrary precision math"
+
+[platform]
+any = true

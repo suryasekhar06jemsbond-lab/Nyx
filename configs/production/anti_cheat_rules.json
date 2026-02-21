@@ -1,0 +1,7 @@
+{
+  "max_speed": 120.0,
+  "max_acceleration": 80.0,
+  "max_input_rate": 240.0,
+  "max_teleport_distance": 20.0,
+  "anomaly_threshold": 0.85
+}

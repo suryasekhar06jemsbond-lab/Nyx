@@ -1,0 +1,33 @@
+# Nysystem Engine Package Configuration
+
+name = "Nysystem"
+version = "2.0.0"
+description = "Nyx System Programming Engine - Syscalls, Drivers, Embedded, FFI"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nysystem"
+
+keywords = ["nyx", "system-programming", "syscalls", "drivers", "embedded", "ffi"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nysystem = "Nysystem:main"
+
+[modules]
+Nysystem = "Core system engine"
+syscall = "System calls"
+process = "Process management"
+thread = "Threading & synchronization"
+memory = "Memory management"
+filesystem = "File I/O & paths"
+network = "Low-level networking"
+time = "Time & timers"
+signal = "Signal handling"
+env = "Environment variables"
+ffi = "Foreign function interface"
+driver = "Driver framework"
+
+[platform]
+any = true

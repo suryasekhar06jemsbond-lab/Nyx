@@ -1,0 +1,19 @@
+Marketplace upload files for release v3.0.1
+
+Files generated:
+1) nyx-language-vscode-marketplace-v3.0.1.vsix
+   Target: Visual Studio Code Marketplace upload
+
+2) nyx-language-openvsx-marketplace-v3.0.1.vsix
+   Target: Open VSX registry upload
+
+3) nyx-language-VS studio-v3.0.1.vsix
+   Target: VS studio naming request artifact (same package content)
+
+Release tag reference: v3.0.1
+Package semantic version: 3.0.1
+Major fixes in this release:
+- improved NYX file icon visibility for `.ny`/`.nx` with language icon + icon theme defaults
+- added icon-theme language mapping and icon fallback paths
+- install docs include DNS fallback commands when raw.githubusercontent.com is blocked
+Generated from: editor/vscode/nyx-language

@@ -1,0 +1,16 @@
+# Nyx Language Definition for GitHub Linguist
+# Copy this to https://github.com/github/linguist/blob/master/lib/linguist/languages.yml
+
+Nyx:
+  type: programming
+  color: "#5e5086"
+  extensions:
+    - .ny
+    - .nx
+  aliases:
+    - nyx
+  tm_scope: source.nyx
+
+# Also add sample files in samples/nyx/:
+# - hello.ny
+# - example.ny

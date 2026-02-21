@@ -1,0 +1,50 @@
+# Nylogic Engine Package Configuration
+
+name = "Nylogic"
+version = "1.0.0"
+description = "Nyx Declarative Game Logic Engine - rule DSL, graph orchestration, AI rule generation"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nylogic"
+
+keywords = ["nyx", "logic", "rule-engine", "declarative", "graph", "ai", "runtime-mutation"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nylogic = "nylogic:create_logic"
+
+[modules]
+dsl = "Declarative rule DSL surface"
+parser = "Rule parser and text translation"
+state = "World state fact model"
+runtime = "Rule evaluation and trigger execution"
+graph = "Graph-based rule orchestration"
+ai_assist = "AI-assisted rule generation"
+mutation = "Runtime hot mutation of rules"
+validation = "Self-validating rule pipeline"
+optimization = "Automatic runtime optimization"
+production = "Production health profile"
+WorldClassLogicSuite = "High-end logic orchestration suite"
+ProductionLogicProfile = "Production-ready logic profile"
+LogicEngine = "Main declarative logic orchestrator"
+
+[platform]
+any = true
+
+[capabilities]
+rule_dsl = "Declarative rule syntax without imperative scripts"
+declarative_runtime = "Rule-first gameplay execution model"
+graph_orchestration = "Dependency-aware graph orchestration"
+ai_rule_generation = "AI-assisted rule creation from prompts"
+hot_mutation = "Runtime rule patching without restart"
+self_validating_rules = "Rule and runtime validation checks"
+automatic_optimization = "Automatic runtime performance optimization"
+production_health = "Logic health telemetry and readiness"
+determinism_rule_replay = "AAA contract: determinism rule replay"
+intent_rule_generation = "AAA contract: intent rule generation"
+logic_observability = "AAA contract: logic observability"
+no_imperative_scripting = "AAA contract: no imperative scripting"
+runtime_hot_mutation = "AAA contract: runtime hot mutation"
+visual_rule_authoring = "AAA contract: visual rule authoring"

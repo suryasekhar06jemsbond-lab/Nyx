@@ -1,0 +1,31 @@
+# Nysec Engine Package Configuration
+
+name = "Nysec"
+version = "2.0.0"
+description = "Nyx Security Engine - Penetration Testing, Vulnerability Scanning, Hardening"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nysec"
+
+keywords = ["nyx", "security", "penetration-testing", "vulnerability", "audit"]
+
+dependencies = ["nyx >= 2.0.0", "Nynetwork >= 2.0.0"]
+
+[scripts]
+Nysec = "Nysec:main"
+
+[modules]
+Nysec = "Main security engine"
+pentest = "Penetration testing"
+scan = "Vulnerability scanning"
+audit = "Security auditing"
+harden = "System hardening"
+crypto = "Cryptographic tools"
+forensics = "Digital forensics"
+ IDS = "Intrusion detection"
+exploit = "Exploitation frameworks"
+report = "Security reporting"
+
+[platform]
+any = true

@@ -1,0 +1,109 @@
+# Nyweb Engine Package Configuration
+# World-class production-grade web framework
+
+name = "Nyweb"
+version = "3.0.0"
+description = "Nyx Web Development Engine - World-Class Production Web Framework"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyweb"
+
+keywords = ["nyx", "web", "server", "framework", "api", "rest", "http", "websocket", "orm", "mvc"]
+
+dependencies = ["nyx >= 2.0.0", "nynetwork >= 2.0.0"]
+
+[scripts]
+Nyweb = "nyweb:main"
+Server = "nyweb:HTTPServer"
+App = "nyweb:NywebApp"
+
+[modules]
+# Core
+NywebApp = "Main application builder"
+HTTPServer = "HTTP server (HTTP/1.1, HTTP/2, HTTP/3)"
+Request = "HTTP request object"
+Response = "HTTP response object"
+Route = "Route definition"
+Middleware = "Middleware system"
+
+# Routing
+Router = "Zero-allocation router with path parameters"
+RoutePattern = "Compiled route patterns"
+
+# Security
+JWT = "JSON Web Tokens"
+CSRF = "CSRF protection"
+XSSProtection = "XSS auto-escaping"
+SecurityHeaders = "Security headers middleware"
+
+# Templates
+TemplateEngine = "Template engine with auto-escaping"
+
+# WebSocket
+WebSocket = "WebSocket support"
+WSMessage = "WebSocket message"
+
+# Database
+Database = "Database connection and ORM"
+Model = "ORM base model"
+QueryBuilder = "Query builder"
+
+# Sessions
+Session = "Session management"
+Cookie = "Cookie handling"
+
+# Middleware
+LoggingMiddleware = "Request/response logging"
+CorsMiddleware = "CORS handling"
+RateLimitMiddleware = "Rate limiting"
+SessionMiddleware = "Session handling"
+BodyParserMiddleware = "Request body parsing"
+StaticFileHandler = "Static file serving"
+SecurityHeadersMiddleware = "Security headers"
+
+# Production
+Logger = "Structured logging"
+Metrics = "Prometheus metrics"
+HealthCheck = "Health checks"
+HealthCheckRegistry = "Health check registry"
+
+# CLI
+CLI = "Command-line interface"
+ProjectConfig = "Project configuration"
+
+[platform]
+any = true
+
+[server]
+host = "0.0.0.0"
+port = 8080
+workers = 4
+
+[features]
+# Enable by default
+default = ["http1", "middleware", "templates", "logging", "security"]
+
+# Optional features
+http2 = "HTTP/2 support"
+http3 = "HTTP/3 (QUIC) support"
+websocket = "WebSocket support"
+orm = "Database ORM"
+sessions = "Session management"
+jwt = "JWT authentication"
+rate_limit = "Rate limiting"
+metrics = "Prometheus metrics"
+
+[performance]
+# Performance targets
+startup_time_ms = 50
+max_connections = 100000
+request_timeout_ms = 30000
+
+[security]
+# Security defaults
+csrf_enabled = true
+xss_escape = true
+secure_headers = true
+rate_limit_requests = 100
+rate_limit_window = 60

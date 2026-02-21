@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "total_runs": 48,
+  "pass_rate": 0.9791666666666666,
+  "required_pass_rate": 0.95,
+  "total_critical_failures": 0,
+  "max_critical_failures": 0,
+  "platform_results": [
+    {
+      "platform": "pc_min",
+      "cycles": 12,
+      "pass": 12,
+      "pass_rate": 1.0,
+      "critical_failures": 0,
+      "frame_ms_avg": 16.495195988894732
+    },
+    {
+      "platform": "pc_rec",
+      "cycles": 12,
+      "pass": 12,
+      "pass_rate": 1.0,
+      "critical_failures": 0,
+      "frame_ms_avg": 15.026542643990128
+    },
+    {
+      "platform": "console_gen_current_a",
+      "cycles": 12,
+      "pass": 12,
+      "pass_rate": 1.0,
+      "critical_failures": 0,
+      "frame_ms_avg": 15.940803677583467
+    },
+    {
+      "platform": "console_gen_current_b",
+      "cycles": 12,
+      "pass": 11,
+      "pass_rate": 0.9166666666666666,
+      "critical_failures": 0,
+      "frame_ms_avg": 15.612030458064282
+    }
+  ]
+}

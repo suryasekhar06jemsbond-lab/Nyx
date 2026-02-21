@@ -1,0 +1,52 @@
+# Nyx Type Hint Stubs
+# Equivalent to Python's .pyi files
+# Used by type checkers for static analysis
+
+# Type aliases
+pub type Any = any;
+pub type Never = never;
+pub type Void = void;
+
+# Built-in types
+pub type Int = int;
+pub type Float = float;
+pub type Bool = bool;
+pub type Str = string;
+pub type Bytes = bytes;
+
+# Collection types  
+pub type List[T] = list[T];
+pub type Dict[K, V] = dict[K, V];
+pub type Set[T] = set[T];
+pub type Tuple[T, U] = tuple[T, U];
+pub type Optional[T] = T?;
+
+# Protocol for callable objects
+pub interface Callable[[...], R] {
+    pub fn call(...) -> R;
+}
+
+# Protocol for iterables
+pub interface Iterable[T] {
+    pub fn iter() -> Iterator[T];
+}
+
+pub interface Iterator[T] {
+    pub fn next() -> T?;
+    pub fn has_next() -> bool;
+}
+
+# Protocol for context managers
+pub interface ContextManager[T] {
+    pub fn __enter__() -> T;
+    pub fn __exit__(exc: Any) -> bool;
+}
+
+# Async protocols
+pub interface AsyncIterator[T] {
+    pub async fn __anext__() -> T?;
+}
+
+pub interface Awaitable[T] {
+    pub async fn await() -> T;
+}

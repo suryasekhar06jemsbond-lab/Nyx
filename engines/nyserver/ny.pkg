@@ -1,0 +1,175 @@
+# Nyserver Engine Package Configuration
+# Production-grade server infrastructure for Nyx
+
+name = "Nyserver"
+version = "2.0.0"
+description = "Nyx Server Infrastructure - Production Server with Async, Clustering, Observability"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyserver"
+
+keywords = ["nyx", "server", "async", "process", "cluster", "daemon", "worker", "supervisor", "infrastructure"]
+
+dependencies = ["nyx >= 2.0.0", "nynetwork >= 2.0.0"]
+
+[scripts]
+Nyserver = "nyserver:main"
+Server = "nyserver:Server"
+ProcessManager = "nyserver:process:ProcessManager"
+
+[modules]
+# Async Core
+async_core = "Event-driven async foundation"
+EventLoop = "Async event loop"
+Task = "Async task/future"
+Timer = "Timer utilities"
+
+# Worker Pool
+worker_pool = "Worker pool implementation"
+WorkerPool = "Multi-worker pool"
+Worker = "Worker process"
+
+# Process Management
+process = "Process management"
+Process = "Process handle"
+ProcessManager = "Process manager"
+
+# Daemon & Supervisor
+daemon = "Daemon support"
+Daemon = "Daemon process"
+Supervisor = "Process supervisor"
+SupervisedProcess = "Supervised process"
+
+# Middleware
+middleware = "Middleware pipeline"
+MiddlewareStack = "Middleware execution pipeline"
+LoggingMiddleware = "Request logging"
+RateLimitMiddleware = "Rate limiting"
+CORSMiddleware = "CORS handling"
+Context = "Request context"
+
+# Dependency Injection
+di = "Dependency injection container"
+Container = "Service container"
+
+# Cluster & Discovery
+cluster = "Cluster management"
+Cluster = "Cluster manager"
+ClusterNode = "Cluster node"
+ServiceRegistry = "Service discovery"
+
+# Health & Circuit Breaker
+health = "Health checks"
+HealthCheck = "Health check"
+HealthCheckRegistry = "Health check registry"
+CircuitBreaker = "Circuit breaker pattern"
+
+# Observability
+observability = "Observability components"
+Metrics = "Metrics collection (Prometheus)"
+Logger = "Structured JSON logging"
+Tracer = "Distributed tracing (OpenTelemetry)"
+AdminAPI = "Runtime admin API"
+
+# Server
+Server = "Main server class"
+CLI = "Command-line interface"
+
+[platform]
+any = true
+
+[server]
+workers = 4
+max_connections = 10000
+keep_alive = true
+timeout = 30
+
+[capabilities]
+# Core Runtime
+async = "Event-driven async core"
+workers = "Multi-worker support"
+process = "Process management"
+daemon = "Daemon support"
+supervisor = "Process supervision"
+
+# Protocol Engine
+http = "HTTP server"
+http2 = "HTTP/2 support"
+http3 = "HTTP/3 (QUIC)"
+websocket = "WebSocket support"
+grpc = "gRPC support"
+tls = "TLS 1.3"
+
+# Application Model
+middleware = "Middleware pipeline"
+di = "Dependency injection"
+plugins = "Plugin system"
+
+# Distributed
+cluster = "Cluster mode"
+service_discovery = "Service discovery"
+load_balancing = "Load balancing"
+health_checks = "Health checks"
+circuit_breaker = "Circuit breaker"
+
+# Observability
+metrics = "Prometheus metrics"
+logging = "Structured logging"
+tracing = "OpenTelemetry tracing"
+admin_api = "Runtime admin API"
+
+# Security
+tls = "TLS termination"
+mTLS = "mTLS support"
+rbac = "RBAC for admin"
+rate_limit = "Rate limiting"
+
+# Operations
+hot_reload = "Hot config reload"
+graceful_shutdown = "Graceful shutdown"
+monitoring = "CPU/memory monitoring"
+
+[features]
+default = ["async", "workers", "middleware", "logging", "metrics"]
+
+# Core
+async = "Event-driven async I/O"
+workers = "Worker process pool"
+process = "Process management"
+daemon = "Daemon processes"
+
+# Protocols
+http = "HTTP/1.1 support"
+http2 = "HTTP/2"
+http3 = "HTTP/3 QUIC"
+websocket = "WebSocket support"
+grpc = "gRPC support"
+
+# Application
+middleware = "Middleware pipeline"
+di = "Dependency injection"
+plugins = "Plugin runtime"
+
+# Cluster
+cluster = "Cluster mode"
+service_discovery = "Service registry"
+health_checks = "Health check system"
+circuit_breaker = "Circuit breaker"
+failover = "Auto failover"
+
+# Observability
+metrics = "Prometheus metrics"
+logging = "Structured JSON logging"
+tracing = "Distributed tracing"
+admin_api = "Admin REST API"
+
+# Security
+tls = "TLS 1.3"
+mTLS = "Mutual TLS"
+rate_limit = "Rate limiting"
+
+# Operations
+hot_reload = "Hot reload config"
+graceful_shutdown = "Graceful shutdown"
+monitoring = "Runtime monitoring"

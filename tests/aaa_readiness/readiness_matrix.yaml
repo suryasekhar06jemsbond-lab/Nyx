@@ -1,0 +1,62 @@
+version: 1
+tracks:
+  native_backend:
+    required_files:
+      - native/backends/generated/native_hooks_inventory.json
+      - native/backends/generated/nyx_native_hooks.h
+      - native/backends/generated/nyx_native_hooks_stub.c
+      - native/backends/CMakeLists.txt
+      - configs/production/aaa_engine_feature_contract.json
+      - scripts/sync_engine_capabilities.py
+      - scripts/validate_aaa_feature_contract.py
+    minimum_hooks: 100
+    required_commands:
+      - python3 scripts/generate_native_backend_stubs.py
+      - python3 scripts/validate_aaa_feature_contract.py
+  editor_toolchain:
+    required_files:
+      - tools/nyx_studio/README.md
+      - tools/nyx_studio/editor_manifest.yaml
+      - tools/nyx_studio/studio_server.py
+      - tools/nyx_studio/web/index.html
+      - configs/production/cook_profile.json
+    required_commands:
+      - python3 tools/nyx_studio/studio_server.py --help
+  optimization_stability:
+    required_files:
+      - docs/engine_production/03_optimization_stability.md
+      - tests/aaa_readiness/readiness_matrix.yaml
+      - scripts/run_engine_gates.py
+      - configs/production/gate_thresholds.json
+    required_commands:
+      - python3 scripts/run_engine_gates.py --iterations 200
+  platform_online:
+    required_files:
+      - docs/engine_production/04_platform_online_readiness.md
+      - configs/production/liveops_slo.yaml
+      - scripts/run_platform_online_suite.py
+      - configs/production/platform_cert_matrix.json
+      - configs/production/anti_cheat_rules.json
+    required_commands:
+      - python3 scripts/run_platform_online_suite.py
+  content_pipeline:
+    required_files:
+      - docs/engine_production/05_content_pipeline_team_scale.md
+      - docs/engine_production/AAA_WORK_BREAKDOWN.yaml
+      - scripts/run_content_pipeline.py
+      - configs/production/team_roster.json
+    required_commands:
+      - python3 scripts/run_content_pipeline.py
+  gta_scale_program:
+    required_files:
+      - scripts/run_gta_scale_program.py
+      - scripts/run_hardware_validation_cycles.py
+      - scripts/run_continuous_scale_optimization.py
+      - scripts/plan_multi_year_production.py
+      - scripts/generate_massive_content_backlog.py
+      - configs/production/gta_scale_program.json
+      - configs/production/multi_year_plan.json
+      - configs/production/content_targets.json
+      - configs/production/hardware_matrix.json
+    required_commands:
+      - python3 scripts/run_gta_scale_program.py

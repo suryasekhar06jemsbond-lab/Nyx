@@ -1,0 +1,84 @@
+{
+  "timestamp": "2026-02-21T07:09:09.621638+00:00",
+  "contract": "configs/production/aaa_engine_feature_contract.json",
+  "ok": true,
+  "engines": {
+    "nycore": {
+      "pkg": "engines/nycore/ny.pkg",
+      "required_capabilities": 24,
+      "available_capabilities": 26,
+      "missing_capabilities": [],
+      "missing_profile_checks": [],
+      "ok": true
+    },
+    "nyrender": {
+      "pkg": "engines/nyrender/ny.pkg",
+      "required_capabilities": 56,
+      "available_capabilities": 60,
+      "missing_capabilities": [],
+      "missing_profile_checks": [],
+      "ok": true
+    },
+    "nyphysics": {
+      "pkg": "engines/nyphysics/ny.pkg",
+      "required_capabilities": 38,
+      "available_capabilities": 42,
+      "missing_capabilities": [],
+      "missing_profile_checks": [],
+      "ok": true
+    },
+    "nyworld": {
+      "pkg": "engines/nyworld/ny.pkg",
+      "required_capabilities": 34,
+      "available_capabilities": 34,
+      "missing_capabilities": [],
+      "missing_profile_checks": [],
+      "ok": true
+    },
+    "nyai": {
+      "pkg": "engines/nyai/ny.pkg",
+      "required_capabilities": 31,
+      "available_capabilities": 33,
+      "missing_capabilities": [],
+      "missing_profile_checks": [],
+      "ok": true
+    },
+    "nynet": {
+      "pkg": "engines/nynet/ny.pkg",
+      "required_capabilities": 24,
+      "available_capabilities": 24,
+      "missing_capabilities": [],
+      "missing_profile_checks": [],
+      "ok": true
+    },
+    "nyaudio": {
+      "pkg": "engines/nyaudio/ny.pkg",
+      "required_capabilities": 19,
+      "available_capabilities": 19,
+      "missing_capabilities": [],
+      "missing_profile_checks": [],
+      "ok": true
+    },
+    "nyanim": {
+      "pkg": "engines/nyanim/ny.pkg",
+      "required_capabilities": 18,
+      "available_capabilities": 18,
+      "missing_capabilities": [],
+      "missing_profile_checks": [],
+      "ok": true
+    },
+    "nylogic": {
+      "pkg": "engines/nylogic/ny.pkg",
+      "required_capabilities": 14,
+      "available_capabilities": 14,
+      "missing_capabilities": [],
+      "missing_profile_checks": [],
+      "ok": true
+    }
+  },
+  "summary": {
+    "engine_count": 9,
+    "missing_capabilities": 0,
+    "missing_profile_checks": 0
+  }
+}

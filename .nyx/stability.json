@@ -1,0 +1,18 @@
+{
+  "parser": {
+    "noop_directives": ["use", "import"],
+    "modifier_keywords": ["pub"]
+  },
+  "runtime": {
+    "auto_call_main": true,
+    "rewrites": [
+      { "pattern": "::", "replacement": "." },
+      { "pattern": "\\.starts_with\\(", "replacement": ".startswith(" },
+      { "pattern": "\\.toLower\\(", "replacement": ".lower(" },
+      { "pattern": "\\.toUpper\\(", "replacement": ".upper(" }
+    ]
+  },
+  "modules": {
+    "extra": ["nyui", "nyweb", "nybuild", "nygui"]
+  }
+}

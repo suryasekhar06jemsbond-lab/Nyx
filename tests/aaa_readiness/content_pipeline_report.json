@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "assets_total": 2,
+  "used_mb": 1.4422874450683594,
+  "budget_mb": 10240,
+  "qa": {
+    "schema_validation": true,
+    "budget_validation": true,
+    "ownership_complete": true,
+    "publish_ready": true
+  },
+  "counts_by_type": {
+    "other": 1,
+    "texture": 1
+  },
+  "assignments": [
+    {
+      "asset": "assets/nyx-logo.ico",
+      "type": "other",
+      "team": "qa",
+      "owner": "qa_1"
+    },
+    {
+      "asset": "assets/nyx-logo.png",
+      "type": "texture",
+      "team": "tech_art",
+      "owner": "ta_1"
+    }
+  ]
+}

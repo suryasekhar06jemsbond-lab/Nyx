@@ -1,0 +1,19 @@
+// Nyx Core DLL
+// Equivalent to Python's .pyd (Windows) or .so (Linux)
+// Native C/C++ extension for Nyx
+// 
+// This file represents a compiled native extension module
+// that can be loaded via FFI
+//
+// Usage in Nyx:
+//   use native "nyx_core" {
+//       fn fast_math_operation(x: Int) -> Int;
+//   }
+
+LIBRARY nyx_core
+EXPORT fast_math_operation
+EXPORT fast_string_hash
+EXPORT memory_copy
+EXPORT get_version
+
+VERSION 2.0.0

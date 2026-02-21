@@ -1,0 +1,17 @@
+{
+  "teams": {
+    "tech_art": ["ta_1", "ta_2"],
+    "world": ["world_1", "world_2", "world_3"],
+    "animation": ["anim_1", "anim_2"],
+    "audio": ["audio_1"],
+    "mission": ["mission_1", "mission_2"],
+    "qa": ["qa_1", "qa_2", "qa_3"]
+  },
+  "ownership_rules": {
+    "texture": "tech_art",
+    "mesh": "world",
+    "animation": "animation",
+    "audio": "audio",
+    "logic": "mission"
+  }
+}

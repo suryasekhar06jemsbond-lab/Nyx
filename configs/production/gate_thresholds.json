@@ -1,0 +1,10 @@
+{
+  "render_gpu_ms_max": 20.0,
+  "physics_step_ms_max": 8.0,
+  "ai_frame_ms_max": 8.0,
+  "net_tick_ms_max": 20.0,
+  "audio_dsp_ms_max": 8.0,
+  "logic_profile_ms_max": 10.0,
+  "api_call_p95_ms_max": 2.5,
+  "minimum_iterations": 200
+}

@@ -1,0 +1,25 @@
+# Nyml Engine Package Configuration
+
+name = "Nyml"
+version = "2.0.0"
+description = "Nyx Machine Learning Engine - Neural Networks, Models, Training"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyml"
+
+keywords = ["nyx", "machine-learning", "neural-networks", "deep-learning", "ai"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyml = "Nyml:main"
+
+[modules]
+Nyml = "Main ML engine"
+nn = "Neural networks"
+optimizers = "Optimization algorithms"
+datasets = "Dataset utilities"
+preprocessing = "Data preprocessing"
+training = "Training utilities"
+models = "Pre-built models"

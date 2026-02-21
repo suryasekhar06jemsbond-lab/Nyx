@@ -1,0 +1,8 @@
+{
+  "ok": true,
+  "connections_before": 10000,
+  "connections_after": 9980,
+  "broadcasts": 100,
+  "broadcasts_per_second": 2337.125,
+  "unstable_connections_pruned": 20
+}

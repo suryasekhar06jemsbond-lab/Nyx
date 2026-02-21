@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ff56688c-711c-472c-89a0-24117768b3eb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/linguist.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SECURITY.md" beforeDir="false" afterPath="$PROJECT_DIR$/SECURITY.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/comprehensive.ny" beforeDir="false" afterPath="$PROJECT_DIR$/examples/comprehensive.ny" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/native/nyx.c" beforeDir="false" afterPath="$PROJECT_DIR$/native/nyx.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ny.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ny.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nyx.exe" beforeDir="false" afterPath="$PROJECT_DIR$/nyx.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ast_nodes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ast_nodes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interpreter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/interpreter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/lexer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/token_types.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/token_types.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/algorithm.ny" beforeDir="false" afterPath="$PROJECT_DIR$/stdlib/algorithm.ny" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/autograd.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/bench.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/blas.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/cache.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/ci.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/class.nx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/collections.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/compress.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/cron.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/crypto.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/database.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/dataset.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/debug.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/distributed.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/experiment.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/feature_store.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/game.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/governance.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/gui.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/http.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/hub.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/json.ny" beforeDir="false" afterPath="$PROJECT_DIR$/stdlib/json.ny" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/jwt.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/log.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/metrics.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/mlops.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/monitor.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/network.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/nlp.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/nn.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/optimize.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/parser.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/precision.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/process.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/redis.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/regex.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/science.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/serialization.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/serving.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/socket.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/sparse.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/state_machine.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/string.ny" beforeDir="false" afterPath="$PROJECT_DIR$/stdlib/string.ny" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/symbolic.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/tensor.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/time.ny" beforeDir="false" afterPath="$PROJECT_DIR$/stdlib/time.ny" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/train.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/types.nx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/validator.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/visualize.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/web.ny" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stdlib/xml.ny" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="39mwufTsvlSWgyx2OIfyPrO3Hah" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/cyber",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ff56688c-711c-472c-89a0-24117768b3eb" name="Changes" comment="" />
+      <created>1771314778736</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1771314778736</updated>
+      <workItem from="1771314779969" duration="1294000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/editor/vscode/nyx-language/extension.js" />
+      </list>
+    </option>
+  </component>
+</project>

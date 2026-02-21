@@ -1,0 +1,19 @@
+Marketplace upload files for release v2.2.2
+
+Files generated:
+1) nyx-language-vscode-marketplace-v2.2.2.vsix
+   Target: Visual Studio Code Marketplace upload
+
+2) nyx-language-openvsx-marketplace-v2.2.2.vsix
+   Target: Open VSX registry upload
+
+3) nyx-language-VS studio-v2.2.2.vsix
+   Target: VS studio naming request artifact (same package content)
+
+Release tag reference: v2.2.2
+Package semantic version: 2.2.2
+Updates in this build:
+- extension icon metadata and packaged icon asset for marketplace visibility
+- expanded VS Code README details/features with NYX-only project examples
+- updated changelog and release docs
+Generated from: editor/vscode/nyx-language

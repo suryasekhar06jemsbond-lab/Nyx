@@ -1,0 +1,63 @@
+# Nyaudio Engine Package Configuration
+
+name = "Nyaudio"
+version = "1.0.0"
+description = "Nyx 3D Audio Engine - HRTF, occlusion, Doppler, convolution reverb, dynamic score"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyaudio"
+
+keywords = ["nyx", "audio", "3d-audio", "hrtf", "reverb", "doppler", "soundtrack", "ambience"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyaudio = "nyaudio:create_audio"
+
+[modules]
+spatial = "HRTF spatial audio"
+acoustics = "Occlusion and Doppler processing"
+reverb = "Convolution reverb pipeline"
+music = "Dynamic soundtrack layering"
+ambience = "AI procedural ambience"
+mixer = "Bus and submix graph"
+effects = "EQ, compression, limiting, sidechain"
+streaming = "Audio streaming decode/cache"
+voice = "Voice chat processing and routing"
+loudness = "Loudness meter and normalization"
+environment = "Audio zones and environment routing"
+diagnostics = "Audio metrics and debug panel"
+propagation = "Geometry-aware acoustic propagation model"
+failover = "Audio backend/device failover control"
+production = "Audio production health and SLO model"
+ProductionAudioProfile = "Production-ready audio profile"
+WorldClassAudioSuite = "High-end audio orchestration suite"
+AudioEngine = "Main audio orchestrator"
+acoustic_zone_graph = "Visual acoustic zone graph authoring"
+emotional_music = "Emotional state driven music layering"
+NoCodeAudioRuntime = "No-code audio orchestration runtime"
+
+[platform]
+any = true
+
+[capabilities]
+hrtf = "Binaural spatial audio"
+occlusion = "Real-time obstruction attenuation"
+doppler = "Velocity-based pitch shift"
+convolution_reverb = "Environment impulse response reverb"
+dynamic_music = "Adaptive music layering"
+ai_ambience = "Procedural ambient generation"
+mix_buses = "Flexible bus/submix routing"
+dsp_chain = "EQ/compressor/limiter processing"
+voice_chat = "Realtime voice chat pipeline"
+loudness_management = "Broadcast-safe loudness control"
+audio_zones = "Zone-aware environment acoustics"
+audio_observability = "Runtime audio diagnostics"
+acoustic_propagation = "Geometry-aware reflection/occlusion acoustics"
+backend_failover = "Runtime backend/device failover"
+production_health = "Audio health telemetry and readiness"
+visual_acoustic_graph = "Visual reverb/occlusion/reflection zone authoring"
+emotional_music_director = "Calm/tension/chaos/combat state music logic"
+no_manual_dsp_graph = "No imperative DSP scripting path"
+emotional_music_state_machine = "AAA contract: emotional music state machine"

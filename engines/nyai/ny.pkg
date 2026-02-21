@@ -1,0 +1,78 @@
+# Nyai Engine Package Configuration
+
+name = "Nyai"
+version = "1.0.0"
+description = "Nyx NPC Intelligence Engine - BT+GOAP, crowd, combat, police, social simulation"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyai"
+
+keywords = ["nyx", "ai", "npc", "behavior-tree", "goap", "crowd", "combat", "social"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyai = "nyai:create_ai"
+
+[modules]
+hybrid = "Behavior tree + GOAP hybrid brain"
+path = "Hierarchical A* and rerouting"
+crowd = "Crowd behavior and panic models"
+police = "Heat escalation and pursuit logic"
+combat = "Cover/flank/squad combat logic"
+social = "Memory/relationship/economy/rumor simulation"
+perception = "Vision/hearing/threat perception stack"
+utility = "Utility-based decision scoring"
+knowledge = "Blackboard and shared knowledge systems"
+narrative = "Dialogue and mission direction"
+training = "Behavior telemetry and adaptation hooks"
+debugging = "AI explainability and budget controls"
+persistence = "Long-term persistent NPC memory DB"
+budget = "Per-frame AI budget governor"
+production = "AI production health and SLO model"
+ProductionAIProfile = "Production-ready AI profile"
+WorldClassAISuite = "High-end AI orchestration suite"
+AIEngine = "Main AI orchestrator"
+intent_authoring = "Intent-based behavior authoring"
+memory_graph = "Data-defined memory and relationship graph"
+sandbox = "Offline AI sandbox simulation runtime"
+NoCodeAIRuntime = "No-code AI orchestration runtime"
+
+[platform]
+any = true
+
+[capabilities]
+bt_goap_hybrid = "Reactive + long-horizon planning"
+hierarchical_pathfinding = "Hierarchical A*"
+crowd_simulation = "Local avoidance and density control"
+police_system = "Heat levels, roadblocks, helicopter tracking"
+combat_ai = "Cover, flanking, squad coordination"
+social_simulation = "NPC memory, relationships, rumor propagation"
+perception_stack = "Vision and hearing based sensing"
+utility_ai = "Continuous utility scoring for decisions"
+blackboard = "Per-agent and shared knowledge boards"
+dialogue_mission = "Narrative direction runtime"
+ai_observability = "Decision explainability and AI budgets"
+persistent_memory = "Cross-session NPC world memory"
+ai_budget_governor = "Dynamic per-frame AI budget control"
+production_health = "AI health telemetry and readiness"
+intent_behavior_authoring = "Author behavior by intent instead of tree coding"
+data_defined_memory_graph = "Event/trust/fear memory graph model"
+ai_sandbox_simulation = "Offline scenario simulation with slider tuning"
+no_behavior_tree_scripting = "No manual BT/GOAP graph coding path"
+cover_system = "AAA contract: cover system"
+density_control = "AAA contract: density control"
+dynamic_obstacle_avoidance = "AAA contract: dynamic obstacle avoidance"
+economy_interaction = "AAA contract: economy interaction"
+heat_escalation = "AAA contract: heat escalation"
+helicopter_tracking = "AAA contract: helicopter tracking"
+local_avoidance = "AAA contract: local avoidance"
+memory_model_per_npc = "AAA contract: memory model per npc"
+panic_models = "AAA contract: panic models"
+realtime_rerouting = "AAA contract: realtime rerouting"
+relationship_graphs = "AAA contract: relationship graphs"
+rumor_propagation = "AAA contract: rumor propagation"
+squad_communication = "AAA contract: squad communication"
+strategic_roadblocks = "AAA contract: strategic roadblocks"
+tactical_flanking = "AAA contract: tactical flanking"

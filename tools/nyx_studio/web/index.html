@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NYX Studio</title>
+  <style>
+    :root {
+      --bg: #0c1118;
+      --panel: #151d28;
+      --line: #2a3a4f;
+      --text: #d5deea;
+      --accent: #3fd0a1;
+      --warn: #f0c04c;
+    }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, sans-serif; background: radial-gradient(circle at 20% 0%, #18273a, var(--bg)); color: var(--text); }
+    header { padding: 18px 24px; border-bottom: 1px solid var(--line); }
+    h1 { margin: 0; font-size: 20px; letter-spacing: .4px; }
+    main { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; padding: 14px; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+    .card h2 { margin: 0 0 10px 0; font-size: 16px; }
+    label { display: block; font-size: 12px; margin: 8px 0 4px; color: #b0bfce; }
+    input, textarea { width: 100%; box-sizing: border-box; border-radius: 8px; border: 1px solid var(--line); background: #0f1520; color: var(--text); padding: 8px; }
+    textarea { min-height: 80px; resize: vertical; }
+    .row { display: flex; gap: 8px; margin-top: 10px; }
+    button { border: 1px solid var(--line); background: #1a2533; color: var(--text); padding: 8px 10px; border-radius: 8px; cursor: pointer; }
+    button.primary { background: #1f483d; border-color: #2b836a; color: #d8fff4; }
+    pre { white-space: pre-wrap; background: #0f1520; border: 1px solid var(--line); border-radius: 8px; padding: 8px; font-size: 12px; min-height: 74px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>NYX Studio - Material, Pipeline, World, Logic Editors</h1>
+  </header>
+  <main>
+    <section class="card" id="materialCard">
+      <h2>Material Graph</h2>
+      <label>Asset Name</label><input id="matName" value="wet_asphalt_night" />
+      <label>Prompt</label><textarea id="matPrompt">Wet asphalt at night with street reflection</textarea>
+      <label>Nodes</label><input id="matNodes" type="number" value="12" />
+      <label>Layers</label><input id="matLayers" type="number" value="3" />
+      <div class="row"><button class="primary" onclick="compileKind('material')">Compile</button><button onclick="saveKind('material')">Save</button></div>
+      <pre id="matOut"></pre>
+    </section>
+
+    <section class="card" id="pipeCard">
+      <h2>Render Pipeline</h2>
+      <label>Asset Name</label><input id="pipeName" value="default_pipeline" />
+      <label>Passes</label><input id="pipePasses" type="number" value="7" />
+      <label>Edges</label><input id="pipeEdges" type="number" value="11" />
+      <div class="row"><button class="primary" onclick="compileKind('pipeline')">Compile</button><button onclick="saveKind('pipeline')">Save</button></div>
+      <pre id="pipeOut"></pre>
+    </section>
+
+    <section class="card" id="worldCard">
+      <h2>World Rules</h2>
+      <label>Asset Name</label><input id="worldName" value="downtown_rules" />
+      <label>Zone</label><input id="worldZone" value="downtown" />
+      <label>Rule Count</label><input id="worldRules" type="number" value="18" />
+      <div class="row"><button class="primary" onclick="compileKind('world')">Compile</button><button onclick="saveKind('world')">Save</button></div>
+      <pre id="worldOut"></pre>
+    </section>
+
+    <section class="card" id="logicCard">
+      <h2>Logic Rules</h2>
+      <label>Asset Name</label><input id="logicName" value="bank_robbery" />
+      <label>Rule</label><textarea id="logicRule">rule BankRobbery when Player enters Bank and Time is Night trigger PoliceResponse(level=3)</textarea>
+      <div class="row"><button class="primary" onclick="compileKind('logic')">Compile</button><button onclick="saveKind('logic')">Save</button></div>
+      <pre id="logicOut"></pre>
+    </section>
+  </main>
+
+  <script>
+    async function post(url, payload) {
+      const res = await fetch(url, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
+      return await res.json();
+    }
+
+    function materialPayload() {
+      return {
+        prompt: document.getElementById('matPrompt').value,
+        nodes: Number(document.getElementById('matNodes').value),
+        layers: Number(document.getElementById('matLayers').value)
+      };
+    }
+
+    function pipelinePayload() {
+      return {
+        passes: Number(document.getElementById('pipePasses').value),
+        edges: Number(document.getElementById('pipeEdges').value)
+      };
+    }
+
+    function worldPayload() {
+      return {
+        zone: document.getElementById('worldZone').value,
+        rule_count: Number(document.getElementById('worldRules').value)
+      };
+    }
+
+    function logicPayload() {
+      return { rule: document.getElementById('logicRule').value };
+    }
+
+    function outputEl(kind) {
+      if (kind === 'material') return document.getElementById('matOut');
+      if (kind === 'pipeline') return document.getElementById('pipeOut');
+      if (kind === 'world') return document.getElementById('worldOut');
+      return document.getElementById('logicOut');
+    }
+
+    function assetName(kind) {
+      if (kind === 'material') return document.getElementById('matName').value;
+      if (kind === 'pipeline') return document.getElementById('pipeName').value;
+      if (kind === 'world') return document.getElementById('worldName').value;
+      return document.getElementById('logicName').value;
+    }
+
+    function payloadFor(kind) {
+      if (kind === 'material') return materialPayload();
+      if (kind === 'pipeline') return pipelinePayload();
+      if (kind === 'world') return worldPayload();
+      return logicPayload();
+    }
+
+    async function compileKind(kind) {
+      const out = outputEl(kind);
+      out.textContent = 'Compiling...';
+      const res = await post(`/api/compile/${kind}`, payloadFor(kind));
+      out.textContent = JSON.stringify(res, null, 2);
+    }
+
+    async function saveKind(kind) {
+      const out = outputEl(kind);
+      out.textContent = 'Saving...';
+      const data = payloadFor(kind);
+      const res = await post('/api/save', { kind, name: assetName(kind), data });
+      out.textContent = JSON.stringify(res, null, 2);
+    }
+  </script>
+</body>
+</html>

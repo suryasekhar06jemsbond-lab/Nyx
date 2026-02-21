@@ -1,0 +1,11 @@
+slo:
+  matchmaking_latency_ms_p95: 1500
+  server_tick_ms_p95: 20
+  reconnect_rate_percent: 2
+  packet_loss_percent: 5
+  anti_cheat_false_positive_percent: 1
+operations:
+  incident_levels: [sev1, sev2, sev3]
+  rollback_window_minutes: 15
+  canary_percentages: [1, 5, 20, 50, 100]
+  failover_drill_cadence_days: 14

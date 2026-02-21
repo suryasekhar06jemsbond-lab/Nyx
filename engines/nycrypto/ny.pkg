@@ -1,0 +1,24 @@
+# Nycrypto Engine Package Configuration
+
+name = "Nycrypto"
+version = "2.0.0"
+description = "Nyx Cryptography Engine - Encryption, Hashing, Signatures"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nycrypto"
+
+keywords = ["nyx", "cryptography", "encryption", "hashing", "security"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nycrypto = "Nycrypto:main"
+
+[modules]
+Nycrypto = "Main crypto engine"
+ciphers = "Cipher algorithms"
+hashes = "Hash functions"
+signatures = "Digital signatures"
+key exchange = "Key exchange protocols"
+encoding = "Encoding utilities"

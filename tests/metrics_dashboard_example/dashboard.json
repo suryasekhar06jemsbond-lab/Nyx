@@ -1,0 +1,58 @@
+{
+  "title": "Nyx Runtime Production Dashboard",
+  "refresh_seconds": 5,
+  "datasource": {
+    "type": "http-json",
+    "endpoint": "http://127.0.0.1:8080/__nyx/metrics"
+  },
+  "panels": [
+    {
+      "id": "requests_total",
+      "title": "Requests Total",
+      "path": "$.metrics.requests_total",
+      "unit": "count"
+    },
+    {
+      "id": "error_rate",
+      "title": "Error Rate",
+      "path": "$.metrics.error_rate",
+      "unit": "ratio"
+    },
+    {
+      "id": "latency_avg",
+      "title": "Latency Avg (ms)",
+      "path": "$.metrics.latency_ms_avg",
+      "unit": "ms"
+    },
+    {
+      "id": "worker_utilization",
+      "title": "Worker Utilization",
+      "path": "$.worker.utilization",
+      "unit": "ratio"
+    },
+    {
+      "id": "ws_active",
+      "title": "WebSocket Active",
+      "path": "$.metrics.ws_connections_open",
+      "unit": "count"
+    },
+    {
+      "id": "memory_mb",
+      "title": "Process Memory (MB)",
+      "path": "$.process.memory_mb",
+      "unit": "mb"
+    }
+  ],
+  "alerts": [
+    {
+      "name": "High Worker Utilization",
+      "condition": "$.worker.utilization >= 0.9",
+      "severity": "warning"
+    },
+    {
+      "name": "Elevated Error Rate",
+      "condition": "$.metrics.error_rate >= 0.02",
+      "severity": "critical"
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+program: nyx_aaa_production
+version: 1.0
+tracks:
+  - id: native_backend
+    name: Native Backend Implementation
+    owner_group: engine_runtime
+    milestones:
+      - id: nb_m1_contract_lock
+        name: Contract lock
+        deliverables:
+          - native/backends/generated/native_hooks_inventory.json
+          - native/backends/generated/nyx_native_hooks.h
+        acceptance:
+          - all_native_hooks_discovered: true
+          - abi_review_signed: true
+      - id: nb_m2_domain_impl
+        name: Domain implementations
+        deliverables:
+          - native/backends/src/core/
+          - native/backends/src/render/
+          - native/backends/src/physics/
+          - native/backends/src/world/
+          - native/backends/src/ai/
+          - native/backends/src/net/
+          - native/backends/src/audio/
+          - native/backends/src/anim/
+          - native/backends/src/logic/
+        acceptance:
+          - hook_stub_ratio_below: 0.1
+          - deterministic_hooks_documented: true
+      - id: nb_m3_hardening
+        name: Stability hardening
+        acceptance:
+          - soak_24h_no_critical: true
+          - hook_coverage_percent_min: 95
+
+  - id: editor_toolchain
+    name: Editor And Toolchain
+    owner_group: tools
+    milestones:
+      - id: et_m1_schema
+        name: Unified graph and rule schema
+        acceptance:
+          - schema_versioned: true
+          - backward_compat_plan: true
+      - id: et_m2_vertical_slice
+        name: Editor vertical slices
+        acceptance:
+          - material_graph_roundtrip: true
+          - physics_graph_roundtrip: true
+          - rule_dsl_roundtrip: true
+      - id: et_m3_cook_pipeline
+        name: Deterministic cook pipeline
+        acceptance:
+          - deterministic_recook_hash_match: true
+          - incremental_cook_enabled: true
+
+  - id: optimization_stability
+    name: Optimization And Stability
+    owner_group: performance
+    milestones:
+      - id: os_m1_budgets
+        name: Budget instrumentation
+        acceptance:
+          - frame_budget_metrics: true
+          - memory_budget_metrics: true
+      - id: os_m2_determinism
+        name: Determinism gates
+        acceptance:
+          - physics_replay_match_rate_min: 0.9999
+          - network_desync_rate_max: 0.0001
+      - id: os_m3_reliability
+        name: Reliability gates
+        acceptance:
+          - soak_72h_pass: true
+          - crash_recovery_drill_pass: true
+
+  - id: platform_online
+    name: Platform And Online
+    owner_group: online_platform
+    milestones:
+      - id: po_m1_platform_layer
+        name: Platform abstraction compliance
+        acceptance:
+          - adapter_coverage_complete: true
+          - certification_checklist_green: true
+      - id: po_m2_online_scale
+        name: Matchmaking and scale
+        acceptance:
+          - region_failover_test_pass: true
+          - matchmaking_slo_met: true
+      - id: po_m3_security
+        name: Anti-cheat and security
+        acceptance:
+          - anomaly_detection_precision_min: 0.95
+          - false_positive_rate_max: 0.01
+
+  - id: content_scale
+    name: Content Pipeline And Team Scale
+    owner_group: content_ops
+    milestones:
+      - id: cs_m1_asset_pipeline
+        name: Asset ingest and validation
+        acceptance:
+          - asset_validation_ci: true
+          - budget_violations_block_release: true
+      - id: cs_m2_mission_pipeline
+        name: Mission/rule authoring pipeline
+        acceptance:
+          - mission_validation_automation: true
+          - simulation_dry_run_required: true
+      - id: cs_m3_release_cadence
+        name: Weekly release cadence
+        acceptance:
+          - weekly_release_stable: true
+          - rollback_path_verified: true
+
+global_gates:
+  - id: gate_performance
+    criteria:
+      p95_frame_ms_max: 16.67
+      p99_frame_ms_max: 20.0
+  - id: gate_memory
+    criteria:
+      leak_bytes_per_hour_max: 1048576
+      fragmentation_percent_max: 20
+  - id: gate_online
+    criteria:
+      packet_loss_percent_max: 5
+      reconnect_rate_percent_max: 2
+  - id: gate_quality
+    criteria:
+      blocker_bugs_release_max: 0
+      crash_free_session_minutes_min: 180

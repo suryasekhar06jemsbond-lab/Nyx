@@ -1,0 +1,164 @@
+# Nyhttp Engine Package Configuration
+# Production-grade HTTP client and server for Nyx
+
+name = "Nyhttp"
+version = "2.0.0"
+description = "Nyx HTTP Engine - Production HTTP/1.1, HTTP/2, HTTP/3 with TLS, Proxy, WebSocket"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyhttp"
+
+keywords = ["nyx", "http", "https", "http2", "http3", "server", "client", "websocket", "proxy", "load-balancer", "tls", "ssl"]
+
+dependencies = ["nyx >= 2.0.0", "nynetwork >= 2.0.0"]
+
+[scripts]
+Nyhttp = "nyhttp:main"
+Server = "nyhttp:HttpServer"
+Client = "nyhttp:HttpClient"
+
+[modules]
+# Protocol
+protocol = "HTTP protocol constants and utilities"
+
+# URL
+url = "RFC 3986 URL parsing and building"
+
+# Core
+HttpClient = "Async HTTP client with connection pooling"
+HttpRequest = "HTTP request builder"
+HttpResponse = "HTTP response handler"
+Headers = "HTTP headers management"
+Cookie = "HTTP cookie handling"
+CookieOptions = "Cookie options"
+
+# Routing
+router = "Fast radix tree router"
+Router = "HTTP router with path parameters"
+
+# Middleware
+middleware = "Middleware components"
+CorsMiddleware = "CORS handling"
+RateLimitMiddleware = "Rate limiting"
+LoggingMiddleware = "Request/response logging"
+StaticMiddleware = "Static file serving"
+CompressionMiddleware = "Gzip compression"
+
+# WebSocket
+websocket = "WebSocket support"
+WebSocket = "WebSocket connection"
+WebSocketHandler = "WebSocket event handler"
+
+# Server
+HttpServer = "Production HTTP server"
+TlsConfig = "TLS/SSL configuration"
+Metrics = "Server metrics"
+
+# Proxy
+proxy = "Reverse proxy and load balancing"
+LoadBalancer = "Load balancer with multiple strategies"
+Backend = "Backend server definition"
+ReverseProxy = "Reverse proxy implementation"
+LoadBalanceStrategy = "Load balancing strategies"
+
+# CLI
+cli = "Command-line tools"
+CLI = "CLI builder"
+
+[platform]
+any = true
+
+[server]
+host = "0.0.0.0"
+port = 8080
+workers = 4
+max_connections = 10000
+keep_alive = true
+timeout = 30
+
+[client]
+timeout_ms = 30000
+max_redirects = 10
+max_connections = 100
+connection_pool_size = 100
+
+[capabilities]
+# Core
+http1 = "HTTP/1.1 support"
+http2 = "HTTP/2 support"
+http3 = "HTTP/3 (QUIC) support"
+tls = "TLS 1.3 support"
+mtls = "mTLS/client certificate support"
+
+# Server
+server = "HTTP server"
+middleware = "Middleware pipeline"
+routing = "Radix tree routing"
+static_files = "Static file serving"
+compression = "Gzip/brotli compression"
+websocket = "WebSocket support"
+
+# Security
+cors = "CORS handling"
+rate_limit = "Rate limiting"
+security_headers = "Security headers (HSTS, CSP, etc.)"
+
+# Proxy
+reverse_proxy = "Reverse proxy"
+load_balancer = "Load balancing"
+health_checks = "Backend health checks"
+circuit_breaker = "Circuit breaker pattern"
+
+# Observability
+metrics = "Prometheus metrics"
+logging = "Structured logging"
+
+# CLI
+cli_tools = "Command-line tools"
+config_file = "nyhttp.toml support"
+
+[features]
+default = ["server", "client", "http1", "routing", "middleware"]
+
+# Protocols
+http1 = "HTTP/1.1 (keep-alive, chunked)"
+http2 = "HTTP/2 (multiplexing, HPACK)"
+http3 = "HTTP/3 (QUIC)"
+
+# TLS
+tls = "TLS 1.2/1.3 support"
+tls13 = "TLS 1.3 only"
+mtls = "Mutual TLS"
+
+# Server
+server = "HTTP server"
+routing = "Radix tree routing with params"
+middleware = "Middleware pipeline"
+static_files = "Static file serving"
+compression = "Response compression"
+websocket = "WebSocket support"
+sse = "Server-Sent Events"
+
+# Security
+cors = "CORS middleware"
+rate_limit = "Rate limiting"
+security_headers = "Security headers"
+csrf = "CSRF protection"
+
+# Proxy
+proxy = "Reverse proxy"
+load_balancer = "Load balancing"
+health_check = "Health checks"
+circuit_breaker = "Circuit breaker"
+
+# Client
+client = "HTTP client"
+connection_pool = "Connection pooling"
+cookies = "Cookie jar"
+follow_redirects = "Auto-follow redirects"
+
+# Observability
+metrics = "Metrics collection"
+logging = "Structured logging"
+tracing = "OpenTelemetry tracing"

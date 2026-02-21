@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "suspend_resume",
+    "memory_pressure",
+    "safe_save_load",
+    "network_disconnect_recovery",
+    "accessibility_controls",
+    "localization_fallback"
+  ],
+  "required_pass_rate": 1.0
+}

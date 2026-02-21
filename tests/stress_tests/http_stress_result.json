@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "requests": 10000,
+  "concurrency": 256,
+  "success": 10000,
+  "failed": 0,
+  "rps": 123.841,
+  "latency_ms": {
+    "avg": 2041.176,
+    "max": 2726.342
+  },
+  "state_sum": 10000
+}

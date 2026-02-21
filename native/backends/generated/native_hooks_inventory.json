@@ -1,0 +1,1897 @@
+[
+  {
+    "file": "engines/nyai/nyai.ny",
+    "line": 831,
+    "function": "native_ai_frame_time_ms",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [],
+    "signature": "native_ai_frame_time_ms() -> Float;"
+  },
+  {
+    "file": "engines/nyanim/nyanim.ny",
+    "line": 608,
+    "function": "native_anim_state_sync_ok",
+    "returnNyxType": "Bool",
+    "returnCType": "int",
+    "params": [],
+    "signature": "native_anim_state_sync_ok() -> Bool;"
+  },
+  {
+    "file": "engines/nyanim/nyanim.ny",
+    "line": 607,
+    "function": "native_anim_update_ms",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [],
+    "signature": "native_anim_update_ms() -> Float;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1778,
+    "function": "native_asset_has_changed",
+    "returnNyxType": "bool",
+    "returnCType": "int",
+    "params": [
+      {
+        "name": "path",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_asset_has_changed(path: str) -> bool;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1777,
+    "function": "native_asset_load_audio",
+    "returnNyxType": "Result<AudioBuffer, Error>",
+    "returnCType": "void *",
+    "params": [
+      {
+        "name": "path",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_asset_load_audio(path: str) -> Result<AudioBuffer, Error>;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1776,
+    "function": "native_asset_load_font",
+    "returnNyxType": "Result<Font, Error>",
+    "returnCType": "void *",
+    "params": [
+      {
+        "name": "path",
+        "nyxType": "str",
+        "cType": "const char *"
+      },
+      {
+        "name": "size",
+        "nyxType": "i32",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_asset_load_font(path: str, size: i32) -> Result<Font, Error>;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1773,
+    "function": "native_asset_load_mesh",
+    "returnNyxType": "Result<Mesh, Error>",
+    "returnCType": "void *",
+    "params": [
+      {
+        "name": "path",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_asset_load_mesh(path: str) -> Result<Mesh, Error>;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1774,
+    "function": "native_asset_load_model",
+    "returnNyxType": "Result<Model, Error>",
+    "returnCType": "void *",
+    "params": [
+      {
+        "name": "path",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_asset_load_model(path: str) -> Result<Model, Error>;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1775,
+    "function": "native_asset_load_shader",
+    "returnNyxType": "Result<Shader, Error>",
+    "returnCType": "void *",
+    "params": [
+      {
+        "name": "path",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_asset_load_shader(path: str) -> Result<Shader, Error>;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1772,
+    "function": "native_asset_load_texture",
+    "returnNyxType": "Result<Texture, Error>",
+    "returnCType": "void *",
+    "params": [
+      {
+        "name": "path",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_asset_load_texture(path: str) -> Result<Texture, Error>;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1787,
+    "function": "native_audio_add_filter",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "source_id",
+        "nyxType": "u32",
+        "cType": "long long"
+      },
+      {
+        "name": "filter_type",
+        "nyxType": "FilterType",
+        "cType": "void *"
+      },
+      {
+        "name": "frequency",
+        "nyxType": "f32",
+        "cType": "double"
+      },
+      {
+        "name": "q",
+        "nyxType": "f32",
+        "cType": "double"
+      }
+    ],
+    "signature": "native_audio_add_filter(source_id: u32, filter_type: FilterType, frequency: f32, q: f32);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1786,
+    "function": "native_audio_add_reverb",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "source_id",
+        "nyxType": "u32",
+        "cType": "long long"
+      },
+      {
+        "name": "room_size",
+        "nyxType": "f32",
+        "cType": "double"
+      },
+      {
+        "name": "damping",
+        "nyxType": "f32",
+        "cType": "double"
+      }
+    ],
+    "signature": "native_audio_add_reverb(source_id: u32, room_size: f32, damping: f32);"
+  },
+  {
+    "file": "engines/nyaudio/nyaudio.ny",
+    "line": 678,
+    "function": "native_audio_backend_alive",
+    "returnNyxType": "Bool",
+    "returnCType": "int",
+    "params": [
+      {
+        "name": "backend",
+        "nyxType": "String",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_audio_backend_alive(backend: String) -> Bool;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1780,
+    "function": "native_audio_create_context",
+    "returnNyxType": "AudioContext",
+    "returnCType": "void *",
+    "params": [],
+    "signature": "native_audio_create_context() -> AudioContext;"
+  },
+  {
+    "file": "engines/nyaudio/nyaudio.ny",
+    "line": 679,
+    "function": "native_audio_dsp_time_ms",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [],
+    "signature": "native_audio_dsp_time_ms() -> Float;"
+  },
+  {
+    "file": "engines/nyaudio/nyaudio.ny",
+    "line": 681,
+    "function": "native_audio_integrated_lufs",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [],
+    "signature": "native_audio_integrated_lufs() -> Float;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1781,
+    "function": "native_audio_load_buffer",
+    "returnNyxType": "Result<AudioBuffer, Error>",
+    "returnCType": "void *",
+    "params": [
+      {
+        "name": "path",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_audio_load_buffer(path: str) -> Result<AudioBuffer, Error>;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1782,
+    "function": "native_audio_play",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "source_id",
+        "nyxType": "u32",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_audio_play(source_id: u32);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1785,
+    "function": "native_audio_set_listener",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "position",
+        "nyxType": "Vec3",
+        "cType": "void *"
+      },
+      {
+        "name": "forward",
+        "nyxType": "Vec3",
+        "cType": "void *"
+      },
+      {
+        "name": "up",
+        "nyxType": "Vec3",
+        "cType": "void *"
+      }
+    ],
+    "signature": "native_audio_set_listener(position: Vec3, forward: Vec3, up: Vec3);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1784,
+    "function": "native_audio_set_master_volume",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "volume",
+        "nyxType": "f32",
+        "cType": "double"
+      }
+    ],
+    "signature": "native_audio_set_master_volume(volume: f32);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1783,
+    "function": "native_audio_stop",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "source_id",
+        "nyxType": "u32",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_audio_stop(source_id: u32);"
+  },
+  {
+    "file": "engines/nyaudio/nyaudio.ny",
+    "line": 677,
+    "function": "native_audio_trace_occlusion",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [
+      {
+        "name": "source_id",
+        "nyxType": "String",
+        "cType": "const char *"
+      },
+      {
+        "name": "lx",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "ly",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "lz",
+        "nyxType": "Float",
+        "cType": "double"
+      }
+    ],
+    "signature": "native_audio_trace_occlusion(source_id: String, lx: Float, ly: Float, lz: Float) -> Float;"
+  },
+  {
+    "file": "engines/nyaudio/nyaudio.ny",
+    "line": 680,
+    "function": "native_audio_voice_peers",
+    "returnNyxType": "Int",
+    "returnCType": "long long",
+    "params": [],
+    "signature": "native_audio_voice_peers() -> Int;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1769,
+    "function": "native_input_capture_mouse",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [],
+    "signature": "native_input_capture_mouse();"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1770,
+    "function": "native_input_release_mouse",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [],
+    "signature": "native_input_release_mouse();"
+  },
+  {
+    "file": "engines/nyai/nyai.ny",
+    "line": 981,
+    "function": "native_nyai_build_hybrid_from_intent",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "intent",
+        "nyxType": "String",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_nyai_build_hybrid_from_intent(intent: String) -> Bytes;"
+  },
+  {
+    "file": "engines/nyai/nyai.ny",
+    "line": 982,
+    "function": "native_nyai_run_sandbox",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "step_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nyai_run_sandbox(step_count: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nyanim/nyanim.ny",
+    "line": 708,
+    "function": "native_nyanim_adapt_to_physics",
+    "returnNyxType": "String",
+    "returnCType": "const char *",
+    "params": [
+      {
+        "name": "clip_id",
+        "nyxType": "String",
+        "cType": "const char *"
+      },
+      {
+        "name": "slope",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "impact",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "partial_ragdoll",
+        "nyxType": "Float",
+        "cType": "double"
+      }
+    ],
+    "signature": "native_nyanim_adapt_to_physics(clip_id: String, slope: Float, impact: Float, partial_ragdoll: Float) -> String;"
+  },
+  {
+    "file": "engines/nyanim/nyanim.ny",
+    "line": 707,
+    "function": "native_nyanim_synthesize_intent",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "intent",
+        "nyxType": "String",
+        "cType": "const char *"
+      },
+      {
+        "name": "gait",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "urgency",
+        "nyxType": "Float",
+        "cType": "double"
+      }
+    ],
+    "signature": "native_nyanim_synthesize_intent(intent: String, gait: Float, urgency: Float) -> Bytes;"
+  },
+  {
+    "file": "engines/nyaudio/nyaudio.ny",
+    "line": 797,
+    "function": "native_nyaudio_compile_zone_graph",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "zone_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "edge_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nyaudio_compile_zone_graph(zone_count: Int, edge_count: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nyaudio/nyaudio.ny",
+    "line": 798,
+    "function": "native_nyaudio_resolve_music_state",
+    "returnNyxType": "List<String>",
+    "returnCType": "NyxStringList",
+    "params": [
+      {
+        "name": "state",
+        "nyxType": "String",
+        "cType": "const char *"
+      },
+      {
+        "name": "intensity",
+        "nyxType": "Float",
+        "cType": "double"
+      }
+    ],
+    "signature": "native_nyaudio_resolve_music_state(state: String, intensity: Float) -> List<String>;"
+  },
+  {
+    "file": "engines/nycore/nycore.ny",
+    "line": 1097,
+    "function": "native_nycore_compile_nocode_pipeline",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "graph_blob",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      },
+      {
+        "name": "layout_blob",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      },
+      {
+        "name": "serialization_blob",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      },
+      {
+        "name": "replication_blob",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      }
+    ],
+    "signature": "native_nycore_compile_nocode_pipeline(graph_blob: Bytes, layout_blob: Bytes, serialization_blob: Bytes, replication_blob: Bytes) -> Bytes;"
+  },
+  {
+    "file": "engines/nycore/nycore.ny",
+    "line": 1093,
+    "function": "native_nycore_compile_schema_layout",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "component_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "constraint_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nycore_compile_schema_layout(component_count: Int, constraint_count: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nycore/nycore.ny",
+    "line": 1095,
+    "function": "native_nycore_compile_schema_replication",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "component_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "constraint_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nycore_compile_schema_replication(component_count: Int, constraint_count: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nycore/nycore.ny",
+    "line": 1094,
+    "function": "native_nycore_compile_schema_serialization",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "component_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "constraint_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nycore_compile_schema_serialization(component_count: Int, constraint_count: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nycore/nycore.ny",
+    "line": 1092,
+    "function": "native_nycore_compile_visual_graph",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "system_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "dependency_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "flow_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nycore_compile_visual_graph(system_count: Int, dependency_count: Int, flow_count: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nycore/nycore.ny",
+    "line": 351,
+    "function": "native_nycore_cpu_count",
+    "returnNyxType": "Int",
+    "returnCType": "long long",
+    "params": [],
+    "signature": "native_nycore_cpu_count() -> Int;"
+  },
+  {
+    "file": "engines/nycore/nycore.ny",
+    "line": 816,
+    "function": "native_nycore_detect_isa",
+    "returnNyxType": "String",
+    "returnCType": "const char *",
+    "params": [],
+    "signature": "native_nycore_detect_isa() -> String;"
+  },
+  {
+    "file": "engines/nycore/nycore.ny",
+    "line": 672,
+    "function": "native_nycore_encode",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "schema_id",
+        "nyxType": "String",
+        "cType": "const char *"
+      },
+      {
+        "name": "value_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nycore_encode(schema_id: String, value_count: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nycore/nycore.ny",
+    "line": 818,
+    "function": "native_nycore_fragmentation_pct",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [],
+    "signature": "native_nycore_fragmentation_pct() -> Float;"
+  },
+  {
+    "file": "engines/nycore/nycore.ny",
+    "line": 819,
+    "function": "native_nycore_frame_ms",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [],
+    "signature": "native_nycore_frame_ms() -> Float;"
+  },
+  {
+    "file": "engines/nycore/nycore.ny",
+    "line": 352,
+    "function": "native_nycore_memory_mb",
+    "returnNyxType": "Int",
+    "returnCType": "long long",
+    "params": [],
+    "signature": "native_nycore_memory_mb() -> Int;"
+  },
+  {
+    "file": "engines/nycore/nycore.ny",
+    "line": 1096,
+    "function": "native_nycore_self_optimize",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "frame_ms",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "cpu_pct",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "cache_miss_pct",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "auto_parallel",
+        "nyxType": "Bool",
+        "cType": "int"
+      },
+      {
+        "name": "auto_simd",
+        "nyxType": "Bool",
+        "cType": "int"
+      },
+      {
+        "name": "dynamic_merge",
+        "nyxType": "Bool",
+        "cType": "int"
+      }
+    ],
+    "signature": "native_nycore_self_optimize(frame_ms: Float, cpu_pct: Float, cache_miss_pct: Float, auto_parallel: Bool, auto_simd: Bool, dynamic_merge: Bool);"
+  },
+  {
+    "file": "engines/nycore/nycore.ny",
+    "line": 817,
+    "function": "native_nycore_simd_dot4",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [
+      {
+        "name": "isa",
+        "nyxType": "String",
+        "cType": "const char *"
+      },
+      {
+        "name": "ax",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "ay",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "az",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "aw",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "bx",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "by",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "bz",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "bw",
+        "nyxType": "Float",
+        "cType": "double"
+      }
+    ],
+    "signature": "native_nycore_simd_dot4(isa: String, ax: Float, ay: Float, az: Float, aw: Float, bx: Float, by: Float, bz: Float, bw: Float) -> Float;"
+  },
+  {
+    "file": "engines/nycore/nycore.ny",
+    "line": 1098,
+    "function": "native_nycore_validate_nocode_pipeline",
+    "returnNyxType": "Bool",
+    "returnCType": "int",
+    "params": [],
+    "signature": "native_nycore_validate_nocode_pipeline() -> Bool;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 2034,
+    "function": "native_nygame_bind_engine",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "name",
+        "nyxType": "str",
+        "cType": "const char *"
+      },
+      {
+        "name": "slot",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_nygame_bind_engine(name: str, slot: str);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 2039,
+    "function": "native_nygame_enable_telemetry",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "name",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_nygame_enable_telemetry(name: str);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 2033,
+    "function": "native_nygame_mount_engine",
+    "returnNyxType": "bool",
+    "returnCType": "int",
+    "params": [
+      {
+        "name": "name",
+        "nyxType": "str",
+        "cType": "const char *"
+      },
+      {
+        "name": "enabled",
+        "nyxType": "bool",
+        "cType": "int"
+      }
+    ],
+    "signature": "native_nygame_mount_engine(name: str, enabled: bool) -> bool;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 2042,
+    "function": "native_nygame_report_capability_validation",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "ok",
+        "nyxType": "bool",
+        "cType": "int"
+      }
+    ],
+    "signature": "native_nygame_report_capability_validation(ok: bool);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 2043,
+    "function": "native_nygame_report_production_validation",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "ok",
+        "nyxType": "bool",
+        "cType": "int"
+      }
+    ],
+    "signature": "native_nygame_report_production_validation(ok: bool);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 2037,
+    "function": "native_nygame_report_sync",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "ok",
+        "nyxType": "bool",
+        "cType": "int"
+      }
+    ],
+    "signature": "native_nygame_report_sync(ok: bool);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 2038,
+    "function": "native_nygame_set_engine_profile",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "name",
+        "nyxType": "str",
+        "cType": "const char *"
+      },
+      {
+        "name": "profile",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_nygame_set_engine_profile(name: str, profile: str);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 2036,
+    "function": "native_nygame_shutdown_engine",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "name",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_nygame_shutdown_engine(name: str);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 2035,
+    "function": "native_nygame_tick_engine",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "name",
+        "nyxType": "str",
+        "cType": "const char *"
+      },
+      {
+        "name": "dt",
+        "nyxType": "f32",
+        "cType": "double"
+      }
+    ],
+    "signature": "native_nygame_tick_engine(name: str, dt: f32);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 2040,
+    "function": "native_nygame_verify_engine_capability",
+    "returnNyxType": "bool",
+    "returnCType": "int",
+    "params": [
+      {
+        "name": "name",
+        "nyxType": "str",
+        "cType": "const char *"
+      },
+      {
+        "name": "capability",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_nygame_verify_engine_capability(name: str, capability: str) -> bool;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 2041,
+    "function": "native_nygame_verify_engine_profile",
+    "returnNyxType": "bool",
+    "returnCType": "int",
+    "params": [
+      {
+        "name": "name",
+        "nyxType": "str",
+        "cType": "const char *"
+      },
+      {
+        "name": "profile",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_nygame_verify_engine_profile(name: str, profile: str) -> bool;"
+  },
+  {
+    "file": "engines/nylogic/nylogic.ny",
+    "line": 480,
+    "function": "native_nylogic_compile_graph",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "node_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "edge_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nylogic_compile_graph(node_count: Int, edge_count: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nylogic/nylogic.ny",
+    "line": 478,
+    "function": "native_nylogic_decode_rule",
+    "returnNyxType": "String",
+    "returnCType": "const char *",
+    "params": [
+      {
+        "name": "rule_blob",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      }
+    ],
+    "signature": "native_nylogic_decode_rule(rule_blob: Bytes) -> String;"
+  },
+  {
+    "file": "engines/nylogic/nylogic.ny",
+    "line": 481,
+    "function": "native_nylogic_execute",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "action",
+        "nyxType": "String",
+        "cType": "const char *"
+      },
+      {
+        "name": "payload",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      }
+    ],
+    "signature": "native_nylogic_execute(action: String, payload: Bytes);"
+  },
+  {
+    "file": "engines/nylogic/nylogic.ny",
+    "line": 477,
+    "function": "native_nylogic_generate_rule",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "prompt",
+        "nyxType": "String",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_nylogic_generate_rule(prompt: String) -> Bytes;"
+  },
+  {
+    "file": "engines/nylogic/nylogic.ny",
+    "line": 484,
+    "function": "native_nylogic_mutate",
+    "returnNyxType": "Bool",
+    "returnCType": "int",
+    "params": [
+      {
+        "name": "rule_id",
+        "nyxType": "String",
+        "cType": "const char *"
+      },
+      {
+        "name": "patch_blob",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      }
+    ],
+    "signature": "native_nylogic_mutate(rule_id: String, patch_blob: Bytes) -> Bool;"
+  },
+  {
+    "file": "engines/nylogic/nylogic.ny",
+    "line": 482,
+    "function": "native_nylogic_optimize",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "frame_ms",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "target_ms",
+        "nyxType": "Float",
+        "cType": "double"
+      }
+    ],
+    "signature": "native_nylogic_optimize(frame_ms: Float, target_ms: Float);"
+  },
+  {
+    "file": "engines/nylogic/nylogic.ny",
+    "line": 483,
+    "function": "native_nylogic_profile_ms",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [],
+    "signature": "native_nylogic_profile_ms() -> Float;"
+  },
+  {
+    "file": "engines/nylogic/nylogic.ny",
+    "line": 479,
+    "function": "native_nylogic_validate",
+    "returnNyxType": "Bool",
+    "returnCType": "int",
+    "params": [
+      {
+        "name": "rule_id",
+        "nyxType": "String",
+        "cType": "const char *"
+      },
+      {
+        "name": "condition_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "trigger_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nylogic_validate(rule_id: String, condition_count: Int, trigger_count: Int) -> Bool;"
+  },
+  {
+    "file": "engines/nynet/nynet.ny",
+    "line": 887,
+    "function": "native_nynet_autodiscover_replication",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "component_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "bandwidth_kbps",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nynet_autodiscover_replication(component_count: Int, bandwidth_kbps: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nynet/nynet.ny",
+    "line": 888,
+    "function": "native_nynet_build_interest_zones",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "entity_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nynet_build_interest_zones(entity_count: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nynet/nynet.ny",
+    "line": 317,
+    "function": "native_nynet_checksum",
+    "returnNyxType": "String",
+    "returnCType": "const char *",
+    "params": [
+      {
+        "name": "frame_id",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "world_blob",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      }
+    ],
+    "signature": "native_nynet_checksum(frame_id: Int, world_blob: Bytes) -> String;"
+  },
+  {
+    "file": "engines/nynet/nynet.ny",
+    "line": 741,
+    "function": "native_nynet_packet_loss_pct",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [],
+    "signature": "native_nynet_packet_loss_pct() -> Float;"
+  },
+  {
+    "file": "engines/nynet/nynet.ny",
+    "line": 740,
+    "function": "native_nynet_tick_ms",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [],
+    "signature": "native_nynet_tick_ms() -> Float;"
+  },
+  {
+    "file": "engines/nynet/nynet.ny",
+    "line": 889,
+    "function": "native_nynet_validate_desync",
+    "returnNyxType": "Bool",
+    "returnCType": "int",
+    "params": [
+      {
+        "name": "frame",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "local_checksum",
+        "nyxType": "String",
+        "cType": "const char *"
+      },
+      {
+        "name": "remote_checksum",
+        "nyxType": "String",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_nynet_validate_desync(frame: Int, local_checksum: String, remote_checksum: String) -> Bool;"
+  },
+  {
+    "file": "engines/nyphysics/nyphysics.ny",
+    "line": 1141,
+    "function": "native_nyphysics_apply_template",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "template_id",
+        "nyxType": "String",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_nyphysics_apply_template(template_id: String);"
+  },
+  {
+    "file": "engines/nyphysics/nyphysics.ny",
+    "line": 1142,
+    "function": "native_nyphysics_auto_tune",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "telemetry_blob",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      }
+    ],
+    "signature": "native_nyphysics_auto_tune(telemetry_blob: Bytes);"
+  },
+  {
+    "file": "engines/nyphysics/nyphysics.ny",
+    "line": 1140,
+    "function": "native_nyphysics_compile_constraint_graph",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "node_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "edge_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nyphysics_compile_constraint_graph(node_count: Int, edge_count: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nyphysics/nyphysics.ny",
+    "line": 1144,
+    "function": "native_nyphysics_compile_nocode_bundle",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "graph_blob",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      },
+      {
+        "name": "fracture_blob",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      },
+      {
+        "name": "template_id",
+        "nyxType": "String",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_nyphysics_compile_nocode_bundle(graph_blob: Bytes, fracture_blob: Bytes, template_id: String) -> Bytes;"
+  },
+  {
+    "file": "engines/nyphysics/nyphysics.ny",
+    "line": 1143,
+    "function": "native_nyphysics_generate_fracture_rules",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "material_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nyphysics_generate_fracture_rules(material_count: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nyrender/nyrender.ny",
+    "line": 1326,
+    "function": "native_nyrender_apply_tier",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "tier",
+        "nyxType": "String",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_nyrender_apply_tier(tier: String);"
+  },
+  {
+    "file": "engines/nyrender/nyrender.ny",
+    "line": 1323,
+    "function": "native_nyrender_compile_material_graph",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "node_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "layer_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nyrender_compile_material_graph(node_count: Int, layer_count: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nyrender/nyrender.ny",
+    "line": 1325,
+    "function": "native_nyrender_compile_pipeline_graph",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "pass_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "edge_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nyrender_compile_pipeline_graph(pass_count: Int, edge_count: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nyrender/nyrender.ny",
+    "line": 1324,
+    "function": "native_nyrender_generate_material_from_prompt",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "prompt",
+        "nyxType": "String",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_nyrender_generate_material_from_prompt(prompt: String) -> Bytes;"
+  },
+  {
+    "file": "engines/nyrender/nyrender.ny",
+    "line": 1327,
+    "function": "native_nyrender_register_material_blob",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "material_id",
+        "nyxType": "String",
+        "cType": "const char *"
+      },
+      {
+        "name": "graph_blob",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      }
+    ],
+    "signature": "native_nyrender_register_material_blob(material_id: String, graph_blob: Bytes);"
+  },
+  {
+    "file": "engines/nyworld/nyworld.ny",
+    "line": 987,
+    "function": "native_nyworld_compile_world_rules",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "rule_count",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nyworld_compile_world_rules(rule_count: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nyworld/nyworld.ny",
+    "line": 988,
+    "function": "native_nyworld_predict_streaming",
+    "returnNyxType": "List<String>",
+    "returnCType": "NyxStringList",
+    "params": [
+      {
+        "name": "profile_blob",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      }
+    ],
+    "signature": "native_nyworld_predict_streaming(profile_blob: Bytes) -> List<String>;"
+  },
+  {
+    "file": "engines/nyworld/nyworld.ny",
+    "line": 989,
+    "function": "native_nyworld_simulate_economy",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "tick_index",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_nyworld_simulate_economy(tick_index: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nyphysics/nyphysics.ny",
+    "line": 485,
+    "function": "native_physics_boot",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [],
+    "signature": "native_physics_boot();"
+  },
+  {
+    "file": "engines/nyphysics/nyphysics.ny",
+    "line": 793,
+    "function": "native_physics_checksum",
+    "returnNyxType": "String",
+    "returnCType": "const char *",
+    "params": [
+      {
+        "name": "frame",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "blob",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      }
+    ],
+    "signature": "native_physics_checksum(frame: Int, blob: Bytes) -> String;"
+  },
+  {
+    "file": "engines/nyphysics/nyphysics.ny",
+    "line": 927,
+    "function": "native_physics_query_step_ms",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [],
+    "signature": "native_physics_query_step_ms() -> Float;"
+  },
+  {
+    "file": "engines/nyphysics/nyphysics.ny",
+    "line": 926,
+    "function": "native_physics_set_float_mode",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "mode",
+        "nyxType": "String",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_physics_set_float_mode(mode: String);"
+  },
+  {
+    "file": "engines/nyphysics/nyphysics.ny",
+    "line": 486,
+    "function": "native_physics_shutdown",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [],
+    "signature": "native_physics_shutdown();"
+  },
+  {
+    "file": "engines/nyphysics/nyphysics.ny",
+    "line": 928,
+    "function": "native_physics_validate_frame",
+    "returnNyxType": "Bool",
+    "returnCType": "int",
+    "params": [
+      {
+        "name": "frame",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "state_blob",
+        "nyxType": "Bytes",
+        "cType": "NyxBytes"
+      }
+    ],
+    "signature": "native_physics_validate_frame(frame: Int, state_blob: Bytes) -> Bool;"
+  },
+  {
+    "file": "engines/nyrender/nyrender.ny",
+    "line": 609,
+    "function": "native_render_boot",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "backend",
+        "nyxType": "String",
+        "cType": "const char *"
+      },
+      {
+        "name": "width",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "height",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_render_boot(backend: String, width: Int, height: Int);"
+  },
+  {
+    "file": "engines/nyrender/nyrender.ny",
+    "line": 1104,
+    "function": "native_render_query_gpu_memory_mb",
+    "returnNyxType": "Int",
+    "returnCType": "long long",
+    "params": [],
+    "signature": "native_render_query_gpu_memory_mb() -> Int;"
+  },
+  {
+    "file": "engines/nyrender/nyrender.ny",
+    "line": 1105,
+    "function": "native_render_query_gpu_time_ms",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [],
+    "signature": "native_render_query_gpu_time_ms() -> Float;"
+  },
+  {
+    "file": "engines/nyrender/nyrender.ny",
+    "line": 610,
+    "function": "native_render_shutdown",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [],
+    "signature": "native_render_shutdown();"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1767,
+    "function": "native_renderer_clear",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "r",
+        "nyxType": "f32",
+        "cType": "double"
+      },
+      {
+        "name": "g",
+        "nyxType": "f32",
+        "cType": "double"
+      },
+      {
+        "name": "b",
+        "nyxType": "f32",
+        "cType": "double"
+      },
+      {
+        "name": "a",
+        "nyxType": "f32",
+        "cType": "double"
+      }
+    ],
+    "signature": "native_renderer_clear(r: f32, g: f32, b: f32, a: f32);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1766,
+    "function": "native_renderer_set_viewport",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "x",
+        "nyxType": "i32",
+        "cType": "long long"
+      },
+      {
+        "name": "y",
+        "nyxType": "i32",
+        "cType": "long long"
+      },
+      {
+        "name": "width",
+        "nyxType": "i32",
+        "cType": "long long"
+      },
+      {
+        "name": "height",
+        "nyxType": "i32",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_renderer_set_viewport(x: i32, y: i32, width: i32, height: i32);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1789,
+    "function": "native_time_get_ticks",
+    "returnNyxType": "u64",
+    "returnCType": "long long",
+    "params": [],
+    "signature": "native_time_get_ticks() -> u64;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1759,
+    "function": "native_window_close",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "handle",
+        "nyxType": "WindowHandle",
+        "cType": "void *"
+      }
+    ],
+    "signature": "native_window_close(handle: WindowHandle);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1752,
+    "function": "native_window_create",
+    "returnNyxType": "WindowHandle",
+    "returnCType": "void *",
+    "params": [
+      {
+        "name": "width",
+        "nyxType": "i32",
+        "cType": "long long"
+      },
+      {
+        "name": "height",
+        "nyxType": "i32",
+        "cType": "long long"
+      },
+      {
+        "name": "title",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_window_create(width: i32, height: i32, title: str) -> WindowHandle;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1761,
+    "function": "native_window_get_dpi",
+    "returnNyxType": "f32",
+    "returnCType": "double",
+    "params": [],
+    "signature": "native_window_get_dpi() -> f32;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1762,
+    "function": "native_window_get_refresh_rate",
+    "returnNyxType": "i32",
+    "returnCType": "long long",
+    "params": [],
+    "signature": "native_window_get_refresh_rate() -> i32;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1755,
+    "function": "native_window_get_size",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "arg0",
+        "nyxType": ") -> (i32, i32",
+        "cType": "void *"
+      }
+    ],
+    "signature": "native_window_get_size() -> (i32, i32);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1760,
+    "function": "native_window_is_active",
+    "returnNyxType": "bool",
+    "returnCType": "int",
+    "params": [],
+    "signature": "native_window_is_active() -> bool;"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1757,
+    "function": "native_window_maximize",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "handle",
+        "nyxType": "WindowHandle",
+        "cType": "void *"
+      }
+    ],
+    "signature": "native_window_maximize(handle: WindowHandle);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1756,
+    "function": "native_window_minimize",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "handle",
+        "nyxType": "WindowHandle",
+        "cType": "void *"
+      }
+    ],
+    "signature": "native_window_minimize(handle: WindowHandle);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1758,
+    "function": "native_window_restore",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "handle",
+        "nyxType": "WindowHandle",
+        "cType": "void *"
+      }
+    ],
+    "signature": "native_window_restore(handle: WindowHandle);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1753,
+    "function": "native_window_set_fullscreen",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "handle",
+        "nyxType": "WindowHandle",
+        "cType": "void *"
+      },
+      {
+        "name": "enabled",
+        "nyxType": "bool",
+        "cType": "int"
+      }
+    ],
+    "signature": "native_window_set_fullscreen(handle: WindowHandle, enabled: bool);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1763,
+    "function": "native_window_set_icon",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "path",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_window_set_icon(path: str);"
+  },
+  {
+    "file": "engines/nygame/nygame.ny",
+    "line": 1754,
+    "function": "native_window_set_title",
+    "returnNyxType": "void",
+    "returnCType": "void",
+    "params": [
+      {
+        "name": "handle",
+        "nyxType": "WindowHandle",
+        "cType": "void *"
+      },
+      {
+        "name": "title",
+        "nyxType": "str",
+        "cType": "const char *"
+      }
+    ],
+    "signature": "native_window_set_title(handle: WindowHandle, title: str);"
+  },
+  {
+    "file": "engines/nyworld/nyworld.ny",
+    "line": 400,
+    "function": "native_world_gpu_memory_used_mb",
+    "returnNyxType": "Int",
+    "returnCType": "long long",
+    "params": [],
+    "signature": "native_world_gpu_memory_used_mb() -> Int;"
+  },
+  {
+    "file": "engines/nyworld/nyworld.ny",
+    "line": 399,
+    "function": "native_world_noise",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [
+      {
+        "name": "x",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "y",
+        "nyxType": "Float",
+        "cType": "double"
+      },
+      {
+        "name": "octaves",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_world_noise(x: Float, y: Float, octaves: Int) -> Float;"
+  },
+  {
+    "file": "engines/nyworld/nyworld.ny",
+    "line": 684,
+    "function": "native_world_serialize",
+    "returnNyxType": "Bytes",
+    "returnCType": "NyxBytes",
+    "params": [
+      {
+        "name": "revision",
+        "nyxType": "Int",
+        "cType": "long long"
+      },
+      {
+        "name": "records",
+        "nyxType": "Int",
+        "cType": "long long"
+      }
+    ],
+    "signature": "native_world_serialize(revision: Int, records: Int) -> Bytes;"
+  },
+  {
+    "file": "engines/nyworld/nyworld.ny",
+    "line": 825,
+    "function": "native_world_stream_latency_ms",
+    "returnNyxType": "Float",
+    "returnCType": "double",
+    "params": [],
+    "signature": "native_world_stream_latency_ms() -> Float;"
+  }
+]

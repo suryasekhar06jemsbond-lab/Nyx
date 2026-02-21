@@ -1,0 +1,108 @@
+{
+  "timestamp": "2026-02-21T07:09:09.575322+00:00",
+  "mode": "deep",
+  "tracks": {
+    "native_backend": {
+      "ok": true,
+      "missing": [],
+      "required_count": 7
+    },
+    "editor_toolchain": {
+      "ok": true,
+      "missing": [],
+      "required_count": 5
+    },
+    "optimization_stability": {
+      "ok": true,
+      "missing": [],
+      "required_count": 4
+    },
+    "platform_online": {
+      "ok": true,
+      "missing": [],
+      "required_count": 5
+    },
+    "content_pipeline": {
+      "ok": true,
+      "missing": [],
+      "required_count": 5
+    },
+    "gta_scale_program": {
+      "ok": true,
+      "missing": [],
+      "required_count": 8
+    }
+  },
+  "summary": {
+    "ok": true,
+    "missing_files": 0,
+    "hook_count": 112,
+    "hooks_ok": true,
+    "deep_suite_failures": 0
+  },
+  "deep_suites": {
+    "feature_contract": {
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "{\n  \"ok\": true,\n  \"engines\": 9,\n  \"missing_capabilities\": 0,\n  \"missing_profile_checks\": 0,\n  \"report\": \"tests/aaa_readiness/feature_contract_report.json\"\n}\n",
+      "stderr_tail": "",
+      "command": "python3 scripts/validate_aaa_feature_contract.py"
+    },
+    "engine_gates": {
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "yai_build_hybrid_from_intent\": 0.00034,\n      \"native_nyai_run_sandbox\": 0.0004,\n      \"native_ai_frame_time_ms\": 0.000136,\n      \"native_nynet_checksum\": 0.000385,\n      \"native_nynet_validate_desync\": 0.000358,\n      \"native_nynet_tick_ms\": 0.000124,\n      \"native_nynet_packet_loss_pct\": 0.000119,\n      \"native_audio_play\": 0.000244,\n      \"native_audio_stop\": 0.000215,\n      \"native_audio_dsp_time_ms\": 0.000125,\n      \"native_nyaudio_resolve_music_state\": 0.000355,\n      \"native_nylogic_generate_rule\": 0.000367,\n      \"native_nylogic_decode_rule\": 0.000292,\n      \"native_nylogic_validate\": 0.000376,\n      \"native_nylogic_compile_graph\": 0.000478,\n      \"native_nylogic_execute\": 0.000326,\n      \"native_nylogic_profile_ms\": 0.000145\n    },\n    \"count\": {\n      \"native_render_boot\": 1,\n      \"native_nyrender_apply_tier\": 1,\n      \"native_physics_boot\": 1,\n      \"native_physics_set_float_mode\": 1,\n      \"native_audio_create_context\": 1,\n      \"native_audio_set_master_volume\": 1,\n      \"native_nyrender_compile_material_graph\": 400,\n      \"native_nyrender_compile_pipeline_graph\": 200,\n      \"native_render_query_gpu_time_ms\": 200,\n      \"native_physics_checksum\": 400,\n      \"native_nyphysics_auto_tune\": 200,\n      \"native_physics_query_step_ms\": 200,\n      \"native_physics_validate_frame\": 200,\n      \"native_nyai_build_hybrid_from_intent\": 200,\n      \"native_nyai_run_sandbox\": 200,\n      \"native_ai_frame_time_ms\": 200,\n      \"native_nynet_checksum\": 400,\n      \"native_nynet_validate_desync\": 200,\n      \"native_nynet_tick_ms\": 200,\n      \"native_nynet_packet_loss_pct\": 200,\n      \"native_audio_play\": 200,\n      \"native_audio_stop\": 200,\n      \"native_audio_dsp_time_ms\": 200,\n      \"native_nyaudio_resolve_music_state\": 200,\n      \"native_nylogic_generate_rule\": 200,\n      \"native_nylogic_decode_rule\": 200,\n      \"native_nylogic_validate\": 200,\n      \"native_nylogic_compile_graph\": 200,\n      \"native_nylogic_execute\": 200,\n      \"native_nylogic_profile_ms\": 200\n    }\n  }\n}\n",
+      "stderr_tail": "",
+      "command": "python3 scripts/run_engine_gates.py --iterations 200"
+    },
+    "platform_online": {
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "{\n  \"ok\": true,\n  \"certification\": {\n    \"ok\": true,\n    \"pass_rate\": 1.0,\n    \"checks\": {\n      \"suspend_resume\": true,\n      \"memory_pressure\": true,\n      \"safe_save_load\": true,\n      \"network_disconnect_recovery\": true,\n      \"accessibility_controls\": true,\n      \"localization_fallback\": true\n    }\n  },\n  \"anti_cheat\": {\n    \"ok\": true,\n    \"samples\": 1500,\n    \"flagged\": 0,\n    \"flag_rate\": 0.0,\n    \"hard_violations\": 21\n  },\n  \"liveops\": {\n    \"ok\": true,\n    \"avg_wait_ms\": 1164.3333333333333,\n    \"failover_seconds\": 47,\n    \"reconnect_rate\": 0.012264227921445263,\n    \"regions\": [\n      {\n        \"region\": \"us-east\",\n        \"avg_wait_ms\": 1193,\n        \"matches\": 2177\n      },\n      {\n        \"region\": \"us-west\",\n        \"avg_wait_ms\": 1403,\n        \"matches\": 3631\n      },\n      {\n        \"region\": \"eu-central\",\n        \"avg_wait_ms\": 897,\n        \"matches\": 3895\n      }\n    ]\n  }\n}\n",
+      "stderr_tail": "",
+      "command": "python3 scripts/run_platform_online_suite.py"
+    },
+    "content_pipeline": {
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "{\n  \"ok\": true,\n  \"assets_total\": 2,\n  \"used_mb\": 1.4422874450683594\n}\n",
+      "stderr_tail": "",
+      "command": "python3 scripts/run_content_pipeline.py"
+    },
+    "hardware_validation": {
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "{\n  \"ok\": true,\n  \"pass_rate\": 0.9791666666666666,\n  \"critical\": 0\n}\n",
+      "stderr_tail": "",
+      "command": "python3 scripts/run_hardware_validation_cycles.py"
+    },
+    "scale_optimization": {
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "{\n  \"ok\": true,\n  \"days\": 120,\n  \"ok_rate\": 1.0,\n  \"violations\": 0\n}\n",
+      "stderr_tail": "",
+      "command": "python3 scripts/run_continuous_scale_optimization.py --days 120"
+    },
+    "production_plan": {
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "{\n  \"ok\": true,\n  \"timeline_months\": 54,\n  \"target_team_size\": 820\n}\n",
+      "stderr_tail": "",
+      "command": "python3 scripts/plan_multi_year_production.py"
+    },
+    "content_backlog": {
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "{\n  \"ok\": true,\n  \"primary_missions\": 180,\n  \"side_missions\": 450,\n  \"animation_clips\": 85000,\n  \"vo_lines\": 600000,\n  \"cinematic_shots\": 25000\n}\n",
+      "stderr_tail": "",
+      "command": "python3 scripts/generate_massive_content_backlog.py"
+    },
+    "gta_scale_program": {
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "{\n  \"ok\": true,\n  \"horizon_ok\": true,\n  \"team_ok\": true,\n  \"content_ok\": true\n}\n",
+      "stderr_tail": "",
+      "command": "python3 scripts/run_gta_scale_program.py"
+    }
+  }
+}

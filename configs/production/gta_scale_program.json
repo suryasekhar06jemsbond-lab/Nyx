@@ -1,0 +1,18 @@
+{
+  "minimum_horizon_years": 4,
+  "minimum_total_team_size": 700,
+  "minimum_content_targets": {
+    "primary_missions": 150,
+    "side_missions": 300,
+    "animation_clips": 50000,
+    "vo_lines": 300000,
+    "cinematic_shots": 15000
+  },
+  "required_suites": [
+    "engine_gates",
+    "platform_online_suite",
+    "content_pipeline",
+    "hardware_validation",
+    "scale_optimization"
+  ]
+}

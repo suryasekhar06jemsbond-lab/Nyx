@@ -1,0 +1,62 @@
+# Nyanim Engine Package Configuration
+
+name = "Nyanim"
+version = "1.0.0"
+description = "Nyx Animation Engine - IK, motion matching, facial simulation, blend trees"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyanim"
+
+keywords = ["nyx", "animation", "ik", "motion-matching", "facial", "blend-tree", "locomotion"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyanim = "nyanim:create_anim"
+
+[modules]
+ik = "Full-body IK and skeleton structures"
+motion = "Motion matching database and query"
+face = "Facial muscle simulation"
+blend = "Blend trees and procedural blending"
+locomotion = "AI locomotion synthesis"
+state_machine = "Animation state machine graph"
+retarget = "Cross-rig retargeting runtime"
+warping = "Motion warping and foot lock tools"
+compression = "Clip compression and streaming"
+events = "Animation notify/event tracks"
+network = "Animation snapshot sync primitives"
+crowds = "Crowd animation instancing"
+learned = "Learned locomotion synthesis runtime"
+physics_coupling = "Physics-aware animation blending"
+production = "Animation production health and SLO model"
+ProductionAnimProfile = "Production-ready animation profile"
+WorldClassAnimSuite = "High-end animation orchestration suite"
+AnimEngine = "Main animation orchestrator"
+intent_motion = "Intent-based motion synthesis authoring"
+physics_aware_motion = "Automatic physics-aware motion adaptation"
+NoCodeAnimRuntime = "No-code animation orchestration runtime"
+
+[platform]
+any = true
+
+[capabilities]
+full_body_ik = "IK solve for complete rigs"
+motion_matching = "Runtime pose search"
+facial_muscles = "Muscle-based facial control"
+blend_trees = "Hierarchical animation blending"
+procedural_blend = "Additive procedural overlays"
+ai_locomotion = "Locomotion synthesis hooks"
+state_graph = "Advanced animation state graphing"
+retargeting = "Cross-skeleton motion transfer"
+motion_warping = "Target-aware root motion warping"
+clip_streaming = "Compressed animation streaming"
+anim_events = "Timed animation notifications"
+animation_network_sync = "Networked animation state sync"
+learned_locomotion = "Model-based locomotion synthesis"
+physics_animation_coupling = "Physics-state driven animation correction"
+production_health = "Animation health telemetry and readiness"
+intent_motion_synthesis = "Generate motion from intent descriptors"
+physics_aware_adaptation = "Auto adapt animation to slope/impact/ragdoll"
+no_manual_state_machine = "No imperative animation state machine coding path"
