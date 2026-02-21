@@ -768,7 +768,19 @@ See `CONTRIBUTING.md` for detailed contribution guidelines.
 
 ## License
 
-Nyx is licensed under the **Nyx Language Project License**, modeled after the Python Software Foundation License v2. It is a permissive, BSD-style license that allows free use, modification, and redistribution — provided the copyright notice is retained.
+Nyx is licensed under a **custom no-contribution license**:
+
+✅ **You CAN:**
+- Download and use the software freely
+- Experiment and modify locally for personal use
+- Use in personal, educational, or commercial projects
+- Report bugs and request features via GitHub Issues
+
+❌ **You CANNOT:**
+- Push or commit changes to the repository
+- Create pull requests or contribute code
+- Redistribute modified versions
+- Fork for public distribution
 
 Copyright (c) 2024-2026 Surya Sekhar Roy. All Rights Reserved.
 
