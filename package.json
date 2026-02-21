@@ -3,7 +3,7 @@
   "version": "3.3.3",
   "description": "Nyx Programming Language",
   "main": "index.js",
-  "license": "PROPRIETARY",
+  "license": "PSF-2.0",
   "author": "Surya Sekhar Roy",
   "copyright": "Copyright (c) 2026 Surya Sekhar Roy. All Rights Reserved.",
   "repository": {

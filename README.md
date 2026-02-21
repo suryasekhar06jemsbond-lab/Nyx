@@ -768,6 +768,8 @@ See `CONTRIBUTING.md` for detailed contribution guidelines.
 
 ## License
 
-This project is **proprietary software**. Copyright (c) 2026 Surya Sekhar Roy. All Rights Reserved.
+Nyx is licensed under the **Nyx Language Project License**, modeled after the Python Software Foundation License v2. It is a permissive, BSD-style license that allows free use, modification, and redistribution — provided the copyright notice is retained.
+
+Copyright (c) 2024-2026 Surya Sekhar Roy. All Rights Reserved.
 
 See the [LICENSE](LICENSE) file for full terms and conditions.
