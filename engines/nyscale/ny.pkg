@@ -1,0 +1,37 @@
+# Nyscale Engine Package Configuration
+
+name = "Nyscale"
+version = "2.0.0"
+description = "Nyx Distributed Training Engine - data/model/pipeline parallelism, ZeRO, elastic scaling"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyscale"
+
+keywords = ["nyx", "distributed", "data-parallel", "model-parallel", "pipeline", "zero", "elastic", "gradient"]
+
+dependencies = ["nyx >= 2.0.0", "nytensor", "nygrad"]
+
+[scripts]
+Nyscale = "nyscale:create_scale"
+
+[modules]
+compression = "Gradient compression and sparsification"
+data_parallel = "Replicated data parallelism"
+dist = "Distributed context and collective ops"
+elastic = "Elastic scaling and fault recovery"
+model_parallel = "Model shard and tensor parallelism"
+pipeline = "Pipeline parallelism with micro-batches"
+trainer = "Distributed training orchestrator"
+zero = "ZeRO optimizer state partitioning"
+
+[platform]
+any = true
+
+[capabilities]
+data_parallelism = "Multi-GPU replicated data parallel"
+elastic_training = "Dynamic worker scaling and recovery"
+model_parallelism = "Tensor and model shard parallelism"
+pipeline_parallelism = "Stage-based pipeline parallelism"
+zero_optimizer = "ZeRO-1/2/3 optimizer partitioning"
+

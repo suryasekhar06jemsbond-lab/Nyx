@@ -1,0 +1,36 @@
+# Nymind Engine Package Configuration
+
+name = "Nymind"
+version = "1.0.0"
+description = "Nyx Cognitive Reasoning Engine - symbolic AI, Bayesian networks, belief revision"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nymind"
+
+keywords = ["nyx", "reasoning", "symbolic", "bayesian", "logic", "ontology", "belief", "cognitive"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nymind = "nymind:create_mind"
+
+[modules]
+belief = "Belief revision and conflict resolution"
+CognitiveMind = "Main cognitive reasoning orchestrator"
+logic = "Prolog-style SLD resolution and unification"
+ontology = "OWL ontology import/export"
+probabilistic = "Bayesian networks, Gibbs sampling, Markov"
+rules = "Forward/backward chaining inference engine"
+symbolic = "Modus ponens, resolution, SAT solving"
+
+[platform]
+any = true
+
+[capabilities]
+bayesian_networks = "Probabilistic graphical models"
+belief_revision = "AGM belief revision"
+inference_engine = "Forward and backward chaining"
+logic_programming = "Prolog-style resolution"
+ontology_reasoning = "OWL-based ontology reasoning"
+

@@ -1,0 +1,35 @@
+# Nyode Engine Package Configuration
+
+name = "Nyode"
+version = "1.0.0"
+description = "Nyx Differential Equation Engine - ODE/PDE solvers, adaptive stepping, stability"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyode"
+
+keywords = ["nyx", "ode", "pde", "differential-equations", "runge-kutta", "finite-difference", "stiff"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyode = "nyode:create_ode"
+
+[modules]
+adaptive = "Adaptive step size control"
+explicit = "Explicit solvers (RK4, Euler, Midpoint)"
+implicit = "Implicit solvers for stiff systems"
+pde = "PDE finite difference solvers"
+stability = "Stability analysis tools"
+system = "ODE system representation"
+
+[platform]
+any = true
+
+[capabilities]
+adaptive_stepping = "Error-based step size control"
+pde_solvers = "1D/2D finite difference PDE solvers"
+runge_kutta = "RK4 and embedded RK methods"
+stability_analysis = "Eigenvalue-based stability analysis"
+stiff_solvers = "BDF and implicit methods for stiff ODEs"
+

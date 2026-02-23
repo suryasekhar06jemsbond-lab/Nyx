@@ -1,0 +1,36 @@
+# Nyprecision Engine Package Configuration
+
+name = "Nyprecision"
+version = "1.0.0"
+description = "Nyx Arbitrary Precision Engine - BigInt, BigFloat, interval arithmetic"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyprecision"
+
+keywords = ["nyx", "precision", "bigint", "bigfloat", "interval", "numerical-stability", "kahan"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyprecision = "nyprecision:create_precision"
+
+[modules]
+bigfloat = "Arbitrary precision floating point"
+bigint = "Arbitrary precision integers"
+error = "Error propagation tracking"
+interval = "Interval arithmetic with bounds"
+rounding = "Deterministic rounding control"
+stability = "Floating-point stability monitoring"
+summation = "Kahan compensated summation"
+
+[platform]
+any = true
+
+[capabilities]
+arbitrary_float = "Configurable precision floating point"
+arbitrary_int = "Unlimited precision integer arithmetic"
+compensated_summation = "Kahan summation for stability"
+error_tracking = "Automatic error propagation"
+interval_arithmetic = "Rigorous interval bounds"
+

@@ -1,0 +1,37 @@
+# Nyrl Engine Package Configuration
+
+name = "Nyrl"
+version = "2.0.0"
+description = "Nyx Reinforcement Learning Engine - DQN, PPO, SAC, DDPG, multi-armed bandits"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyrl"
+
+keywords = ["nyx", "rl", "reinforcement-learning", "dqn", "ppo", "sac", "ddpg", "bandit"]
+
+dependencies = ["nyx >= 2.0.0", "nytensor", "nygrad"]
+
+[scripts]
+Nyrl = "nyrl:create_rl"
+
+[modules]
+bandit = "Epsilon-greedy and UCB bandits"
+buffer = "Replay and prioritized experience buffers"
+ddpg = "Deep deterministic policy gradient agent"
+dqn = "Deep Q-network with target networks"
+env = "Environment and space definitions"
+policy_gradient = "REINFORCE and actor-critic agents"
+ppo = "Proximal policy optimization agent"
+sac = "Soft actor-critic with entropy tuning"
+
+[platform]
+any = true
+
+[capabilities]
+bandits = "Multi-armed bandit algorithms"
+continuous_control = "DDPG and SAC for continuous actions"
+dqn = "DQN with double and dueling variants"
+policy_gradient = "REINFORCE and A2C algorithms"
+ppo = "PPO with clipped objective"
+

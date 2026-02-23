@@ -2,23 +2,35 @@
 
 name = "Nygui"
 version = "2.0.0"
-description = "Nyx GUI Framework - Windows, Widgets, Layouts"
+description = "Nyx GUI Framework Engine - windows, widgets, layouts, canvas, menus, dialogs"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
 homepage = "https://github.com/nyxlang/Nygui"
 
-keywords = ["nyx", "gui", "ui", "widgets", "desktop"]
+keywords = ["nyx", "gui", "widgets", "desktop", "window", "layout", "canvas", "dialog"]
 
 dependencies = ["nyx >= 2.0.0"]
 
 [scripts]
-Nygui = "Nygui:main"
+Nygui = "nygui:create_gui"
 
 [modules]
-Nygui = "Main GUI framework"
-widgets = "UI widgets"
-layouts = "Layout managers"
-canvas = "Drawing canvas"
-menus = "Menu system"
-dialogs = "Dialog boxes"
+application = "Application lifecycle and event loop"
+canvas = "2D drawing canvas with shapes"
+dialogs = "File, color, message dialogs"
+layout = "Grid, pack, and place layout managers"
+menus = "Menu bar and context menus"
+widgets = "Button, Label, Entry, Text, Checkbox, etc."
+window = "Window and dialog management"
+
+[platform]
+any = true
+
+[capabilities]
+canvas_drawing = "2D drawing with shapes and images"
+dialog_system = "Standard file/color/message dialogs"
+event_handling = "Event binding and propagation"
+layout_management = "Grid, pack, place layout engines"
+widget_toolkit = "Rich widget library with styling"
+

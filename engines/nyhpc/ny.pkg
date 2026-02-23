@@ -1,0 +1,36 @@
+# Nyhpc Engine Package Configuration
+
+name = "Nyhpc"
+version = "1.0.0"
+description = "Nyx High-Performance Computing Engine - MPI, GPU clusters, NUMA, fault tolerance"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyhpc"
+
+keywords = ["nyx", "hpc", "mpi", "parallel", "gpu-cluster", "numa", "fault-tolerance", "distributed"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyhpc = "nyhpc:create_hpc"
+
+[modules]
+deterministic = "Deterministic execution guarantees"
+fault_tolerance = "Checkpoint and recovery"
+gpu_cluster = "GPU cluster orchestration"
+load_balance = "Dynamic load balancing"
+mpi = "MPI-style distributed cluster computing"
+numa = "NUMA-aware memory handling"
+parallel = "Multi-core parallelism primitives"
+
+[platform]
+any = true
+
+[capabilities]
+deterministic_execution = "Bit-reproducible parallel execution"
+fault_recovery = "Checkpoint-based fault tolerance"
+gpu_orchestration = "Multi-GPU job scheduling"
+mpi_communication = "Scatter/gather/reduce/broadcast"
+numa_aware = "NUMA-topology-aware allocation"
+

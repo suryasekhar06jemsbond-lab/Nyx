@@ -2,32 +2,39 @@
 
 name = "Nysystem"
 version = "2.0.0"
-description = "Nyx System Programming Engine - Syscalls, Drivers, Embedded, FFI"
+description = "Nyx System Programming Engine - syscalls, processes, threads, memory, filesystem, FFI"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
 homepage = "https://github.com/nyxlang/Nysystem"
 
-keywords = ["nyx", "system-programming", "syscalls", "drivers", "embedded", "ffi"]
+keywords = ["nyx", "system", "syscall", "process", "thread", "memory", "filesystem", "ffi", "driver"]
 
 dependencies = ["nyx >= 2.0.0"]
 
 [scripts]
-Nysystem = "Nysystem:main"
+Nysystem = "nysystem:create_system"
 
 [modules]
-Nysystem = "Core system engine"
-syscall = "System calls"
-process = "Process management"
-thread = "Threading & synchronization"
-memory = "Memory management"
-filesystem = "File I/O & paths"
-network = "Low-level networking"
-time = "Time & timers"
-signal = "Signal handling"
-env = "Environment variables"
-ffi = "Foreign function interface"
-driver = "Driver framework"
+driver = "Device driver framework"
+env = "Environment variables and paths"
+ffi = "Foreign function interface (C/Rust)"
+filesystem = "Low-level file system operations"
+memory = "Memory mapping and allocation"
+network = "Raw network socket access"
+process = "Process management and IPC"
+signal = "Signal handling and delivery"
+syscall = "Direct kernel syscall interface"
+thread = "Thread creation and synchronization"
+time = "High-precision timing and clocks"
 
 [platform]
 any = true
+
+[capabilities]
+ffi = "C/Rust foreign function calls"
+memory_management = "mmap, shmem, memory protection"
+process_management = "Spawn, signal, IPC primitives"
+syscall = "Direct kernel syscall invocation"
+thread_management = "Thread pool and synchronization"
+

@@ -2,29 +2,36 @@
 
 name = "Nygpu"
 version = "2.0.0"
-description = "Nyx GPU Compute Engine - CUDA, Vulkan, Metal, ROCm Support"
+description = "Nyx GPU Compute Engine - CUDA, Vulkan, Metal, ROCm, tensor cores, ray tracing"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
 homepage = "https://github.com/nyxlang/Nygpu"
 
-keywords = ["nyx", "gpu", "cuda", "vulkan", "metal", "compute", "gpgpu"]
+keywords = ["nyx", "gpu", "cuda", "vulkan", "metal", "rocm", "tensorcore", "compute", "ray-tracing"]
 
 dependencies = ["nyx >= 2.0.0"]
 
 [scripts]
-Nygpu = "Nygpu:main"
+Nygpu = "nygpu:create_gpu"
 
 [modules]
-Nygpu = "Core GPU engine"
-cuda = "NVIDIA CUDA support"
-vulkan = "Vulkan compute"
-metal = "Apple Metal compute"
-roc = "AMD ROCm support"
-device = "Device management"
-memory = "GPU memory management"
-kernel = "Kernel compilation & execution"
-tensor = "GPU tensor operations"
+cuda = "CUDA kernel launch and memory"
+interop = "Cross-API GPU interop"
+metal = "Apple Metal compute pipeline"
+roc = "AMD ROCm HIP compute"
+rt = "Ray tracing acceleration"
+tensorcore = "Tensor core mixed-precision compute"
+vulkan = "Vulkan compute shader dispatch"
 
 [platform]
 any = true
+
+[capabilities]
+cuda_compute = "CUDA kernel launch and memory management"
+metal_compute = "Apple Metal compute pipelines"
+ray_tracing = "Hardware ray tracing acceleration"
+rocm_compute = "AMD ROCm HIP kernel execution"
+tensor_cores = "Mixed-precision tensor core operations"
+vulkan_compute = "Vulkan compute shader dispatch"
+

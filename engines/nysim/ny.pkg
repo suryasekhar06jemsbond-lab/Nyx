@@ -1,0 +1,35 @@
+# Nysim Engine Package Configuration
+
+name = "Nysim"
+version = "1.0.0"
+description = "Nyx Simulation Engine - physics, agents, scenarios, time control, checkpoints"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nysim"
+
+keywords = ["nyx", "simulation", "physics", "agent", "scenario", "time-control", "rigid-body"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nysim = "nysim:create_sim"
+
+[modules]
+physics = "Rigid body, collider, collision detection/resolution"
+sandbox = "Agent sandbox with policy/observe/act"
+scenario = "Scenario runner with success criteria"
+SimEngine = "Main simulation orchestrator"
+time_control = "Pause/resume/checkpoint/restore time control"
+world = "Vec3, Transform, Entity, World with ECS"
+
+[platform]
+any = true
+
+[capabilities]
+agent_sandbox = "Multi-agent sandbox with rewards"
+collision_detection = "Sphere and box collision detection"
+rigid_body_physics = "Force-based rigid body simulation"
+scenario_testing = "Configurable scenario success criteria"
+time_checkpoints = "Snapshot and restore simulation state"
+

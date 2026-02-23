@@ -1,0 +1,39 @@
+# Nyevent Engine Package Configuration
+
+name = "Nyevent"
+version = "1.0.0"
+description = "Nyx Event Propagation & Signal Engine - dispatch, bus, gestures, commands"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyevent"
+
+keywords = ["nyx", "event", "signal", "dispatch", "bus", "gesture", "command", "stream"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyevent = "nyevent:create_event_system"
+
+[modules]
+bus = "Global event bus with namespaces"
+commands = "Command pattern with undo/redo"
+core = "Event types and handler registry"
+dispatch = "Priority-based event dispatch"
+EventSystem = "Main event system orchestrator"
+gestures = "Touch, swipe, pinch gesture recognition"
+shortcuts = "Keyboard shortcut binding"
+signals = "Reactive signal/slot connections"
+streams = "Reactive event streams"
+timing = "Debounce, throttle, delay"
+
+[platform]
+any = true
+
+[capabilities]
+command_undo = "Command pattern with undo/redo stack"
+event_dispatch = "Priority-ordered event propagation"
+event_streams = "Functional reactive event streams"
+gesture_recognition = "Multi-touch gesture detection"
+signal_slot = "Type-safe signal/slot connections"
+

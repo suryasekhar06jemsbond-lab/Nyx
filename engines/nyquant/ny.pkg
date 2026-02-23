@@ -1,0 +1,34 @@
+# Nyquant Engine Package Configuration
+
+name = "Nyquant"
+version = "1.0.0"
+description = "Nyx Model Compression Engine - INT8/INT4 quantization, pruning, distillation"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyquant"
+
+keywords = ["nyx", "quantization", "compression", "pruning", "distillation", "int8", "int4", "optimization"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyquant = "nyquant:create_quant"
+
+[modules]
+benchmark = "Accuracy/speed benchmarking"
+calibration = "Post-training calibration"
+distillation = "Knowledge distillation"
+pruning = "Structured and unstructured pruning"
+quantize = "INT8/INT4/FP16 quantization"
+
+[platform]
+any = true
+
+[capabilities]
+int4_quantization = "INT4 weight-only quantization"
+int8_quantization = "Post-training INT8 quantization"
+knowledge_distillation = "Teacher-student distillation"
+mixed_precision = "Mixed precision inference"
+pruning = "Magnitude and structured pruning"
+

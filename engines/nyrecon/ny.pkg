@@ -1,0 +1,35 @@
+# Nyrecon Engine Package Configuration
+
+name = "Nyrecon"
+version = "1.0.0"
+description = "Nyx Reconnaissance Engine - port scanning, fingerprinting, subdomain enumeration"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyrecon"
+
+keywords = ["nyx", "recon", "scanning", "fingerprint", "subdomain", "crawl", "vulnerability"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyrecon = "nyrecon:create_recon"
+
+[modules]
+crawler = "Web crawler and spider"
+fingerprint = "Service fingerprinting"
+os_detect = "OS detection heuristics"
+scanner = "Advanced port scanner"
+subdomain = "Subdomain enumeration"
+vuln = "Vulnerability scanning modules"
+
+[platform]
+any = true
+
+[capabilities]
+os_detection = "TCP/IP stack OS fingerprinting"
+port_scanning = "SYN/TCP/UDP port scanning"
+service_fingerprint = "Banner-based service identification"
+subdomain_enum = "DNS-based subdomain discovery"
+web_crawling = "Recursive web crawling"
+

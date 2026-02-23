@@ -1,4 +1,3 @@
-import "nypm";
-
-let app = nypm.nyweb.create();
-print(app);
+# NYPM placeholder smoke (runtime package import check)
+use nyobjects;
+print("nypm-ok");

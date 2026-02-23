@@ -1,0 +1,37 @@
+# Nylinear Engine Package Configuration
+
+name = "Nylinear"
+version = "1.0.0"
+description = "Nyx Linear Algebra Engine - matrices, decomposition, SVD, eigensolvers, sparse"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nylinear"
+
+keywords = ["nyx", "linear-algebra", "matrix", "svd", "eigenvalues", "sparse", "qr", "lu"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nylinear = "nylinear:create_linear"
+
+[modules]
+eigen = "Eigenvalue solvers"
+lu = "LU decomposition"
+matrix = "Dense matrix operations"
+nonlinear = "Nonlinear equation solvers"
+optimization = "Numerical optimization solvers"
+qr = "QR decomposition"
+sparse = "Sparse matrix support"
+svd = "Singular value decomposition"
+
+[platform]
+any = true
+
+[capabilities]
+decomposition = "LU/QR/SVD/Cholesky decomposition"
+dense_matrix = "Full dense matrix algebra"
+eigensolvers = "Symmetric and general eigensolvers"
+optimization = "Constrained and unconstrained optimization"
+sparse_algebra = "CSR/CSC sparse matrix operations"
+

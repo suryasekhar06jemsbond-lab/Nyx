@@ -1,0 +1,34 @@
+# Nyprovision Engine Package Configuration
+
+name = "Nyprovision"
+version = "1.0.0"
+description = "Nyx Provisioning Engine - infrastructure builder, idempotent execution, drift"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyprovision"
+
+keywords = ["nyx", "provisioning", "infrastructure", "idempotent", "state", "drift", "rollback"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyprovision = "nyprovision:create_provision"
+
+[modules]
+builder = "Infrastructure builder DSL"
+drift = "Drift detection and remediation"
+engine = "Provisioning orchestrator"
+executor = "Idempotent execution engine"
+rollback = "Rollback management"
+state = "State management and versioning"
+
+[platform]
+any = true
+
+[capabilities]
+drift_detection = "Live state drift detection"
+idempotent_execution = "Convergent idempotent operations"
+rollback = "Point-in-time rollback"
+state_tracking = "Versioned infrastructure state"
+

@@ -1,0 +1,36 @@
+# Nyhft Engine Package Configuration
+
+name = "Nyhft"
+version = "1.0.0"
+description = "Nyx High-Frequency Trading Engine - lock-free queues, kernel bypass, RDTSC"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyhft"
+
+keywords = ["nyx", "hft", "trading", "low-latency", "lock-free", "dpdk", "rdtsc", "nanosecond"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyhft = "nyhft:create_hft"
+
+[modules]
+HFTEngine = "Main HFT orchestrator"
+hotpath = "Hot path processor: market to order pipeline"
+lockfree = "SPSC/MPSC queues, ring buffer, atomics"
+memory = "Zero-copy buffers, huge pages, memory pools"
+network = "DPDK kernel bypass networking"
+scheduling = "CPU pinning, busy-wait, core isolation"
+timestamps = "RDTSC hardware timestamps, latency tracker"
+
+[platform]
+any = true
+
+[capabilities]
+cpu_pinning = "Core isolation and busy-wait loops"
+kernel_bypass = "DPDK kernel bypass networking"
+lock_free_queues = "SPSC and MPSC lock-free queues"
+nanosecond_timestamps = "RDTSC hardware timestamp precision"
+zero_copy = "Zero-copy buffer management"
+

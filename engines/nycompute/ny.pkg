@@ -1,0 +1,30 @@
+# Nycompute Engine Package Configuration
+
+name = "Nycompute"
+version = "1.0.0"
+description = "Nyx Vectorized Compute Engine - SIMD operations, parallel computation"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nycompute"
+
+keywords = ["nyx", "compute", "simd", "vectorized", "parallel", "math", "acceleration"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nycompute = "nycompute:create_compute"
+
+[modules]
+math = "High-performance numerical routines"
+parallel = "Multi-core parallel computation"
+vectorized = "SIMD-accelerated vector operations"
+
+[platform]
+any = true
+
+[capabilities]
+numerical_precision = "IEEE 754 compliant precision"
+parallel_compute = "Multi-core workload distribution"
+simd_acceleration = "AVX/SSE/NEON vectorized ops"
+

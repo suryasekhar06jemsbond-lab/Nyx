@@ -1,0 +1,36 @@
+# Nycache Engine Package Configuration
+
+name = "Nycache"
+version = "1.0.0"
+description = "Nyx Distributed Cache Engine - LRU/LFU eviction, sharding, pub/sub, persistence"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nycache"
+
+keywords = ["nyx", "cache", "nyx", "redis", "nyx", "lru", "nyx", "lfu", "nyx", "sharding", "nyx", "pubsub", "nyx", "persistence", "nyx", "ttl"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nycache = "nycache:create_cache"
+
+[modules]
+cache = "In-memory cache with stats"
+CacheEngine = "Main cache orchestrator"
+persistence = "Snapshot persistence with checksum"
+pubsub = "Channel-based pub/sub messaging"
+sharding = "Consistent-hash sharded cache"
+store = "Cache entry with TTL, LRU/LFU eviction"
+structures = "List, Set, Hash, SortedSet data structures"
+
+[platform]
+any = true
+
+[capabilities]
+data_structures = "Redis-like List/Set/Hash/SortedSet"
+lru_lfu_eviction = "LRU and LFU eviction policies"
+pubsub_messaging = "Channel publish/subscribe messaging"
+sharded_cache = "Consistent-hash sharded distribution"
+snapshot_persistence = "Checksummed disk persistence"
+

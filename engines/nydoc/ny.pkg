@@ -2,29 +2,33 @@
 
 name = "Nydoc"
 version = "2.0.0"
-description = "Nyx Document Engine - LaTeX, PDF, Reports, Charts, Visualization"
+description = "Nyx Document Generation Engine - LaTeX, PDF, Markdown, charts, reports"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
 homepage = "https://github.com/nyxlang/Nydoc"
 
-keywords = ["nyx", "document", "latex", "pdf", "reports", "charts", "visualization"]
+keywords = ["nyx", "document", "pdf", "latex", "markdown", "chart", "report", "generation"]
 
 dependencies = ["nyx >= 2.0.0"]
 
 [scripts]
-Nydoc = "Nydoc:main"
+Nydoc = "nydoc:create_doc"
 
 [modules]
-Nydoc = "Core document engine"
-latex = "LaTeX generation"
-pdf = "PDF generation"
-markdown = "Markdown processing"
-html = "HTML generation"
-charts = "Chart & graph generation"
-tables = "Table generation"
-templates = "Document templates"
-report = "Report builder"
+charts = "Chart and graph generation"
+latex = "LaTeX document generation"
+markdown = "Markdown parser and renderer"
+pdf = "PDF rendering and manipulation"
+report = "Report template engine"
 
 [platform]
 any = true
+
+[capabilities]
+chart_generation = "Bar, line, pie charts in documents"
+latex_generation = "LaTeX document compilation"
+markdown = "CommonMark and GFM parsing"
+pdf_rendering = "PDF creation and merging"
+report_templates = "Parametric report generation"
+

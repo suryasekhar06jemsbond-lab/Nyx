@@ -1,0 +1,35 @@
+# Nyvoice Engine Package Configuration
+
+name = "Nyvoice"
+version = "1.0.0"
+description = "Nyx Speech & Voice Engine - STT, TTS, wake-word, VAD, noise reduction"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyvoice"
+
+keywords = ["nyx", "voice", "speech", "stt", "tts", "wake-word", "vad", "audio", "recognition"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyvoice = "nyvoice:create_voice"
+
+[modules]
+audio = "Audio capture, streams, buffers, VAD"
+effects = "Noise reduction, echo cancellation, resampling"
+stt = "Speech-to-text with streaming transcription"
+tts = "Text-to-speech with SSML and voice selection"
+VoiceEngine = "Main voice orchestrator"
+wakeword = "Wake-word detection with keyword sensitivity"
+
+[platform]
+any = true
+
+[capabilities]
+noise_reduction = "Adaptive noise reduction and echo cancellation"
+speech_recognition = "Real-time streaming speech-to-text"
+speech_synthesis = "SSML-supported text-to-speech"
+voice_activity = "Voice activity detection"
+wake_word = "Always-on wake-word detection"
+

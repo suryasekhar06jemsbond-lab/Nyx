@@ -1,0 +1,43 @@
+# Nyruntime Engine Package Configuration
+
+name = "Nyruntime"
+version = "1.0.0"
+description = "Nyx Desktop Runtime Engine - platform, memory, threading, GPU, windowing"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyruntime"
+
+keywords = ["nyx", "runtime", "desktop", "platform", "memory", "threading", "gpu", "windowing", "sandbox"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyruntime = "nyruntime:create_runtime"
+
+[modules]
+Application = "Main application runtime"
+clipboard = "System clipboard access"
+diagnostics = "Performance diagnostics"
+dialogs = "Native file/message dialogs"
+event_loop = "Native event loop integration"
+gpu = "GPU device and context management"
+input = "Keyboard/mouse/touch input handling"
+lifecycle = "Application lifecycle management"
+memory = "Memory allocator with pools and arenas"
+platform = "Cross-platform OS detection and API"
+process = "Child process management"
+sandbox = "Process sandboxing"
+threading = "Thread pool and synchronization"
+tray = "System tray integration"
+
+[platform]
+any = true
+
+[capabilities]
+cross_platform = "Windows/macOS/Linux support"
+gpu_context = "Vulkan/Metal/DX12 GPU context"
+memory_management = "Arena and pool allocators"
+native_dialogs = "OS-native file and message dialogs"
+process_sandbox = "Security sandboxing for processes"
+

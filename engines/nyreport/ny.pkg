@@ -1,0 +1,37 @@
+# Nyreport Engine Package Configuration
+
+name = "Nyreport"
+version = "1.0.0"
+description = "Nyx Reporting & Notebook Engine - notebooks, execution, HTML/PDF export"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyreport"
+
+keywords = ["nyx", "report", "notebook", "html", "pdf", "export", "storytelling", "interactive"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyreport = "nyreport:create_report"
+
+[modules]
+api = "Notebook manipulation API"
+html_export = "HTML report export"
+interactive = "Interactive document features"
+io = "Notebook format I/O"
+kernel = "Cell execution kernel"
+notebook = "Notebook structure with cells"
+pdf_export = "PDF report generation"
+templates = "Data storytelling templates"
+
+[platform]
+any = true
+
+[capabilities]
+html_export = "Rich HTML report generation"
+interactive_docs = "Interactive widget support"
+notebook_execution = "Code cell execution with output capture"
+pdf_export = "PDF rendering pipeline"
+storytelling = "Data narrative templates"
+

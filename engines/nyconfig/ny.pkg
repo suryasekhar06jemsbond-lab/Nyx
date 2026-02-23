@@ -1,0 +1,34 @@
+# Nyconfig Engine Package Configuration
+
+name = "Nyconfig"
+version = "1.0.0"
+description = "Nyx Configuration Engine - parsing, templating, secrets, remote config"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyconfig"
+
+keywords = ["nyx", "config", "configuration", "secrets", "templates", "environment", "validation"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyconfig = "nyconfig:create_config"
+
+[modules]
+environment = "Environment-specific config management"
+parser = "Multi-format config parser (TOML/YAML/JSON)"
+remote = "Remote config with polling"
+secrets = "Secret manager with encryption"
+template = "Config templating with variable substitution"
+validator = "Schema-based config validation"
+
+[platform]
+any = true
+
+[capabilities]
+multi_format = "TOML/YAML/JSON/INI parsing"
+remote_config = "Remote config with hot reload"
+schema_validation = "Type-safe config validation"
+secret_management = "Encrypted secret storage"
+

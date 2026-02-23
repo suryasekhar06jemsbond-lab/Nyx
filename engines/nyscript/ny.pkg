@@ -1,0 +1,30 @@
+# Nyscript Engine Package Configuration
+
+name = "Nyscript"
+version = "1.0.0"
+description = "Nyx Scripting & Automation Engine - task runner, async tasks, scripting DSL"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyscript"
+
+keywords = ["nyx", "script", "automation", "task", "async", "runner", "dsl"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyscript = "nyscript:create_script"
+
+[modules]
+async_tasks = "Async task execution engine"
+dsl = "Scripting domain-specific language"
+runner = "Task runner and scheduler"
+
+[platform]
+any = true
+
+[capabilities]
+async_execution = "Non-blocking async task engine"
+scripting_dsl = "Lightweight scripting DSL"
+task_running = "Sequential and parallel task execution"
+

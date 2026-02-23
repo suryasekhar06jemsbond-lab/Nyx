@@ -1,0 +1,35 @@
+# Nyserverless Engine Package Configuration
+
+name = "Nyserverless"
+version = "1.0.0"
+description = "Nyx FaaS Engine - cold-start optimization, event triggers, edge deployment"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyserverless"
+
+keywords = ["nyx", "serverless", "faas", "lambda", "edge", "cold-start", "triggers", "functions"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyserverless = "nyserverless:create_serverless"
+
+[modules]
+composition = "Function composition pipelines with branching"
+edge = "Edge location deployment and routing"
+functions = "Function config, instances, invocation"
+scaling = "Auto-scaling with warm pools and scale-to-zero"
+ServerlessEngine = "Main serverless orchestrator"
+triggers = "HTTP/schedule/queue/storage/event triggers"
+
+[platform]
+any = true
+
+[capabilities]
+cold_start_optimization = "Warm pool and provisioned concurrency"
+edge_deployment = "Multi-region edge deployment routing"
+event_triggers = "HTTP/cron/queue/storage/event triggers"
+function_pipelines = "Step function composition with branching"
+scale_to_zero = "Automatic scale-to-zero on idle"
+

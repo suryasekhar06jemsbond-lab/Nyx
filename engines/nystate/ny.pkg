@@ -1,0 +1,36 @@
+# Nystate Engine Package Configuration
+
+name = "Nystate"
+version = "1.0.0"
+description = "Nyx Reactive State Engine - observables, stores, time-travel, middleware"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nystate"
+
+keywords = ["nyx", "state", "reactive", "observable", "store", "time-travel", "middleware", "binding"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nystate = "nystate:create_state"
+
+[modules]
+bindings = "UI data binding layer"
+compose = "Computed values and state composition"
+devtools = "Developer tools and state inspector"
+middleware = "State change middleware pipeline"
+reactive = "Observable values with subscriptions"
+store = "Centralized state stores with selectors"
+timetravel = "Time-travel debugging with snapshots"
+
+[platform]
+any = true
+
+[capabilities]
+centralized_store = "Redux-style centralized store"
+computed_values = "Derived computed state values"
+reactive_state = "Observable state with automatic subscriptions"
+state_middleware = "Interceptor middleware for state changes"
+time_travel = "Undo/redo with state snapshots"
+

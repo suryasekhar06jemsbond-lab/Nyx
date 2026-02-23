@@ -222,7 +222,396 @@ class Callback {
     }
 }
 
+# ===========================================
+# Advanced FFI Features
+# ===========================================
+
+# Variadic function support
+class VariadicFunction {
+    fn init(self, ptr, ret_type) {
+        self.ptr = ptr;
+        self.ret_type = ret_type;
+    }
+    
+    fn call(self, ...args) {
+        # Convert args to C variadic format
+        return _ffi_call_variadic(self.ptr, self.ret_type, args);
+    }
+}
+
+# Function pointer table (vtable)
+class VTable {
+    fn init(self) {
+        self.functions = {};
+    }
+    
+    fn add(self, name, func_ptr, ret_type) {
+        self.functions[name] = CFunction(func_ptr, ret_type);
+    }
+    
+    fn call(self, name, ...args) {
+        if name in self.functions {
+            return self.functions[name].call(...args);
+        }
+        throw "VTable: function " + name + " not found";
+    }
+}
+
+# Union type for C unions
+class CUnion {
+    fn init(self, size) {
+        self.ptr = malloc(size);
+        self.size = size;
+        
+        if self.ptr == null {
+            throw "CUnion: allocation failed";
+        }
+    }
+    
+    fn read_as(self, type_) {
+        return peek(self.ptr, type_);
+    }
+    
+    fn write_as(self, value, type_) {
+        poke(self.ptr, value, type_);
+    }
+    
+    fn destroy(self) {
+        if self.ptr != null {
+            free(self.ptr);
+            self.ptr = null;
+        }
+    }
+}
+
+# Bit field support
+class BitField {
+    fn init(self, value, offset, width) {
+        self.value = value;
+        self.offset = offset;
+        self.width = width;
+    }
+    
+    fn get(self) {
+        let mask = (1 << self.width) - 1;
+        return (self.value >> self.offset) & mask;
+    }
+    
+    fn set(self, new_value) {
+        let mask = (1 << self.width) - 1;
+        self.value = (self.value & ~(mask << self.offset)) | ((new_value & mask) << self.offset);
+        return self.value;
+    }
+}
+
+# Packed struct support
+class PackedStruct {
+    fn init(self, fields) {
+        # fields = [(name, type, offset), ...]
+        self.fields = fields;
+        self.size = self.calculate_size();
+        self.ptr = malloc(self.size);
+        
+        if self.ptr == null {
+            throw "PackedStruct: allocation failed";
+        }
+    }
+    
+    fn calculate_size(self) {
+        let max_end = 0;
+        for field in self.fields {
+            let offset = field[2];
+            let type_ = field[1];
+            let end = offset + type_size(type_.name);
+            if end > max_end {
+                max_end = end;
+            }
+        }
+        return max_end;
+    }
+    
+    fn get(self, field_name) {
+        for field in self.fields {
+            if field[0] == field_name {
+                let offset = field[2];
+                let type_ = field[1];
+                return peek(ptr_add(self.ptr, offset), type_.name);
+            }
+        }
+        throw "PackedStruct: field " + field_name + " not found";
+    }
+    
+    fn set(self, field_name, value) {
+        for field in self.fields {
+            if field[0] == field_name {
+                let offset = field[2];
+                let type_ = field[1];
+                poke(ptr_add(self.ptr, offset), value, type_.name);
+                return;
+            }
+        }
+        throw "PackedStruct: field " + field_name + " not found";
+    }
+    
+    fn destroy(self) {
+        if self.ptr != null {
+            free(self.ptr);
+            self.ptr = null;
+        }
+    }
+}
+
+# Function trampoline for callbacks
+class CallbackTrampoline {
+    fn init(self, nyx_func, ret_type, arg_types) {
+        self.nyx_func = nyx_func;
+        self.ret_type = ret_type;
+        self.arg_types = arg_types;
+        self.trampoline_ptr = _ffi_create_trampoline(nyx_func, ret_type, arg_types);
+    }
+    
+    fn get_ptr(self) {
+        return self.trampoline_ptr;
+    }
+    
+    fn destroy(self) {
+        if self.trampoline_ptr != null {
+            _ffi_destroy_trampoline(self.trampoline_ptr);
+            self.trampoline_ptr = null;
+        }
+    }
+}
+
+# Lazy symbol loading
+class LazySymbol {
+    fn init(self, lib, symbol_name, ret_type) {
+        self.lib = lib;
+        self.symbol_name = symbol_name;
+        self.ret_type = ret_type;
+        self.func_ptr = null;
+        self.loaded = false;
+    }
+    
+    fn ensure_loaded(self) {
+        if !self.loaded {
+            self.func_ptr = symbol(self.lib, self.symbol_name);
+            if self.func_ptr == null {
+                throw "LazySymbol: failed to load " + self.symbol_name;
+            }
+            self.loaded = true;
+        }
+    }
+    
+    fn call(self, ...args) {
+        self.ensure_loaded();
+        return call(self.func_ptr, self.ret_type, ...args);
+    }
+}
+
+# Dynamic library loader with caching
+class LibraryCache {
+    fn init(self) {
+        self.libraries = {};
+    }
+    
+    fn load(self, path) {
+        if path in self.libraries {
+            return self.libraries[path];
+        }
+        
+        let lib = Library(path);
+        self.libraries[path] = lib;
+        return lib;
+    }
+    
+    fn unload(self, path) {
+        if path in self.libraries {
+            let lib = self.libraries[path];
+            lib.close();
+            delete(self.libraries, path);
+        }
+    }
+    
+    fn unload_all(self) {
+        for path in keys(self.libraries) {
+            self.libraries[path].close();
+        }
+        self.libraries = {};
+    }
+}
+
+# Opaque pointers (for C void*)
+class OpaquePtr {
+    fn init(self, ptr) {
+        self.ptr = ptr;
+    }
+    
+    fn as_int(self) {
+        return address_of(self.ptr);
+    }
+    
+    fn cast(self, type_) {
+        return self.ptr;
+    }
+    
+    fn is_null(self) {
+        return self.ptr == null;
+    }
+}
+
+# Array marshalling helpers
+class ArrayMarshaller {
+    fn to_c_array_i32(self, arr) {
+        let size = len(arr);
+        let ptr = malloc(size * 4);
+        
+        for i in range(0, size) {
+            poke(ptr_add(ptr, i * 4), arr[i], "int");
+        }
+        
+        return ptr;
+    }
+    
+    fn from_c_array_i32(self, ptr, size) {
+        let arr = [];
+        
+        for i in range(0, size) {
+            let val = peek(ptr_add(ptr, i * 4), "int");
+            push(arr, val);
+        }
+        
+        return arr;
+    }
+    
+    fn to_c_array_f64(self, arr) {
+        let size = len(arr);
+        let ptr = malloc(size * 8);
+        
+        for i in range(0, size) {
+            poke(ptr_add(ptr, i * 8), arr[i], "double");
+        }
+        
+        return ptr;
+    }
+    
+    fn from_c_array_f64(self, ptr, size) {
+        let arr = [];
+        
+        for i in range(0, size) {
+            let val = peek(ptr_add(ptr, i * 8), "double");
+            push(arr, val);
+        }
+        
+        return arr;
+    }
+}
+
+# String encoding conversions
+class StringEncoding {
+    fn utf8_to_utf16(self, utf8_str) {
+        return _encoding_convert(utf8_str, "utf8", "utf16");
+    }
+    
+    fn utf16_to_utf8(self, utf16_str) {
+        return _encoding_convert(utf16_str, "utf16", "utf8");
+    }
+    
+    fn to_wide_string(self, str) {
+        # Windows WCHAR* (UTF-16)
+        return self.utf8_to_utf16(str);
+    }
+}
+
+# Error code handling
+class FFIError {
+    fn init(self) {
+        self.last_error = 0;
+    }
+    
+    fn set_last_error(self, code) {
+        self.last_error = code;
+    }
+    
+    fn get_last_error(self) {
+        return self.last_error;
+    }
+    
+    fn clear_error(self) {
+        self.last_error = 0;
+    }
+    
+    fn check_error(self, message = "FFI call failed") {
+        if self.last_error != 0 {
+            throw message + " (error code: " + str(self.last_error) + ")";
+        }
+    }
+}
+
+# Global instances
+let GLOBAL_LIBRARY_CACHE = LibraryCache();
+let GLOBAL_ARRAY_MARSHALLER = ArrayMarshaller();
+let GLOBAL_STRING_ENCODING = StringEncoding();
+let GLOBAL_FFI_ERROR = FFIError();
+
+# Convenience functions
+fn load_library_cached(path) {
+    return GLOBAL_LIBRARY_CACHE.load(path);
+}
+
+fn to_c_array_i32(arr) {
+    return GLOBAL_ARRAY_MARSHALLER.to_c_array_i32(arr);
+}
+
+fn from_c_array_i32(ptr, size) {
+    return GLOBAL_ARRAY_MARSHALLER.from_c_array_i32(ptr, size);
+}
+
+fn utf8_to_utf16(str) {
+    return GLOBAL_STRING_ENCODING.utf8_to_utf16(str);
+}
+
+fn get_ffi_last_error() {
+    return GLOBAL_FFI_ERROR.get_last_error();
+}
+
+# Native stubs for advanced features
+fn _ffi_call_variadic(ptr, ret_type, args) {
+    # Native variadic call implementation
+    return null;
+}
+
+fn _ffi_create_trampoline(func, ret_type, arg_types) {
+    # Create executable trampoline for callback
+    return null;
+}
+
+fn _ffi_destroy_trampoline(ptr) {
+    # Free trampoline memory
+}
+
+fn _encoding_convert(str, from_enc, to_enc) {
+    # Native encoding conversion
+    return str;
+}
+
 # Example usage:
 # let lib = Library("libc.so.6");
 # let printf = lib.func("printf", C_INT);
 # printf.call("Hello %s\n", "World");
+#
+# # Advanced usage:
+# let lib_cache = LibraryCache();
+# let libc = lib_cache.load("libc.so.6");
+#
+# # Callbacks:
+# let callback = CallbackTrampoline(fn(x, y) { return x + y; }, C_INT, [C_INT, C_INT]);
+# some_c_function(callback.get_ptr());
+#
+# # Packed structs:
+# let my_struct = PackedStruct([
+#     ("x", C_INT, 0),
+#     ("y", C_INT, 4),
+#     ("z", C_FLOAT, 8)
+# ]);
+# my_struct.set("x", 42);
+# print(my_struct.get("x"));

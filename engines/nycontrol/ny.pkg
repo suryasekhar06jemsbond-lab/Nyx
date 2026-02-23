@@ -1,0 +1,36 @@
+# Nycontrol Engine Package Configuration
+
+name = "Nycontrol"
+version = "1.0.0"
+description = "Nyx Real-Time Control Engine - PID, sensor fusion, Kalman filter, GPIO"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nycontrol"
+
+keywords = ["nyx", "control", "realtime", "pid", "kalman", "sensor-fusion", "gpio", "robotics"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nycontrol = "nycontrol:create_control"
+
+[modules]
+ControlSystem = "Main control system orchestrator"
+deterministic = "Real-time scheduler with CPU affinity"
+event_loop = "Hard real-time event loop"
+hardware_io = "GPIO/ADC/DAC/PWM hardware interface"
+pid = "PID with anti-windup, cascade, auto-tuner"
+sensor_fusion = "Kalman, EKF, complementary filters"
+signal = "FIR/IIR/FFT/spectrogram DSP"
+
+[platform]
+any = true
+
+[capabilities]
+dsp = "FIR/IIR filtering and FFT spectral analysis"
+hard_realtime = "Deterministic scheduling with CPU pinning"
+hardware_io = "GPIO/ADC/DAC/PWM hardware access"
+kalman_filter = "Extended Kalman and complementary filters"
+pid_control = "PID with anti-windup and auto-tuning"
+

@@ -1,0 +1,5 @@
+project=nyx-hyper-web
+source=tests/nyui/pure_web.ny
+output=tests/nyui/nyweb_hyper_site.html
+bytes=8226
+engines=nyweb,nyrender,nyanim,nyai,nycore

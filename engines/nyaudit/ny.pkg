@@ -1,0 +1,30 @@
+# Nyaudit Engine Package Configuration
+
+name = "Nyaudit"
+version = "1.0.0"
+description = "Nyx Security Auditing Engine - vulnerability scanning, compliance checks, reporting"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyaudit"
+
+keywords = ["nyx", "audit", "security", "vulnerability", "compliance", "scanning", "reporting"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyaudit = "nyaudit:create_auditor"
+
+[modules]
+compliance = "Security standard compliance checker"
+reporter = "Audit report generator"
+scanner = "Automated vulnerability scanner"
+
+[platform]
+any = true
+
+[capabilities]
+audit_reporting = "PDF/HTML audit report generation"
+compliance_check = "CIS/NIST/ISO compliance auditing"
+vuln_scanning = "Automated vulnerability detection"
+

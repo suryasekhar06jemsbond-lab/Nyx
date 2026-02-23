@@ -1,0 +1,80 @@
+{
+  "runtime": "F:\\Nyx\\build\\nyx.exe",
+  "parse_total": 45,
+  "parse_fail": 0,
+  "exec_total": 18,
+  "exec_fail": 14,
+  "parse_failures": [],
+  "exec_failures": [
+    {
+      "file": "F:\\Nyx\\tests\\test_nyai.ny",
+      "exit_code": 1,
+      "stderr": "Error at 2:5: expected ';' after expression"
+    },
+    {
+      "file": "F:\\Nyx\\tests\\test_nyanim.ny",
+      "exit_code": 1,
+      "stderr": "Error at 2:5: expected ';' after expression"
+    },
+    {
+      "file": "F:\\Nyx\\tests\\test_nyaudio.ny",
+      "exit_code": 1,
+      "stderr": "Error at 2:5: expected ';' after expression"
+    },
+    {
+      "file": "F:\\Nyx\\tests\\test_nycore.ny",
+      "exit_code": 1,
+      "stderr": "Error at 2:5: expected ';' after expression"
+    },
+    {
+      "file": "F:\\Nyx\\tests\\test_nynet.ny",
+      "exit_code": 1,
+      "stderr": "Error at 2:5: expected ';' after expression"
+    },
+    {
+      "file": "F:\\Nyx\\tests\\test_nyphysics.ny",
+      "exit_code": 1,
+      "stderr": "Error at 2:5: expected ';' after expression"
+    },
+    {
+      "file": "F:\\Nyx\\tests\\test_nypm.ny",
+      "exit_code": 1,
+      "stderr": "Error at 2:5: expected ';' after expression"
+    },
+    {
+      "file": "F:\\Nyx\\tests\\test_nyrender.ny",
+      "exit_code": 1,
+      "stderr": "Error at 2:5: expected ';' after expression"
+    },
+    {
+      "file": "F:\\Nyx\\tests\\test_nyweb_simple.ny",
+      "exit_code": 1,
+      "stderr": "Error at 2:5: expected ';' after expression"
+    },
+    {
+      "file": "F:\\Nyx\\tests\\test_nyworld.ny",
+      "exit_code": 1,
+      "stderr": "Error at 2:5: expected ';' after expression"
+    },
+    {
+      "file": "F:\\Nyx\\tests\\test_stdlib.ny",
+      "exit_code": 1,
+      "stderr": "Error at 2:5: expected ';' after expression"
+    },
+    {
+      "file": "F:\\Nyx\\tests\\test_use.ny",
+      "exit_code": 1,
+      "stderr": "Error at 2:5: expected ';' after expression"
+    },
+    {
+      "file": "F:\\Nyx\\tests\\test_website.ny",
+      "exit_code": 1,
+      "stderr": "Error at 2:5: expected ';' after expression"
+    },
+    {
+      "file": "F:\\Nyx\\tests\\website.ny",
+      "exit_code": 1,
+      "stderr": "Error at 2:5: expected ';' after expression"
+    }
+  ]
+}

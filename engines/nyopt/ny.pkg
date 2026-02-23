@@ -1,0 +1,34 @@
+# Nyopt Engine Package Configuration
+
+name = "Nyopt"
+version = "2.0.0"
+description = "Nyx Optimizer Engine - SGD, Adam, AdamW, RMSProp, LR schedulers, gradient clipping"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyopt"
+
+keywords = ["nyx", "optimizer", "sgd", "adam", "rmsprop", "scheduler", "gradient", "mixed-precision"]
+
+dependencies = ["nyx >= 2.0.0", "nytensor", "nygrad"]
+
+[scripts]
+Nyopt = "nyopt:create_opt"
+
+[modules]
+adam = "Adam and AdamW optimizers"
+mixed_precision = "FP16/BF16 mixed precision training"
+rmsprop = "RMSProp and Adagrad optimizers"
+scheduler = "Step, exponential, cosine, warmup LR schedules"
+sgd = "Stochastic gradient descent with momentum"
+
+[platform]
+any = true
+
+[capabilities]
+adam = "Adam, AdamW with weight decay"
+gradient_clipping = "Norm and value gradient clipping"
+lr_scheduling = "Step, cosine, warmup, one-cycle LR"
+mixed_precision = "Automatic mixed precision scaling"
+sgd = "SGD with momentum and Nesterov"
+

@@ -2,32 +2,31 @@
 
 name = "Nyautomate"
 version = "2.0.0"
-description = "Nyx Automation Engine - RPA, Scripting, System Tasks"
+description = "Nyx Web Automation Engine - HTTP requests, scraping, spiders, browser automation"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
 homepage = "https://github.com/nyxlang/Nyautomate"
 
-keywords = ["nyx", "automation", "rpa", "scripting", "tasks"]
+keywords = ["nyx", "automation", "scraping", "http", "spider", "selenium", "beautifulsoup", "requests"]
 
-dependencies = ["nyx >= 2.0.0"]
+dependencies = ["nyx >= 2.0.0", "nyhttp"]
 
 [scripts]
-Nyautomate = "Nyautomate:main"
+Nyautomate = "nyautomate:create_automation"
 
 [modules]
-Nyautomate = "Main automation engine"
-rpa = "Robotic Process Automation"
-scheduler = "Task scheduling"
-workflow = "Workflow management"
-gui = "GUI automation"
-desktop = "Desktop integration"
-webauto = "Browser automation"
-excel = "Excel automation"
-pdf = "PDF processing"
-email = "Email automation"
+nybeautifulsoup = "HTML/XML parser and navigator"
+nyrequests = "HTTP client with sessions and cookies"
+nyscrapy = "Web spider and crawling framework"
+nyselenium = "Browser automation and testing"
 
 [platform]
-windows = true
-macos = true
-linux = true
+any = true
+
+[capabilities]
+browser_automation = "Headless browser control and screenshots"
+html_parsing = "CSS selector and XPath querying"
+http_client = "Full HTTP/1.1 and HTTP/2 client"
+web_crawling = "Distributed web spider framework"
+

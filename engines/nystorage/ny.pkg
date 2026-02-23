@@ -1,0 +1,38 @@
+# Nystorage Engine Package Configuration
+
+name = "Nystorage"
+version = "1.0.0"
+description = "Nyx Storage Engine - key-value, documents, files, encryption, sync"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nystorage"
+
+keywords = ["nyx", "storage", "kv", "documents", "files", "encryption", "migrations", "sync"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nystorage = "nystorage:create_storage"
+
+[modules]
+cache = "Local caching layer"
+db = "SQLite-compatible embedded database"
+documents = "Document store with indexing"
+encrypted = "Encrypted storage with key management"
+files = "File system abstraction"
+kv = "Key-value store with transactions"
+migrations = "Schema migration runner"
+StorageManager = "Main storage orchestrator"
+sync = "Cloud sync with conflict resolution"
+
+[platform]
+any = true
+
+[capabilities]
+cloud_sync = "Bidirectional cloud synchronization"
+document_store = "JSON document storage with queries"
+encryption = "AES-256 encrypted storage"
+file_abstraction = "Cross-platform file I/O"
+kv_store = "ACID key-value transactions"
+

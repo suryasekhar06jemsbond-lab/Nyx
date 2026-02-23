@@ -2,27 +2,34 @@
 
 name = "Nyarray"
 version = "2.0.0"
-description = "Nyx Scientific Computing Engine - Arrays, Linear Algebra, Signal Processing"
+description = "Nyx Array & Numerical Computing Engine - tensors, linear algebra, FFT, statistics, symbolic math"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
 homepage = "https://github.com/nyxlang/Nyarray"
 
-keywords = ["nyx", "scientific-computing", "numerical", "arrays", "linear-algebra"]
+keywords = ["nyx", "array", "tensor", "linalg", "fft", "statistics", "symbolic", "numpy"]
 
 dependencies = ["nyx >= 2.0.0"]
 
 [scripts]
-Nyarray = "Nyarray:main"
+Nyarray = "nyarray:create_array"
 
 [modules]
-Nyarray = "Core multi-dimensional arrays"
-nylinalg = "Linear algebra"
-nysignal = "Signal processing"
-nyoptimize = "Optimization"
-nystats = "Statistics"
-nysympy = "Symbolic mathematics"
-nybigmath = "Arbitrary precision math"
+nyarray = "Core array and tensor operations"
+nylinalg = "Linear algebra operations"
+nyoptimize = "Numerical optimization routines"
+nysignal = "Signal processing and FFT"
+nystats = "Statistical distributions and tests"
+nysympy = "Symbolic mathematics engine"
 
 [platform]
 any = true
+
+[capabilities]
+fft = "Fast Fourier transform and spectral analysis"
+linear_algebra = "Matrix ops, decomposition, eigenvalues"
+ndarray = "N-dimensional array with broadcasting"
+statistics = "Distributions, hypothesis testing, regression"
+symbolic_math = "Symbolic differentiation and integration"
+

@@ -1,0 +1,35 @@
+# Nymodel Engine Package Configuration
+
+name = "Nymodel"
+version = "2.0.0"
+description = "Nyx Model Management Engine - save/load, quantization, pruning, distillation, analysis"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nymodel"
+
+keywords = ["nyx", "model", "quantization", "pruning", "distillation", "compression", "optimization"]
+
+dependencies = ["nyx >= 2.0.0", "nytensor"]
+
+[scripts]
+Nymodel = "nymodel:create_model"
+
+[modules]
+analyzer = "Model parameter and FLOP analysis"
+distiller = "Knowledge distillation framework"
+loader = "Model loading with version compatibility"
+pruner = "Structured and unstructured pruning"
+quantizer = "INT8/FP16 model quantization"
+saver = "Model state serialization and checkpointing"
+
+[platform]
+any = true
+
+[capabilities]
+distillation = "Teacher-student knowledge transfer"
+model_analysis = "Parameter count and FLOP estimation"
+model_serialization = "Save/load model state dictionaries"
+pruning = "Magnitude, structured, lottery pruning"
+quantization = "INT8, FP16, dynamic quantization"
+

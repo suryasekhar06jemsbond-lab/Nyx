@@ -1,0 +1,32 @@
+# Nymlbridge Engine Package Configuration
+
+name = "Nymlbridge"
+version = "1.0.0"
+description = "Nyx ML Bridge Engine - framework interop, ONNX, model conversion"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nymlbridge"
+
+keywords = ["nyx", "ml", "bridge", "onnx", "interop", "tensorflow", "pytorch", "conversion"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nymlbridge = "nymlbridge:create_bridge"
+
+[modules]
+conversion = "Cross-framework model conversion"
+inference = "Unified inference runtime"
+interop = "Framework interoperability layer"
+onnx = "ONNX model import/export"
+
+[platform]
+any = true
+
+[capabilities]
+format_detection = "Automatic model format detection"
+model_conversion = "TF/PyTorch/JAX model conversion"
+onnx_support = "ONNX model import and export"
+unified_inference = "Single API for all frameworks"
+

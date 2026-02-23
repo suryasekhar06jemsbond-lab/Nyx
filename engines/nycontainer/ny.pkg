@@ -1,0 +1,34 @@
+# Nycontainer Engine Package Configuration
+
+name = "Nycontainer"
+version = "1.0.0"
+description = "Nyx Container Orchestration Engine - Docker, Kubernetes, Helm, registry"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nycontainer"
+
+keywords = ["nyx", "container", "docker", "kubernetes", "helm", "registry", "pods", "orchestration"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nycontainer = "nycontainer:create_container"
+
+[modules]
+builder = "Container image builder"
+docker = "Docker client and container management"
+helm = "Helm chart management"
+kubernetes = "Kubernetes cluster management"
+monitor = "Pod monitoring and health checks"
+registry = "Container image registry"
+
+[platform]
+any = true
+
+[capabilities]
+container_lifecycle = "Build/run/stop container management"
+helm_charts = "Helm chart templating and deployment"
+image_registry = "Push/pull container images"
+kubernetes_ops = "K8s deployment and service management"
+

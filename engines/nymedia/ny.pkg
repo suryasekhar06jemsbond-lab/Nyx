@@ -2,30 +2,31 @@
 
 name = "Nymedia"
 version = "2.0.0"
-description = "Nyx Multimedia Engine - Audio, Video, Image Processing"
+description = "Nyx Media Processing Engine - image processing, computer vision, video editing"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
 homepage = "https://github.com/nyxlang/Nymedia"
 
-keywords = ["nyx", "multimedia", "audio", "video", "image", "graphics"]
+keywords = ["nyx", "media", "image", "video", "opencv", "pillow", "processing", "filter"]
 
-dependencies = ["nyx >= 2.0.0", "Nyarray >= 2.0.0"]
+dependencies = ["nyx >= 2.0.0"]
 
 [scripts]
-Nymedia = "Nymedia:main"
+Nymedia = "nymedia:create_media"
 
 [modules]
-Nymedia = "Main multimedia engine"
-audio = "Audio processing"
-video = "Video processing"
-image = "Image processing"
-graphics = "2D/3D graphics"
-camera = "Camera access"
-capture = "Screen capture"
-effects = "Audio/Video effects"
-encode = "Encoding/Decoding"
-stream = "Streaming"
+nycv = "OpenCV-compatible computer vision"
+nyimage = "PIL-compatible image I/O and filters"
+nyvideo = "Video clip editing and compositing"
 
 [platform]
 any = true
+
+[capabilities]
+codec_support = "H.264, H.265, VP9, AV1 codecs"
+computer_vision = "Object detection, feature matching"
+image_processing = "Resize, crop, filter, blend images"
+streaming = "Real-time video stream processing"
+video_editing = "Cut, concat, composite video clips"
+

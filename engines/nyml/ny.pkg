@@ -2,24 +2,35 @@
 
 name = "Nyml"
 version = "2.0.0"
-description = "Nyx Machine Learning Engine - Neural Networks, Models, Training"
+description = "Nyx Machine Learning Engine - neural networks, layers, optimizers, training loop"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
 homepage = "https://github.com/nyxlang/Nyml"
 
-keywords = ["nyx", "machine-learning", "neural-networks", "deep-learning", "ai"]
+keywords = ["nyx", "ml", "neural-network", "deep-learning", "layer", "model", "training", "cnn"]
 
 dependencies = ["nyx >= 2.0.0"]
 
 [scripts]
-Nyml = "Nyml:main"
+Nyml = "nyml:create_ml"
 
 [modules]
-Nyml = "Main ML engine"
-nn = "Neural networks"
-optimizers = "Optimization algorithms"
-datasets = "Dataset utilities"
-preprocessing = "Data preprocessing"
-training = "Training utilities"
-models = "Pre-built models"
+activations = "ReLU, Sigmoid, Tanh, Softmax, GELU"
+layers = "Dense, Conv2D, MaxPool, Dropout, BatchNorm"
+loss = "MSE, CrossEntropy, BCE loss functions"
+model = "Sequential and functional model API"
+optimizer = "SGD, Adam, RMSProp optimizers"
+tensor = "Core tensor operations and autograd"
+training = "Training loop with callbacks"
+
+[platform]
+any = true
+
+[capabilities]
+autograd = "Automatic differentiation engine"
+convolutional = "2D convolution and pooling layers"
+neural_networks = "Deep neural network construction"
+regularization = "Dropout, batch norm, weight decay"
+training_loop = "Configurable training with callbacks"
+

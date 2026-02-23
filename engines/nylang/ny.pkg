@@ -1,0 +1,36 @@
+# Nylang Engine Package Configuration
+
+name = "Nylang"
+version = "1.0.0"
+description = "Nyx Language Intelligence Engine - NLP, tokenization, dialogue, multimodal"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nylang"
+
+keywords = ["nyx", "nlp", "language", "tokenization", "dialogue", "intent", "multimodal", "bpe"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nylang = "nylang:create_language"
+
+[modules]
+context = "Context window and conversation memory"
+dialogue = "Dialogue state and policy management"
+intent = "Intent classification"
+LanguageEngine = "Main language intelligence orchestrator"
+multimodal = "Multi-modal processor (text+image+audio)"
+parsing = "Semantic frame and entity extraction"
+tokenization = "BPE/WordPiece/SentencePiece tokenizers"
+
+[platform]
+any = true
+
+[capabilities]
+dialogue_management = "Stateful dialogue policy engine"
+entity_extraction = "Named entity recognition"
+intent_classification = "Multi-class intent detection"
+multimodal_fusion = "Text, image, audio fusion"
+subword_tokenization = "BPE and WordPiece tokenization"
+

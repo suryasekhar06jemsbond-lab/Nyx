@@ -1,0 +1,36 @@
+# Nysys Engine Package Configuration
+
+name = "Nysys"
+version = "1.0.0"
+description = "Nyx System Control Engine - direct memory, process injection, raw sockets, syscalls"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nysys"
+
+keywords = ["nyx", "system", "memory", "process", "socket", "syscall", "thread", "kernel"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nysys = "nysys:create_sys"
+
+[modules]
+fd = "File descriptor management"
+memory = "Direct memory access and manipulation"
+pointers = "Pointer arithmetic and casting"
+process = "Process injection and control APIs"
+sockets = "Raw socket access"
+syscall = "Direct syscall interface"
+threads = "Thread control and synchronization"
+
+[platform]
+any = true
+
+[capabilities]
+direct_memory = "Raw memory read/write access"
+process_control = "Process injection and manipulation"
+raw_sockets = "Layer 2/3 raw socket access"
+syscall_interface = "Direct kernel syscall invocation"
+thread_control = "Low-level thread manipulation"
+

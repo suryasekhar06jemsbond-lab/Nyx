@@ -1,0 +1,38 @@
+# Nydevice Engine Package Configuration
+
+name = "Nydevice"
+version = "1.0.0"
+description = "Nyx Hardware Access Engine - USB, serial, Bluetooth, HID, GPIO, sensors"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nydevice"
+
+keywords = ["nyx", "device", "hardware", "usb", "serial", "bluetooth", "hid", "gpio", "sensors"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nydevice = "nydevice:create_device_hub"
+
+[modules]
+bluetooth = "BLE and classic Bluetooth"
+DeviceHub = "Main device orchestrator"
+enumeration = "Device discovery and enumeration"
+gpu_compute = "GPU compute device management"
+hid = "Human interface device access"
+sensors = "Accelerometer, gyroscope, temperature sensors"
+serial = "Serial port I/O"
+system = "System device information"
+usb = "USB device communication"
+
+[platform]
+any = true
+
+[capabilities]
+bluetooth_le = "BLE GATT service and characteristic access"
+hot_plug = "Device hot-plug detection"
+sensor_fusion = "Multi-sensor data aggregation"
+serial_io = "RS-232/RS-485 serial communication"
+usb_communication = "USB bulk/interrupt/isochronous transfer"
+

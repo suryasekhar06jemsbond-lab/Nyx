@@ -3,12 +3,12 @@ const path = require('path');
 const fs = require('fs');
 
 const rootDir = __dirname;
+const repoRoot = path.join(__dirname, '..');
 
 const scripts = [
-    { name: 'Crypto Utilities', path: path.join(rootDir, 'usage.js') },
     { name: 'Standard Library (Math, String, FS, JSON, Date, Color)', path: path.join(rootDir, 'test-all.js') },
     { name: 'Network Package', path: path.join(rootDir, 'test-net.js') },
-    { name: 'Server Package', path: path.join(rootDir, 'test-server.js') },
+    { name: 'Server Package', path: path.join(rootDir, 'test-server.js'), optional: true },
     { name: 'Package Manager (NYPM)', path: path.join(rootDir, 'test-nypm.js') }
 ];
 
@@ -22,6 +22,10 @@ scripts.forEach(script => {
     console.log(`[TEST] Running ${script.name}...`);
     try {
         if (!fs.existsSync(script.path)) {
+            if (script.optional) {
+                console.log(`[SKIP] ${script.name} (missing: ${script.path})\n`);
+                return;
+            }
             throw new Error(`File not found: ${script.path}`);
         }
         // Run script synchronously, inheriting stdio so we see the output

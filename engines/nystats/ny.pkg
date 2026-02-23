@@ -1,0 +1,36 @@
+# Nystats Engine Package Configuration
+
+name = "Nystats"
+version = "1.0.0"
+description = "Nyx Statistical Engine - distributions, hypothesis testing, regression, Bayesian"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nystats"
+
+keywords = ["nyx", "statistics", "probability", "regression", "bayesian", "hypothesis", "time-series", "bootstrap"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nystats = "nystats:create_stats"
+
+[modules]
+bayesian = "Bayesian inference and MCMC"
+bootstrap = "Bootstrap and Monte Carlo methods"
+descriptive = "Mean, median, variance, percentiles"
+distributions = "Normal, binomial, Poisson, exponential distributions"
+hypothesis = "T-test, chi-square, ANOVA"
+regression = "Linear, polynomial, logistic regression"
+timeseries = "ARIMA, exponential smoothing"
+
+[platform]
+any = true
+
+[capabilities]
+bayesian_inference = "MCMC-based Bayesian inference"
+hypothesis_testing = "Parametric and non-parametric tests"
+probability_distributions = "Common probability distribution sampling"
+regression_models = "Linear and logistic regression"
+time_series = "ARIMA and smoothing methods"
+

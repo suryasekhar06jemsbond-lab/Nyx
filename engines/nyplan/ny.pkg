@@ -1,0 +1,35 @@
+# Nyplan Engine Package Configuration
+
+name = "Nyplan"
+version = "1.0.0"
+description = "Nyx Planning & Decision Engine - A*, CSP, MDP, MCTS, genetic algorithms"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyplan"
+
+keywords = ["nyx", "planning", "search", "csp", "mdp", "mcts", "optimization", "genetic-algorithm"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyplan = "nyplan:create_plan"
+
+[modules]
+constraints = "CSP solver with arc consistency"
+mdp = "Value iteration, policy iteration, MCTS"
+optimization = "NSGA2, simulated annealing, genetic"
+PlanEngine = "Main planning orchestrator"
+policies = "Decision policy framework"
+search = "A*/Beam search/iterative deepening"
+
+[platform]
+any = true
+
+[capabilities]
+a_star_search = "A* and beam search pathfinding"
+constraint_satisfaction = "CSP with arc consistency"
+genetic_algorithm = "Evolutionary optimization"
+mcts = "Monte Carlo tree search"
+multi_objective = "NSGA2 multi-objective optimization"
+

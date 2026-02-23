@@ -1,0 +1,34 @@
+# Nyparallel Engine Package Configuration
+
+name = "Nyparallel"
+version = "1.0.0"
+description = "Nyx Parallel Computing Engine - par_map, work stealing, auto-scaling, batching"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyparallel"
+
+keywords = ["nyx", "parallel", "map-reduce", "work-stealing", "auto-scaling", "batch", "pipeline"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyparallel = "nyparallel:create_parallel"
+
+[modules]
+autoscaler = "Dynamic worker auto-scaling"
+batch = "Batch processor with chunking"
+ops = "par_map, par_reduce, par_filter primitives"
+orchestrator = "Job orchestrator with scheduling"
+pipeline = "Parallel pipeline with stages"
+work_stealing = "Work-stealing thread pool"
+
+[platform]
+any = true
+
+[capabilities]
+auto_scaling = "Load-based worker pool scaling"
+batch_processing = "Configurable batch chunking"
+parallel_primitives = "par_map/par_reduce/par_filter"
+work_stealing = "Cache-friendly work-stealing execution"
+

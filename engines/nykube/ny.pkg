@@ -1,0 +1,37 @@
+# Nykube Engine Package Configuration
+
+name = "Nykube"
+version = "1.0.0"
+description = "Nyx Kubernetes Engine - pods, deployments, services, HPA/VPA, secrets"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nykube"
+
+keywords = ["nyx", "kubernetes", "k8s", "pods", "deployments", "services", "autoscaling", "secrets"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nykube = "nykube:create_kube"
+
+[modules]
+autoscaling = "HPA and VPA auto-scaling"
+deployments = "Deployment reconciliation and rolling updates"
+KubeEngine = "Main Kubernetes orchestrator"
+namespaces = "Namespace isolation and resource quotas"
+resources = "Metadata, ContainerSpec, Pod types"
+secrets = "Secret and ConfigMap management"
+services = "Service, Ingress, endpoint resolution"
+
+[platform]
+any = true
+
+[capabilities]
+hpa_vpa = "Horizontal and vertical pod autoscaling"
+pod_management = "Full pod lifecycle management"
+resource_quotas = "Per-namespace resource quota enforcement"
+rolling_updates = "Zero-downtime rolling deployments"
+secret_management = "Base64 encoded secret storage"
+service_discovery = "ClusterIP/NodePort/LoadBalancer services"
+

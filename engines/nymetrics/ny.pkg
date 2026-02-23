@@ -1,0 +1,35 @@
+# Nymetrics Engine Package Configuration
+
+name = "Nymetrics"
+version = "2.0.0"
+description = "Nyx ML Metrics Engine - classification, regression, cross-validation, hyperparameter search"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nymetrics"
+
+keywords = ["nyx", "metrics", "evaluation", "cross-validation", "grid-search", "bayesian", "drift"]
+
+dependencies = ["nyx >= 2.0.0", "nytensor"]
+
+[scripts]
+Nymetrics = "nymetrics:create_metrics"
+
+[modules]
+benchmark = "Model benchmarking and comparison"
+classification = "Accuracy, precision, recall, F1, AUC"
+cross_validation = "KFold, stratified, grouped CV"
+drift = "Data and concept drift detection"
+regression = "R2, MAE, MSE, RMSE, MAPE"
+search = "Grid, random, Bayesian hyperparameter search"
+
+[platform]
+any = true
+
+[capabilities]
+classification_metrics = "Full classification metric suite"
+cross_validation = "K-fold and stratified cross-validation"
+drift_detection = "Statistical drift detection"
+hyperparameter_search = "Grid, random, Bayesian optimization"
+regression_metrics = "Comprehensive regression metrics"
+

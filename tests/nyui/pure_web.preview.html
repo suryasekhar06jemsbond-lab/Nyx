@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nyx Programming Language</title>
+  <meta name="description" content="Nyx programming language portal preview from pure_web.ny" />
+  <style>
+    :root {
+      --bg0: #030712;
+      --bg1: #0b1220;
+      --bg2: #10304a;
+      --ink: #dbeafe;
+      --muted: #a5c8e9;
+      --line: rgba(148, 163, 184, 0.25);
+      --brand: #22d3ee;
+      --brand2: #3b82f6;
+      --panel: rgba(15, 23, 42, 0.62);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Manrope, "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 720px at 8% -10%, #22d3ee 0%, transparent 40%),
+        linear-gradient(160deg, var(--bg0), var(--bg1) 40%, var(--bg2));
+      min-height: 100vh;
+    }
+    .wrap { width: min(1200px, 92vw); margin: 0 auto; }
+    .nav {
+      position: sticky;
+      top: 10px;
+      z-index: 40;
+      margin-top: 10px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--line);
+      background: rgba(15,23,42,0.65);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand { font-weight: 900; font-size: 20px; color: #f8fafc; }
+    .nav a {
+      color: #bfdbfe;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: rgba(2,6,23,0.35);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .hero {
+      margin-top: 22px;
+      padding: 28px;
+      border-radius: 22px;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      background: linear-gradient(145deg, rgba(14,165,233,0.2), rgba(15,23,42,0.72));
+      box-shadow: 0 20px 52px rgba(0,0,0,0.36);
+    }
+    h1 { margin: 0; font-size: clamp(34px, 5vw, 54px); line-height: 1.04; color: #f8fafc; }
+    .sub { margin-top: 12px; color: #bfdbfe; font-size: 18px; max-width: 820px; }
+    .chips { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid rgba(56,189,248,0.45);
+      background: rgba(14,116,144,0.22);
+      color: #e0f2fe;
+    }
+    .stats {
+      margin-top: 20px;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .stat {
+      padding: 14px;
+      border-radius: 16px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+    }
+    .stat .l { font-size: 12px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+    .stat .v { margin-top: 6px; font-size: 28px; font-weight: 900; color: #f0f9ff; }
+    section.card {
+      margin-top: 22px;
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(15,23,42,0.56);
+      border: 1px solid var(--line);
+    }
+    h2 { margin: 0; font-size: 30px; color: #f8fafc; }
+    .intro { margin-top: 8px; color: #cbd5e1; }
+    .grid {
+      margin-top: 16px;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .feature {
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(125,211,252,0.2);
+      background: rgba(2,6,23,0.56);
+    }
+    .feature h3 { margin: 0; font-size: 18px; color: #e0f2fe; }
+    .feature p { margin: 8px 0 0 0; color: #cbd5e1; }
+    .two {
+      margin-top: 16px;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 1.05fr 1fr;
+    }
+    .code {
+      margin-top: 12px;
+      border-radius: 14px;
+      padding: 14px;
+      border: 1px solid rgba(56,189,248,0.3);
+      background: rgba(2,6,23,0.66);
+      font-family: Consolas, Menlo, monospace;
+      white-space: pre-wrap;
+    }
+    .list { margin-top: 12px; display: grid; gap: 10px; }
+    .item {
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(2,6,23,0.5);
+      border: 1px solid rgba(148,163,184,0.18);
+    }
+    .item strong { color: #e0f2fe; }
+    .form {
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid rgba(56,189,248,0.45);
+      background: linear-gradient(170deg, rgba(2,132,199,0.2), rgba(15,23,42,0.66));
+    }
+    .form-grid { margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    input, button {
+      width: 100%;
+      border-radius: 10px;
+      padding: 11px;
+      font: inherit;
+    }
+    input {
+      color: #f8fafc;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(15,23,42,0.8);
+    }
+    button {
+      border: 0;
+      font-weight: 900;
+      cursor: pointer;
+      color: #f8fafc;
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+    }
+    .wide { grid-column: span 2; }
+    .result {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px dashed rgba(125,211,252,0.55);
+      background: rgba(15,23,42,0.78);
+      color: #e2e8f0;
+      font-weight: 700;
+      min-height: 20px;
+    }
+    footer {
+      margin: 24px 0 40px;
+      text-align: center;
+      color: #94a3b8;
+    }
+    @media (max-width: 1000px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+      .two { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 780px) {
+      .grid, .stats, .form-grid { grid-template-columns: 1fr; }
+      .wide { grid-column: span 1; }
+      .nav { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="nav">
+      <div class="brand">Nyx Programming Language</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <a href="#home">Home</a>
+        <a href="#docs">Docs</a>
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#playground">Playground</a>
+      </div>
+    </div>
+
+    <section class="hero" id="home">
+      <h1>Build fast systems with expressive syntax.</h1>
+      <p class="sub">Nyx combines systems-level control with integrated web, engine, and tooling workflows for production software.</p>
+      <div class="chips">
+        <span class="chip">Native Runtime + VM</span>
+        <span class="chip">Compiler + Tooling</span>
+        <span class="chip">Engine Ecosystem</span>
+        <span class="chip">Nyx-only Developer Flow</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="l">Portal Visits</div><div class="v" id="visits">0</div></div>
+        <div class="stat"><div class="l">Community Signups</div><div class="v" id="signups">0</div></div>
+        <div class="stat"><div class="l">Playground Runs</div><div class="v" id="runs">0</div></div>
+      </div>
+    </section>
+
+    <section class="card" id="docs">
+      <h2>What Makes Nyx Different</h2>
+      <p class="intro">Unified toolchain, production runtime controls, and engine modules for full-stack development.</p>
+      <div class="grid">
+        <article class="feature"><h3>Unified Toolchain</h3><p>Build, lint, debug, package, and release from a single language environment.</p></article>
+        <article class="feature"><h3>Production Runtime</h3><p>Native execution path with strict limits, observability hooks, and VM consistency gates.</p></article>
+        <article class="feature"><h3>Engine Modules</h3><p>`nyweb`, `nyrender`, `nyanim`, `nyai`, `nynet`, and more.</p></article>
+        <article class="feature"><h3>Progressive Syntax</h3><p>Readable constructs for newcomers and precise controls for systems engineers.</p></article>
+        <article class="feature"><h3>Deployment Ready</h3><p>Cross-platform scripts for test, packaging, and release management.</p></article>
+        <article class="feature"><h3>Extensible Core</h3><p>Lexer, parser, interpreter, ownership, and debugger layers built to scale.</p></article>
+      </div>
+    </section>
+
+    <section class="card two" id="ecosystem">
+      <div>
+        <h2>Quick Start</h2>
+        <div class="code">make
+./build/nyx examples/fibonacci.ny</div>
+        <div class="list">
+          <div class="item"><strong>Language CLI:</strong> `--vm`, `--vm-strict`, `--parse-only`, `--max-steps`</div>
+          <div class="item"><strong>Docs:</strong> Language spec, compatibility lifecycle, release policy.</div>
+          <div class="item"><strong>Ecosystem:</strong> Web, render, animation, AI, network, and core orchestration engines.</div>
+        </div>
+      </div>
+      <div class="form">
+        <h2 style="font-size:26px;">Join The Nyx Community</h2>
+        <p class="intro">Preview mode stores data in browser local storage for quick testing.</p>
+        <form id="communityForm" class="form-grid">
+          <input id="name" placeholder="Your name" />
+          <input id="email" placeholder="Your email" />
+          <input id="role" placeholder="Role (Student / Engineer / Researcher)" />
+          <input id="focus" placeholder="Focus area (Compiler / Runtime / AI / Web)" />
+          <button class="wide" type="submit">Join Community</button>
+        </form>
+        <div class="result" id="communityResult">No signup submitted yet.</div>
+      </div>
+    </section>
+
+    <section class="card" id="playground">
+      <h2>Nyx Playground</h2>
+      <p class="intro">Run a lightweight snippet simulation.</p>
+      <div class="code">fn hello(name) {
+    return "Hello, " + name + " from Nyx";
+}
+
+print(hello("World"));</div>
+      <button id="runPlayground" style="margin-top:12px;max-width:280px;">Run Playground Example</button>
+      <div class="result" id="playgroundResult">No playground run yet.</div>
+    </section>
+
+    <footer>Preview of `tests/nyui/pure_web.ny` rendered in browser</footer>
+  </div>
+
+  <script>
+    (() => {
+      const KEY = "nyx_pure_web_preview_state";
+      const q = (id) => document.getElementById(id);
+      const load = () => {
+        try {
+          return JSON.parse(localStorage.getItem(KEY) || "{}");
+        } catch {
+          return {};
+        }
+      };
+      const save = (s) => localStorage.setItem(KEY, JSON.stringify(s));
+      const state = Object.assign({ visits: 0, signups: 0, runs: 0 }, load());
+      state.visits += 1;
+      save(state);
+      q("visits").textContent = String(state.visits);
+      q("signups").textContent = String(state.signups);
+      q("runs").textContent = String(state.runs);
+
+      q("communityForm").addEventListener("submit", (ev) => {
+        ev.preventDefault();
+        state.signups += 1;
+        save(state);
+        q("signups").textContent = String(state.signups);
+        const id = "NYX-" + String(state.signups).padStart(6, "0");
+        q("communityResult").textContent = "Joined as " + id + " (preview mode)";
+        ev.target.reset();
+      });
+
+      q("runPlayground").addEventListener("click", () => {
+        state.runs += 1;
+        save(state);
+        q("runs").textContent = String(state.runs);
+        q("playgroundResult").textContent = "Run #" + state.runs + ": Hello, World from Nyx";
+      });
+    })();
+  </script>
+</body>
+</html>

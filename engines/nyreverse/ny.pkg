@@ -1,0 +1,32 @@
+# Nyreverse Engine Package Configuration
+
+name = "Nyreverse"
+version = "1.0.0"
+description = "Nyx Reverse Engineering Engine - binary analysis, disassembly, decompilation"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyreverse"
+
+keywords = ["nyx", "reverse-engineering", "binary", "disassembly", "decompilation", "analysis"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyreverse = "nyreverse:create_reverse"
+
+[modules]
+analysis = "Static binary analysis"
+binary = "Binary format parsing (PE/ELF/Mach-O)"
+decompile = "Control flow decompilation"
+disasm = "Multi-architecture disassembler"
+
+[platform]
+any = true
+
+[capabilities]
+binary_parsing = "Multi-format binary parsing"
+cfg_analysis = "Control flow graph construction"
+decompilation = "Pseudo-code decompilation"
+disassembly = "x86/x64/ARM disassembly"
+

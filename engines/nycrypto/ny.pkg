@@ -2,23 +2,33 @@
 
 name = "Nycrypto"
 version = "2.0.0"
-description = "Nyx Cryptography Engine - Encryption, Hashing, Signatures"
+description = "Nyx Cryptography Engine - SHA, AES, RSA, ECC, PBKDF2, bcrypt, digital signatures"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
 homepage = "https://github.com/nyxlang/Nycrypto"
 
-keywords = ["nyx", "cryptography", "encryption", "hashing", "security"]
+keywords = ["nyx", "crypto", "sha", "aes", "rsa", "ecc", "hashing", "encryption", "signature"]
 
 dependencies = ["nyx >= 2.0.0"]
 
 [scripts]
-Nycrypto = "Nycrypto:main"
+Nycrypto = "nycrypto:create_crypto"
 
 [modules]
-Nycrypto = "Main crypto engine"
-ciphers = "Cipher algorithms"
-hashes = "Hash functions"
-signatures = "Digital signatures"
-key exchange = "Key exchange protocols"
-encoding = "Encoding utilities"
+asymmetric = "RSA, ECC key pairs and encryption"
+hash = "SHA256, SHA512, SHA1, MD5, BLAKE2"
+kdf = "PBKDF2, bcrypt, scrypt key derivation"
+signature = "Digital signature and verification"
+symmetric = "AES, DES, RC4, ChaCha20 ciphers"
+
+[platform]
+any = true
+
+[capabilities]
+asymmetric_encryption = "RSA-4096, ECC P-256/P-384"
+digital_signatures = "ECDSA, EdDSA, RSA-PSS signing"
+hashing = "Cryptographic hash functions"
+key_derivation = "PBKDF2, bcrypt, scrypt, Argon2"
+symmetric_encryption = "AES-256-GCM, ChaCha20-Poly1305"
+

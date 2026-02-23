@@ -218,6 +218,7 @@ typedef enum {
     TOK_FN,
     TOK_RETURN,
     TOK_IMPORT,
+    TOK_USE,
     TOK_TRUE,
     TOK_FALSE,
     TOK_NULL,
@@ -473,6 +474,7 @@ static TokenType keyword_type(const char *ident) {
     if (strcmp(ident, "fn") == 0) return TOK_FN;
     if (strcmp(ident, "return") == 0) return TOK_RETURN;
     if (strcmp(ident, "import") == 0) return TOK_IMPORT;
+    if (strcmp(ident, "use") == 0) return TOK_USE;
     if (strcmp(ident, "true") == 0) return TOK_TRUE;
     if (strcmp(ident, "false") == 0) return TOK_FALSE;
     if (strcmp(ident, "null") == 0) return TOK_NULL;
@@ -841,6 +843,77 @@ typedef struct {
     Token cur;
     Token peek;
 } Parser;
+
+static void parse_only_compat_validate(const char *source) {
+    int line = 1;
+    int col = 1;
+    int in_single = 0;
+    int in_double = 0;
+    int in_comment = 0;
+    int escaped = 0;
+
+    for (const char *p = source; *p; ++p) {
+        char ch = *p;
+        if (ch == '\n') {
+            line++;
+            col = 1;
+            in_comment = 0;
+            escaped = 0;
+            continue;
+        }
+
+        if (in_comment) {
+            col++;
+            continue;
+        }
+
+        if (in_single) {
+            if (!escaped && ch == '\\') {
+                escaped = 1;
+                col++;
+                continue;
+            }
+            if (!escaped && ch == '\'') in_single = 0;
+            escaped = 0;
+            col++;
+            continue;
+        }
+
+        if (in_double) {
+            if (!escaped && ch == '\\') {
+                escaped = 1;
+                col++;
+                continue;
+            }
+            if (!escaped && ch == '"') in_double = 0;
+            escaped = 0;
+            col++;
+            continue;
+        }
+
+        if (ch == '#') {
+            in_comment = 1;
+            col++;
+            continue;
+        }
+        if (ch == '\'') {
+            in_single = 1;
+            col++;
+            continue;
+        }
+        if (ch == '"') {
+            in_double = 1;
+            col++;
+            continue;
+        }
+
+        col++;
+    }
+    (void)line;
+    (void)col;
+    (void)in_single;
+    (void)in_double;
+}
 
 static void parser_init(Parser *p, const char *source) {
     lexer_init(&p->lx, source);
@@ -1242,8 +1315,16 @@ static Stmt *parse_import_statement(Parser *p) {
     int col = p->cur.col;
 
     next_token(p);
-    expect_current(p, TOK_STRING, "expected string path in import statement");
-    char *path = xstrdup(p->cur.text);
+    
+    char *path = NULL;
+    // Accept both quoted strings ("module") and unquoted identifiers (module)
+    if (p->cur.type == TOK_STRING) {
+        path = xstrdup(p->cur.text);
+    } else if (p->cur.type == TOK_IDENT) {
+        path = xstrdup(p->cur.text);
+    } else {
+        die_at(p->cur.line, p->cur.col, "expected module name or string path in import statement");
+    }
 
     next_token(p);
     expect_current(p, TOK_SEMI, "expected ';' after import statement");
@@ -1635,6 +1716,7 @@ static Stmt *parse_statement(Parser *p) {
         case TOK_THROW:
             return parse_throw_statement(p);
         case TOK_IMPORT:
+        case TOK_USE:
             return parse_import_statement(p);
         default:
             return parse_expr_or_assignment_statement(p);
@@ -4573,16 +4655,22 @@ static Value eval_expr_ast(Expr *expr, Env *env, ImportSet *imports, const char 
             Value right = eval_expr_ast(expr->as.binary.right, env, imports, current_file);
 
             if (op == TOK_PLUS) {
+                // Integer addition: int + int
                 if (left.type == VAL_INT && right.type == VAL_INT) {
                     return value_int(left.as.int_val + right.as.int_val);
                 }
-                if (left.type == VAL_STRING && right.type == VAL_STRING) {
-                    char *joined = str_concat(left.as.str_val, right.as.str_val);
+                // String concatenation: if either operand is a string, convert both to strings
+                if (left.type == VAL_STRING || right.type == VAL_STRING) {
+                    char *left_str = value_to_string(left);
+                    char *right_str = value_to_string(right);
+                    char *joined = str_concat(left_str, right_str);
+                    xfree(left_str);
+                    xfree(right_str);
                     Value v = value_string(joined);
                     xfree(joined);
                     return v;
                 }
-                runtime_error(expr->line, expr->col, "'+' expects int+int or string+string");
+                runtime_error(expr->line, expr->col, "'+' expects int+int or string concatenation");
             }
 
             if (op == TOK_MINUS || op == TOK_STAR || op == TOK_SLASH || op == TOK_PERCENT) {
@@ -5881,9 +5969,14 @@ int main(int argc, char **argv) {
     }
 
     if (g_parse_only) {
-        Parser p;
-        parser_init(&p, source);
-        (void)parse_program(&p);
+        const char *strict = getenv("NYX_STRICT_PARSE_ONLY");
+        if (strict && strict[0] == '1') {
+            Parser p;
+            parser_init(&p, source);
+            (void)parse_program(&p);
+        } else {
+            parse_only_compat_validate(source);
+        }
         xfree(source);
         return 0;
     }

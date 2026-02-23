@@ -1,39 +1,35 @@
-# Nypm - Nyx Package Manager
-# ===========================
+# Nypm Engine Package Configuration
 
 name = "Nypm"
-version = "3.0.0"
-description = "Nyx Package Manager - Reproducible builds, secure supply chain, fast resolution"
+version = "2.0.0"
+description = "Nyx Package Manager Engine - dependency resolution, registry, lockfile, semver"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
 homepage = "https://github.com/nyxlang/Nypm"
 
-keywords = ["nyx", "package", "manager", "dependency", "registry", "build"]
+keywords = ["nyx", "package-manager", "dependency", "registry", "semver", "lockfile", "install"]
 
 dependencies = ["nyx >= 2.0.0"]
 
 [scripts]
-nypm = "Nypm:main"
+Nypm = "nypm:create_pm"
 
 [modules]
-Main = "Main package manager"
-types = "Core types (Manifest, Lockfile, Version)"
-semver = "Semantic versioning"
-resolver = "Dependency resolution engine"
-registry = "Package registry"
-security = "Security & supply chain"
-build = "Build system"
-workspace = "Workspace support"
-commands = "CLI commands"
+installer = "Package download and installation"
+lockfile = "Deterministic lockfile generation"
+registry = "Package registry client"
+resolver = "SAT-based dependency resolver"
+semver = "Semantic versioning parser and comparator"
+types = "Manifest, lockfile, package info types"
 
-[features]
-default = ["cli"]
+[platform]
+any = true
 
-[binaries]
-nypm = "bin/nypm"
+[capabilities]
+dependency_resolution = "SAT-based dependency solving"
+lockfile = "Reproducible deterministic builds"
+registry = "Package registry search and publish"
+semver = "Full semantic versioning support"
+workspaces = "Multi-package workspace support"
 
-[examples]
-basic = "Basic package management"
-workspace = "Workspace example"
-security = "Security scanning"

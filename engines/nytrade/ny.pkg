@@ -1,0 +1,35 @@
+# Nytrade Engine Package Configuration
+
+name = "Nytrade"
+version = "1.0.0"
+description = "Nyx Trade Execution Engine - order routing, FIX protocol, TWAP/VWAP, risk limits"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nytrade"
+
+keywords = ["nyx", "trading", "execution", "fix", "order", "routing", "twap", "vwap", "risk"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nytrade = "nytrade:create_trade"
+
+[modules]
+book = "Order tracker with fill history"
+gateway = "Exchange gateway with FIX protocol"
+orders = "Order types: market/limit/stop_limit with tracking"
+risk_limits = "Pre-trade risk checks and limits"
+routing = "Smart order routing: TWAP/VWAP/best_price"
+TradeEngine = "Main trade execution orchestrator"
+
+[platform]
+any = true
+
+[capabilities]
+fix_protocol = "FIX protocol exchange connectivity"
+order_management = "Full order lifecycle management"
+partial_fills = "Partial fill tracking and reporting"
+pre_trade_risk = "Real-time pre-trade risk checking"
+smart_routing = "TWAP/VWAP algorithmic order routing"
+

@@ -1,0 +1,1178 @@
+{
+  "test_info": {
+    "start_time": "2026-02-23T21:23:15.412197",
+    "duration_seconds": 300.4775638580322,
+    "cpu_cores": 32
+  },
+  "subsystem_results": {
+    "ai_training": {
+      "total": 9802,
+      "passed": 9802,
+      "failed": 0,
+      "duration": 299.7835612297058
+    },
+    "web_server": {
+      "total": 106859,
+      "passed": 106859,
+      "failed": 0,
+      "duration": 297.55689573287964
+    },
+    "data_pipeline": {
+      "total": 37604,
+      "passed": 37604,
+      "failed": 0,
+      "duration": 298.6045253276825
+    },
+    "storage_engine": {
+      "total": 13712,
+      "passed": 13712,
+      "failed": 0,
+      "duration": 299.26151418685913
+    },
+    "logging_engine": {
+      "total": 46372,
+      "passed": 46372,
+      "failed": 0,
+      "duration": 299.0300223827362
+    }
+  },
+  "overall": {
+    "total_tests": 214349,
+    "passed": 214349,
+    "failed": 0,
+    "pass_rate": 100.0
+  },
+  "snapshots": [
+    {
+      "elapsed": 10.560010194778442,
+      "memory_mb": 23.87109375,
+      "system_percent": 72.8,
+      "cpu_percent": 6.8,
+      "threads": 9,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 24.029902458190918,
+      "memory_mb": 23.9609375,
+      "system_percent": 72.8,
+      "cpu_percent": 5.3,
+      "threads": 9,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 30.385939121246338,
+      "memory_mb": 24.046875,
+      "system_percent": 72.7,
+      "cpu_percent": 6.1,
+      "threads": 9,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 40.529916286468506,
+      "memory_mb": 24.06640625,
+      "system_percent": 72.7,
+      "cpu_percent": 4.9,
+      "threads": 9,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 50.4163019657135,
+      "memory_mb": 24.0703125,
+      "system_percent": 72.7,
+      "cpu_percent": 6.2,
+      "threads": 9,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 60.283543825149536,
+      "memory_mb": 24.078125,
+      "system_percent": 72.9,
+      "cpu_percent": 5.7,
+      "threads": 8,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 70.37597990036011,
+      "memory_mb": 24.89453125,
+      "system_percent": 72.8,
+      "cpu_percent": 4.1,
+      "threads": 8,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 80.28239464759827,
+      "memory_mb": 24.90625,
+      "system_percent": 72.8,
+      "cpu_percent": 4.6,
+      "threads": 8,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 90.4078061580658,
+      "memory_mb": 24.90625,
+      "system_percent": 72.8,
+      "cpu_percent": 4.1,
+      "threads": 8,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 100.5251944065094,
+      "memory_mb": 24.90625,
+      "system_percent": 72.8,
+      "cpu_percent": 7.1,
+      "threads": 8,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 110.19500851631165,
+      "memory_mb": 24.9140625,
+      "system_percent": 72.9,
+      "cpu_percent": 8.3,
+      "threads": 8,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 120.49971961975098,
+      "memory_mb": 24.92578125,
+      "system_percent": 73.0,
+      "cpu_percent": 6.2,
+      "threads": 8,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 130.289621591568,
+      "memory_mb": 24.92578125,
+      "system_percent": 73.1,
+      "cpu_percent": 5.0,
+      "threads": 8,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 140.44011926651,
+      "memory_mb": 24.9140625,
+      "system_percent": 72.8,
+      "cpu_percent": 5.5,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 150.40582180023193,
+      "memory_mb": 24.92578125,
+      "system_percent": 72.7,
+      "cpu_percent": 5.3,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 160.41495013237,
+      "memory_mb": 24.9296875,
+      "system_percent": 72.7,
+      "cpu_percent": 4.2,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 170.02166175842285,
+      "memory_mb": 24.9296875,
+      "system_percent": 72.7,
+      "cpu_percent": 4.8,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 180.12476897239685,
+      "memory_mb": 24.9296875,
+      "system_percent": 72.7,
+      "cpu_percent": 10.8,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 190.3927845954895,
+      "memory_mb": 24.9375,
+      "system_percent": 72.7,
+      "cpu_percent": 4.2,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 200.2465877532959,
+      "memory_mb": 24.9375,
+      "system_percent": 72.7,
+      "cpu_percent": 5.7,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 210.0839807987213,
+      "memory_mb": 24.9453125,
+      "system_percent": 72.8,
+      "cpu_percent": 5.3,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 220.25080561637878,
+      "memory_mb": 24.9453125,
+      "system_percent": 72.9,
+      "cpu_percent": 3.6,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 230.2511236667633,
+      "memory_mb": 24.9453125,
+      "system_percent": 72.6,
+      "cpu_percent": 3.8,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 240.45628952980042,
+      "memory_mb": 24.94921875,
+      "system_percent": 72.5,
+      "cpu_percent": 5.2,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 250.28984546661377,
+      "memory_mb": 24.9609375,
+      "system_percent": 72.6,
+      "cpu_percent": 3.5,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 260.07993817329407,
+      "memory_mb": 24.9609375,
+      "system_percent": 72.7,
+      "cpu_percent": 4.3,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 270.4948585033417,
+      "memory_mb": 24.9609375,
+      "system_percent": 72.7,
+      "cpu_percent": 4.2,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 280.0493369102478,
+      "memory_mb": 24.9609375,
+      "system_percent": 72.7,
+      "cpu_percent": 4.7,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    },
+    {
+      "elapsed": 290.2038526535034,
+      "memory_mb": 24.9609375,
+      "system_percent": 72.6,
+      "cpu_percent": 5.2,
+      "threads": 6,
+      "subsystem_stats": {
+        "ai_training": {
+          "total": 9802,
+          "passed": 9802,
+          "failed": 0,
+          "duration": 299.7835612297058
+        },
+        "web_server": {
+          "total": 106859,
+          "passed": 106859,
+          "failed": 0,
+          "duration": 297.55689573287964
+        },
+        "data_pipeline": {
+          "total": 37604,
+          "passed": 37604,
+          "failed": 0,
+          "duration": 298.6045253276825
+        },
+        "storage_engine": {
+          "total": 13712,
+          "passed": 13712,
+          "failed": 0,
+          "duration": 299.26151418685913
+        },
+        "logging_engine": {
+          "total": 46372,
+          "passed": 46372,
+          "failed": 0,
+          "duration": 299.0300223827362
+        }
+      }
+    }
+  ]
+}

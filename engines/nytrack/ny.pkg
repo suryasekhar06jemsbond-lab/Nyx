@@ -1,0 +1,38 @@
+# Nytrack Engine Package Configuration
+
+name = "Nytrack"
+version = "2.0.0"
+description = "Nyx Experiment Tracking Engine - metrics, checkpoints, artifacts, versioning, early stopping"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nytrack"
+
+keywords = ["nyx", "tracking", "experiment", "metrics", "checkpoint", "artifact", "versioning", "mlops"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nytrack = "nytrack:create_track"
+
+[modules]
+artifact = "Artifact storage and versioning"
+checkpoint = "Model checkpoint with best-tracking"
+dataset = "Dataset versioning and registry"
+early_stopping = "Patience-based early stopping"
+experiment = "Experiment comparison and search"
+logger = "Training progress logger"
+metrics = "Metric recording and time series"
+repro = "Reproducibility config capture"
+run = "Experiment run management"
+
+[platform]
+any = true
+
+[capabilities]
+artifact_storage = "Versioned artifact storage"
+checkpointing = "Automatic best-model checkpointing"
+experiment_management = "Multi-run experiment comparison"
+metric_tracking = "Real-time metric logging and comparison"
+reproducibility = "Full experiment reproducibility capture"
+

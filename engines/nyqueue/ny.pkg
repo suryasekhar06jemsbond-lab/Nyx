@@ -1,31 +1,35 @@
-# NyQueue - Nyx Message Queue & Job Processing
-# ==============================================
+# Nyqueue Engine Package Configuration
 
-name = "NyQueue"
-version = "3.0.0"
-description = "Nyx Message Queue - Reliable job processing, event streaming, distributed messaging"
+name = "Nyqueue"
+version = "2.0.0"
+description = "Nyx Message Queue Engine - distributed queues, jobs, scheduling, pub/sub, dead letter"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
-homepage = "https://github.com/nyxlang/NyQueue"
+homepage = "https://github.com/nyxlang/Nyqueue"
 
-keywords = ["nyx", "queue", "message", "job", "event", "streaming", "worker"]
+keywords = ["nyx", "queue", "message", "job", "scheduler", "pubsub", "dead-letter", "worker"]
 
-dependencies = ["nyx >= 2.0.0", "nyserver >= 2.0.0"]
+dependencies = ["nyx >= 2.0.0"]
 
 [scripts]
-NyQueue = "NyQueue:main"
+Nyqueue = "nyqueue:create_queue"
 
 [modules]
-Main = "Main queue engine"
-types = "Core types (Message, Queue, Consumer)"
-queue = "Queue management"
-pubsub = "Publish/subscribe"
-stream = "Event streaming"
-worker = "Worker execution"
-scheduler = "Job scheduling"
-storage = "Persistence layer"
-cluster = "Distributed cluster"
-security = "Auth & permissions"
-metrics = "Observability"
-api = "HTTP API"
+dead_letter = "Dead letter queue handling"
+metrics = "Queue depth and throughput metrics"
+queue = "MessageQueue, producer, consumer"
+scheduler = "Cron and interval job scheduler"
+types = "Message, queue, consumer, job types"
+worker = "Worker pool with concurrency control"
+
+[platform]
+any = true
+
+[capabilities]
+dead_letter = "Failed message retry and DLQ"
+job_scheduling = "Cron and delayed job scheduling"
+message_queue = "Persistent distributed message queue"
+pub_sub = "Topic-based publish/subscribe"
+worker_pool = "Configurable worker concurrency"
+

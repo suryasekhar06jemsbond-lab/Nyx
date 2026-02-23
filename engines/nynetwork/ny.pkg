@@ -2,24 +2,37 @@
 
 name = "Nynetwork"
 version = "2.0.0"
-description = "Nyx Networking Engine - HTTP, WebSocket, Sockets"
+description = "Nyx Networking Engine - HTTP client/server, WebSocket, DNS, FTP, SMTP, RPC, load balancer"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
 homepage = "https://github.com/nyxlang/Nynetwork"
 
-keywords = ["nyx", "network", "http", "websocket", "sockets"]
+keywords = ["nyx", "network", "http", "websocket", "dns", "ftp", "smtp", "rpc", "load-balancer"]
 
 dependencies = ["nyx >= 2.0.0"]
 
 [scripts]
-Nynetwork = "Nynetwork:main"
+Nynetwork = "nynetwork:create_network"
 
 [modules]
-Nynetwork = "Main network engine"
-sockets = "Socket programming"
-http = "HTTP client/server"
-websocket = "WebSocket protocol"
-dns = "DNS utilities"
-ftp = "FTP client"
-rpc = "Remote procedure calls"
+dns = "DNS resolver and lookup"
+ftp = "FTP client with TLS"
+http = "HTTP client and server"
+loadbalancer = "Round-robin and least-connections LB"
+rpc = "RPC server and client"
+smtp = "SMTP email client"
+socket = "TCP/UDP socket and server"
+webrtc = "WebRTC peer connection"
+websocket = "WebSocket client and server"
+
+[platform]
+any = true
+
+[capabilities]
+dns = "DNS resolution with caching"
+http = "HTTP/1.1 and HTTP/2 client and server"
+load_balancing = "Multi-algorithm load balancing"
+rpc = "Binary RPC with serialization"
+websocket = "Full-duplex WebSocket connections"
+

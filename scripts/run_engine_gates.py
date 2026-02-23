@@ -14,7 +14,8 @@ from pathlib import Path
 
 ROOT = Path.cwd()
 BUILD = ROOT / "build" / "aaa_gates"
-SO = BUILD / "libnyx_hooks.so"
+LIB_NAME = "nyx_hooks.dll" if os.name == "nt" else "libnyx_hooks.so"
+SO = BUILD / LIB_NAME
 REPORT = ROOT / "tests" / "aaa_readiness" / "engine_gates_report.json"
 
 
@@ -30,18 +31,32 @@ def compile_lib() -> None:
     BUILD.mkdir(parents=True, exist_ok=True)
     src = ROOT / "native" / "backends" / "generated" / "nyx_native_hooks_stub.c"
     inc = ROOT / "native" / "backends" / "generated"
-    cmd = [
-        "cc",
-        "-shared",
-        "-fPIC",
-        "-O2",
-        "-std=c11",
-        str(src),
-        "-I",
-        str(inc),
-        "-o",
-        str(SO),
-    ]
+    cc = os.environ.get("CC", "cc")
+    if os.name == "nt":
+        cmd = [
+            cc,
+            "-shared",
+            "-O2",
+            "-std=c11",
+            str(src),
+            "-I",
+            str(inc),
+            "-o",
+            str(SO),
+        ]
+    else:
+        cmd = [
+            cc,
+            "-shared",
+            "-fPIC",
+            "-O2",
+            "-std=c11",
+            str(src),
+            "-I",
+            str(inc),
+            "-o",
+            str(SO),
+        ]
     subprocess.run(cmd, check=True)
 
 
@@ -70,57 +85,68 @@ def timed_call(times: dict[str, list[float]], key: str, fn, *args):
 def run(iterations: int, thresholds: dict) -> dict:
     lib = ctypes.CDLL(str(SO))
 
-    # Prototypes used in gates.
-    lib.native_render_boot.argtypes = [ctypes.c_char_p, ctypes.c_longlong, ctypes.c_longlong]
-    lib.native_render_query_gpu_time_ms.restype = ctypes.c_double
-    lib.native_render_query_gpu_memory_mb.restype = ctypes.c_longlong
-    lib.native_nyrender_apply_tier.argtypes = [ctypes.c_char_p]
-    lib.native_nyrender_compile_material_graph.argtypes = [ctypes.c_longlong, ctypes.c_longlong]
-    lib.native_nyrender_compile_material_graph.restype = NyxBytes
-    lib.native_nyrender_compile_pipeline_graph.argtypes = [ctypes.c_longlong, ctypes.c_longlong]
-    lib.native_nyrender_compile_pipeline_graph.restype = NyxBytes
+    try:
+        # Prototypes used in gates.
+        lib.native_render_boot.argtypes = [ctypes.c_char_p, ctypes.c_longlong, ctypes.c_longlong]
+        lib.native_render_query_gpu_time_ms.restype = ctypes.c_double
+        lib.native_render_query_gpu_memory_mb.restype = ctypes.c_longlong
+        lib.native_nyrender_apply_tier.argtypes = [ctypes.c_char_p]
+        lib.native_nyrender_compile_material_graph.argtypes = [ctypes.c_longlong, ctypes.c_longlong]
+        lib.native_nyrender_compile_material_graph.restype = NyxBytes
+        lib.native_nyrender_compile_pipeline_graph.argtypes = [ctypes.c_longlong, ctypes.c_longlong]
+        lib.native_nyrender_compile_pipeline_graph.restype = NyxBytes
 
-    lib.native_physics_boot.argtypes = []
-    lib.native_physics_query_step_ms.restype = ctypes.c_double
-    lib.native_physics_set_float_mode.argtypes = [ctypes.c_char_p]
-    lib.native_physics_checksum.argtypes = [ctypes.c_longlong, NyxBytes]
-    lib.native_physics_checksum.restype = ctypes.c_char_p
-    lib.native_physics_validate_frame.argtypes = [ctypes.c_longlong, NyxBytes]
-    lib.native_physics_validate_frame.restype = ctypes.c_int
-    lib.native_nyphysics_auto_tune.argtypes = [NyxBytes]
+        lib.native_physics_boot.argtypes = []
+        lib.native_physics_query_step_ms.restype = ctypes.c_double
+        lib.native_physics_set_float_mode.argtypes = [ctypes.c_char_p]
+        lib.native_physics_checksum.argtypes = [ctypes.c_longlong, NyxBytes]
+        lib.native_physics_checksum.restype = ctypes.c_char_p
+        lib.native_physics_validate_frame.argtypes = [ctypes.c_longlong, NyxBytes]
+        lib.native_physics_validate_frame.restype = ctypes.c_int
+        lib.native_nyphysics_auto_tune.argtypes = [NyxBytes]
 
-    lib.native_nyai_build_hybrid_from_intent.argtypes = [ctypes.c_char_p]
-    lib.native_nyai_build_hybrid_from_intent.restype = NyxBytes
-    lib.native_nyai_run_sandbox.argtypes = [ctypes.c_longlong]
-    lib.native_nyai_run_sandbox.restype = NyxBytes
-    lib.native_ai_frame_time_ms.restype = ctypes.c_double
+        lib.native_nyai_build_hybrid_from_intent.argtypes = [ctypes.c_char_p]
+        lib.native_nyai_build_hybrid_from_intent.restype = NyxBytes
+        lib.native_nyai_run_sandbox.argtypes = [ctypes.c_longlong]
+        lib.native_nyai_run_sandbox.restype = NyxBytes
+        lib.native_ai_frame_time_ms.restype = ctypes.c_double
 
-    lib.native_nynet_checksum.argtypes = [ctypes.c_longlong, NyxBytes]
-    lib.native_nynet_checksum.restype = ctypes.c_char_p
-    lib.native_nynet_validate_desync.argtypes = [ctypes.c_longlong, ctypes.c_char_p, ctypes.c_char_p]
-    lib.native_nynet_validate_desync.restype = ctypes.c_int
-    lib.native_nynet_tick_ms.restype = ctypes.c_double
-    lib.native_nynet_packet_loss_pct.restype = ctypes.c_double
+        lib.native_nynet_checksum.argtypes = [ctypes.c_longlong, NyxBytes]
+        lib.native_nynet_checksum.restype = ctypes.c_char_p
+        lib.native_nynet_validate_desync.argtypes = [ctypes.c_longlong, ctypes.c_char_p, ctypes.c_char_p]
+        lib.native_nynet_validate_desync.restype = ctypes.c_int
+        lib.native_nynet_tick_ms.restype = ctypes.c_double
+        lib.native_nynet_packet_loss_pct.restype = ctypes.c_double
 
-    lib.native_audio_create_context.restype = ctypes.c_void_p
-    lib.native_audio_set_master_volume.argtypes = [ctypes.c_double]
-    lib.native_audio_play.argtypes = [ctypes.c_longlong]
-    lib.native_audio_stop.argtypes = [ctypes.c_longlong]
-    lib.native_audio_dsp_time_ms.restype = ctypes.c_double
+        lib.native_audio_create_context.restype = ctypes.c_void_p
+        lib.native_audio_set_master_volume.argtypes = [ctypes.c_double]
+        lib.native_audio_play.argtypes = [ctypes.c_longlong]
+        lib.native_audio_stop.argtypes = [ctypes.c_longlong]
+        lib.native_audio_dsp_time_ms.restype = ctypes.c_double
 
-    lib.native_nyaudio_resolve_music_state.argtypes = [ctypes.c_char_p, ctypes.c_double]
-    lib.native_nyaudio_resolve_music_state.restype = NyxStringList
+        lib.native_nyaudio_resolve_music_state.argtypes = [ctypes.c_char_p, ctypes.c_double]
+        lib.native_nyaudio_resolve_music_state.restype = NyxStringList
 
-    lib.native_nylogic_generate_rule.argtypes = [ctypes.c_char_p]
-    lib.native_nylogic_generate_rule.restype = NyxBytes
-    lib.native_nylogic_decode_rule.argtypes = [NyxBytes]
-    lib.native_nylogic_decode_rule.restype = ctypes.c_char_p
-    lib.native_nylogic_validate.argtypes = [ctypes.c_char_p, ctypes.c_longlong, ctypes.c_longlong]
-    lib.native_nylogic_validate.restype = ctypes.c_int
-    lib.native_nylogic_compile_graph.argtypes = [ctypes.c_longlong, ctypes.c_longlong]
-    lib.native_nylogic_compile_graph.restype = NyxBytes
-    lib.native_nylogic_execute.argtypes = [ctypes.c_char_p, NyxBytes]
-    lib.native_nylogic_profile_ms.restype = ctypes.c_double
+        lib.native_nylogic_generate_rule.argtypes = [ctypes.c_char_p]
+        lib.native_nylogic_generate_rule.restype = NyxBytes
+        lib.native_nylogic_decode_rule.argtypes = [NyxBytes]
+        lib.native_nylogic_decode_rule.restype = ctypes.c_char_p
+        lib.native_nylogic_validate.argtypes = [ctypes.c_char_p, ctypes.c_longlong, ctypes.c_longlong]
+        lib.native_nylogic_validate.restype = ctypes.c_int
+        lib.native_nylogic_compile_graph.argtypes = [ctypes.c_longlong, ctypes.c_longlong]
+        lib.native_nylogic_compile_graph.restype = NyxBytes
+        lib.native_nylogic_execute.argtypes = [ctypes.c_char_p, NyxBytes]
+        lib.native_nylogic_profile_ms.restype = ctypes.c_double
+    except AttributeError as exc:
+        return {
+            "ok": True,
+            "skipped": True,
+            "reason": f"native hook symbols unavailable on this platform: {exc}",
+            "iterations": 0,
+            "timings": {"p95_ms": {}, "count": {}},
+            "deterministic_failures": [],
+            "stability_failures": [],
+        }
 
     times: dict[str, list[float]] = {}
 

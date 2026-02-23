@@ -1,0 +1,33 @@
+# Nyfeature Engine Package Configuration
+
+name = "Nyfeature"
+version = "2.0.0"
+description = "Nyx Feature Engineering Engine - encoding, normalization, PCA, SVD, feature selection"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyfeature"
+
+keywords = ["nyx", "feature", "encoding", "normalization", "pca", "svd", "selection", "scaling"]
+
+dependencies = ["nyx >= 2.0.0", "nytensor"]
+
+[scripts]
+Nyfeature = "nyfeature:create_feature"
+
+[modules]
+encoding = "OneHot, Label, Ordinal, Target encoders"
+reduction = "PCA, SVD, t-SNE dimensionality reduction"
+scaling = "MinMax, Standard, Robust, MaxAbs scalers"
+selection = "Variance, KBest, mutual info, correlation"
+
+[platform]
+any = true
+
+[capabilities]
+categorical_encoding = "OneHot, label, ordinal, target encoding"
+dimensionality_reduction = "PCA, SVD, t-SNE reduction"
+feature_scaling = "MinMax, Standard, Robust normalization"
+feature_selection = "Statistical feature selection methods"
+profiling = "Automated feature profiling and analysis"
+

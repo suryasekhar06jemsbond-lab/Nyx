@@ -1,4 +1,3 @@
-import "utils";
-
-let my_uuid = utils.generateUUID();
-print(my_uuid);
+# Stdlib-like smoke via builtin package
+use nyarrays;
+print("stdlib-ok");

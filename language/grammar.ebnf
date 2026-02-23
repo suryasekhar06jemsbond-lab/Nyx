@@ -129,7 +129,8 @@ continue-statement = "continue", [ identifier ], ";" ;
 yield-statement   = "yield", [ expression ], ";" ;
 
 /* Import Statements */
-import-statement = "import", string-literal, ";"
+import-statement = "use", identifier, ";"
+                | "import", string-literal, ";"
                 | "from", string-literal, "import", import-list, ";"
                 | "from", string-literal, "import", "{", import-list, "}", ";" ;
 import-list      = identifier, { ",", identifier } ;
@@ -326,7 +327,7 @@ generic-type      = identifier, "<", type-list, ">" ;
  *   async, await, yield
  *
  * Other Keywords:
- *   null, true, false, pass, with, assert, import, from, as
+ *   null, true, false, pass, with, assert, use, import, from, as
  */
 
 /* =============================================================================

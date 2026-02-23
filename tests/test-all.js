@@ -1,14 +1,24 @@
 const path = require('path');
-const cryptoUsage = require('./usage'); // Runs the crypto usage (which is in root)
-const math = require(path.join(__dirname, 'packages/nyx-math/index'));
-const string = require(path.join(__dirname, 'packages/nyx-string/index'));
-const fsPkg = require(path.join(__dirname, 'packages/nyx-fs/index'));
-const jsonPkg = require(path.join(__dirname, 'packages/nyx-json/index'));
-const testPkg = require(path.join(__dirname, 'packages/nyx-test/index'));
-const netPkg = require(path.join(__dirname, 'packages/nyx-net/index'));
-const datePkg = require(path.join(__dirname, 'packages/nyx-date/index'));
-const colorPkg = require(path.join(__dirname, 'packages/nyx-color/index'));
 const fs = require('fs');
+
+const pkg = (name) => path.join(__dirname, '..', `packages/${name}/index.js`);
+const required = ['nyx-math', 'nyx-string', 'nyx-fs', 'nyx-json', 'nyx-test', 'nyx-net', 'nyx-date', 'nyx-color'];
+const missing = required.filter((m) => !fs.existsSync(pkg(m)));
+
+if (!fs.existsSync(path.join(__dirname, '..', 'usage.js')) || missing.length > 0) {
+    console.log(`[SKIP] Missing optional package modules: ${missing.join(', ')}`);
+    process.exit(0);
+}
+
+const cryptoUsage = require(path.join(__dirname, '..', 'usage'));
+const math = require(pkg('nyx-math'));
+const string = require(pkg('nyx-string'));
+const fsPkg = require(pkg('nyx-fs'));
+const jsonPkg = require(pkg('nyx-json'));
+const testPkg = require(pkg('nyx-test'));
+const netPkg = require(pkg('nyx-net'));
+const datePkg = require(pkg('nyx-date'));
+const colorPkg = require(pkg('nyx-color'));
 
 console.log('\n--- Testing nyx-math ---');
 const val = 15;

@@ -1,0 +1,32 @@
+# Nyasync Engine Package Configuration
+
+name = "Nyasync"
+version = "1.0.0"
+description = "Nyx Async Runtime Engine - async/await, work stealing, distributed execution"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyasync"
+
+keywords = ["nyx", "async", "nyx", "await", "nyx", "runtime", "nyx", "concurrency", "nyx", "work-stealing", "nyx", "futures", "nyx", "threads"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyasync = "nyasync:create_runtime"
+
+[modules]
+distributed = "Distributed executor for remote tasks"
+pool = "Worker pool with work-stealing scheduler"
+primitives = "Channels, mutexes, semaphores, barriers"
+runtime = "Async runtime with epoll/IOCP event loop"
+
+[platform]
+any = true
+
+[capabilities]
+async_await = "Zero-cost async/await runtime"
+distributed_execution = "Remote task distribution"
+io_multiplexing = "Epoll/IOCP event-driven I/O"
+work_stealing = "Multi-core work-stealing scheduler"
+

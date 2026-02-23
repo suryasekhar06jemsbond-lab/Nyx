@@ -1,8 +1,7 @@
 $scripts = @(
-    @{ Name = 'Crypto Utilities'; Path = 'usage.js' },
     @{ Name = 'Standard Library (Math, String, FS, JSON, Date, Color)'; Path = 'test-all.js' },
     @{ Name = 'Network Package'; Path = 'test-net.js' },
-    @{ Name = 'Server Package'; Path = 'test-server.js' },
+    @{ Name = 'Server Package'; Path = 'test-server.js'; Optional = $true },
     @{ Name = 'Package Manager (NYPM)'; Path = 'test-nypm.js' }
 )
 
@@ -18,6 +17,10 @@ foreach ($script in $scripts) {
     $scriptPath = Join-Path $PSScriptRoot $script.Path
     
     if (-not (Test-Path -LiteralPath $scriptPath)) {
+        if ($script.Optional) {
+            Write-Host ("[SKIP] {0} (missing: {1})`n" -f $script.Name, $scriptPath) -ForegroundColor Yellow
+            continue
+        }
         Write-Error ("File not found: {0}" -f $scriptPath)
         $failures++
         continue

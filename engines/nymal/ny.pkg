@@ -1,0 +1,32 @@
+# Nymal Engine Package Configuration
+
+name = "Nymal"
+version = "1.0.0"
+description = "Nyx Malware Analysis Engine - PE parsing, sandbox, behavioral analysis"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nymal"
+
+keywords = ["nyx", "malware", "analysis", "pe-parser", "sandbox", "behavioral", "reverse-engineering"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nymal = "nymal:create_mal"
+
+[modules]
+behavioral = "Behavioral pattern detection"
+pe_parser = "PE/ELF binary format parsing"
+sandbox = "Dynamic sandbox execution"
+signatures = "Malware signature matching"
+
+[platform]
+any = true
+
+[capabilities]
+behavioral_analysis = "API call and network behavior analysis"
+binary_parsing = "PE/ELF/Mach-O format parsing"
+sandbox_execution = "Isolated malware execution and monitoring"
+signature_matching = "YARA-style signature matching"
+

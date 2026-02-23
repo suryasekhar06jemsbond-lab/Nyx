@@ -1,0 +1,30 @@
+name = "NyAccel"
+version = "1.0.0"
+description = "Hardware Acceleration Engine - Training at scale with multi-device orchestration"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "SEE LICENSE IN LICENSE"
+homepage = "https://github.com/suryasekhar06jemsbond-lab/Nyx"
+keywords = ["gpu", "cuda", "rocm", "tpu", "acceleration", "distributed", "multi-gpu"]
+dependencies = ["nyx >= 3.0.0", "nytensor >= 1.0.0"]
+
+[scripts]
+NyAccel = "NyAccel:main"
+
+[modules]
+CUDABackend = "CUDA device management, kernel launch, memory"
+ROCmBackend = "AMD ROCm acceleration backend"
+TPUBackend = "TPU compatibility layer"
+MultiGPU = "Multi-GPU orchestration and synchronization"
+TensorShard = "Distributed tensor sharding across devices"
+DeviceManager = "Hardware abstraction layer with auto-placement"
+StreamManager = "Async compute streams and synchronization"
+
+[platform]
+gpu = ["cuda", "rocm", "metal"]
+tpu = true
+
+[capabilities]
+multi_gpu = true
+tensor_sharding = true
+auto_placement = true

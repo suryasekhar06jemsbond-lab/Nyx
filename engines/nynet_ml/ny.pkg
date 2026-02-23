@@ -1,0 +1,37 @@
+# Nynet_ml Engine Package Configuration
+
+name = "Nynet_ml"
+version = "2.0.0"
+description = "Nyx Neural Network Engine - layers, modules, attention, transformer, training"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nynet_ml"
+
+keywords = ["nyx", "neural-net", "module", "linear", "conv", "rnn", "lstm", "attention", "transformer"]
+
+dependencies = ["nyx >= 2.0.0", "nytensor", "nygrad"]
+
+[scripts]
+Nynet_ml = "nynet_ml:create_net"
+
+[modules]
+attention = "Multi-head attention and transformer"
+embedding = "Token and positional embeddings"
+linear = "Linear, Conv1d, Conv2d layers"
+module = "Base module with forward/backward"
+normalization = "LayerNorm, BatchNorm, GroupNorm"
+parameter = "Parameter and gradient tracking"
+pooling = "MaxPool, AvgPool, AdaptivePool"
+recurrent = "RNN, LSTM, GRU cells"
+
+[platform]
+any = true
+
+[capabilities]
+linear_layers = "Dense and convolutional layers"
+module_system = "Composable module with parameter tracking"
+normalization = "Layer, batch, group normalization"
+recurrent_networks = "RNN, LSTM, GRU with bidirectional"
+transformer = "Multi-head attention and transformer blocks"
+

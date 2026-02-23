@@ -1,0 +1,37 @@
+# Nyframe Engine Package Configuration
+
+name = "Nyframe"
+version = "1.0.0"
+description = "Nyx DataFrame Engine - columnar storage, group-by, join, lazy execution, SQL"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyframe"
+
+keywords = ["nyx", "dataframe", "columnar", "sql", "groupby", "join", "lazy", "arrow", "parquet"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyframe = "nyframe:create_frame"
+
+[modules]
+columnar = "Arrow-compatible columnar storage"
+dataframe = "DataFrame structure with operations"
+groupby = "Group-by aggregations"
+io = "CSV, Parquet, JSON I/O"
+join = "Optimized hash join operations"
+lazy = "Lazy execution engine"
+parallel = "Parallel execution and multi-index"
+sql = "SQL-like query interface"
+
+[platform]
+any = true
+
+[capabilities]
+columnar_storage = "Arrow-compatible memory layout"
+hash_join = "High-performance hash join"
+lazy_evaluation = "Deferred computation with optimization"
+parquet_io = "Apache Parquet read/write"
+sql_interface = "SQL query parsing and execution"
+

@@ -1,0 +1,35 @@
+# Nysecure Engine Package Configuration
+
+name = "Nysecure"
+version = "2.0.0"
+description = "Nyx Secure AI Engine - adversarial attacks, differential privacy, fairness, explainability"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nysecure"
+
+keywords = ["nyx", "secure", "adversarial", "privacy", "fairness", "explainability", "robustness", "shap"]
+
+dependencies = ["nyx >= 2.0.0", "nytensor", "nygrad"]
+
+[scripts]
+Nysecure = "nysecure:create_secure"
+
+[modules]
+adversarial = "FGSM, PGD, CW adversarial attacks"
+explainability = "GradCAM, LIME, SHAP explainers"
+fairness = "Fairness metrics and bias detection"
+poison = "Data poisoning detection"
+privacy = "Differential privacy and DP optimizers"
+training = "Adversarial training for robustness"
+
+[platform]
+any = true
+
+[capabilities]
+adversarial_attacks = "FGSM, PGD, CW attack generation"
+adversarial_training = "Robust adversarial training loop"
+differential_privacy = "DP-SGD and noise calibration"
+explainability = "GradCAM, LIME, SHAP model explanation"
+fairness_audit = "Bias detection and mitigation"
+

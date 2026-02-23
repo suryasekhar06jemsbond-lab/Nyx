@@ -1,0 +1,35 @@
+# Nygraph_ml Engine Package Configuration
+
+name = "Nygraph_ml"
+version = "2.0.0"
+description = "Nyx Graph Neural Network Engine - GCN, GAT, GraphSAGE, message passing, link prediction"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nygraph_ml"
+
+keywords = ["nyx", "graph", "gnn", "gcn", "gat", "graphsage", "message-passing", "link-prediction"]
+
+dependencies = ["nyx >= 2.0.0", "nytensor", "nygrad"]
+
+[scripts]
+Nygraph_ml = "nygraph_ml:create_graph"
+
+[modules]
+batch = "Mini-batch graph loading"
+classifier = "Graph classification head"
+conv = "GCNConv, GATConv, SAGEConv layers"
+graph = "Graph data structure with adjacency"
+link_predictor = "Link prediction model"
+message_passing = "Message passing framework"
+
+[platform]
+any = true
+
+[capabilities]
+graph_batching = "Efficient mini-batch graph loading"
+graph_classification = "Whole-graph classification"
+graph_convolution = "GCN, GAT, GraphSAGE convolutions"
+link_prediction = "Edge prediction and scoring"
+message_passing = "Flexible message passing framework"
+

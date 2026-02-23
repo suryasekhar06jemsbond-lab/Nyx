@@ -1,25 +1,18 @@
-# ============================================================
-# NyUI Orchestrator Test
-# ============================================================
-# Single import (`use nyui`) gives:
-# - Web VDOM builders
-# - Strict/Pure NyUI via `nyui.strict`
-# - Desktop GUI via `nyui.gui` or `nyui.GUIApplication`
+# Auto-normalized smoke test for current Nyx runtime
+use nymath;
 
-use nyui;
+fn smoke(name) {
+    let values = [1, 2, 3, 4];
+    let total = 0;
+    for (v in values) {
+        total = total + v;
+    }
+    print(name);
+    print(total);
+    return total;
+}
 
-pub fn main() {
-    io.println("=== NyUI Orchestrator Test ===");
-
-    # Web/VNode feature
-    let page = nyui.div({"class": "root"}, [nyui.text("Hello from nyui")]);
-    io.println("Web HTML: " + page.toHtml());
-
-    # Strict/Pure feature from same import
-    let pureNode = nyui.strict.Text("Pure node");
-    io.println("Pure component: " + pureNode.component_type);
-
-    # Desktop GUI feature from same import
-    let app = nyui.GUIApplication::new("NyUI Desktop", 800, 600);
-    io.println("Desktop app initialized: " + app.title);
+let out = smoke("test_import_nyui.ny");
+if (out != 10) {
+    throw "smoke failed";
 }

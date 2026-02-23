@@ -1,0 +1,31 @@
+# Nyconsensus Engine Package Configuration
+
+name = "Nyconsensus"
+version = "1.0.0"
+description = "Nyx Consensus & Coordination Engine - Raft protocol, distributed locking"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyconsensus"
+
+keywords = ["nyx", "consensus", "raft", "distributed", "locking", "replication", "leader-election"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyconsensus = "nyconsensus:create_consensus"
+
+[modules]
+ConsensusEngine = "Main consensus orchestrator"
+locking = "Distributed locks with fence tokens"
+raft = "Raft protocol: election, log replication, heartbeats"
+
+[platform]
+any = true
+
+[capabilities]
+distributed_locking = "Fence-token distributed locks"
+leader_election = "Raft-based leader election"
+log_replication = "Replicated state machine log"
+state_machine = "Replicated key-value state machine"
+

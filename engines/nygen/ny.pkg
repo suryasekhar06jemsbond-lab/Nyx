@@ -1,0 +1,34 @@
+# Nygen Engine Package Configuration
+
+name = "Nygen"
+version = "2.0.0"
+description = "Nyx Generative AI Engine - GANs, VAEs, diffusion models, transformers, LLMs"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nygen"
+
+keywords = ["nyx", "generative", "gan", "vae", "diffusion", "transformer", "llm", "text-generation"]
+
+dependencies = ["nyx >= 2.0.0", "nytensor", "nygrad", "nynet_ml"]
+
+[scripts]
+Nygen = "nygen:create_gen"
+
+[modules]
+diffusion = "Denoising diffusion models"
+gan = "GAN, Conditional GAN, WGAN architectures"
+llm = "Large language model with generation"
+transformer = "Transformer blocks with causal attention"
+vae = "Variational autoencoder"
+
+[platform]
+any = true
+
+[capabilities]
+diffusion_models = "Score-based diffusion generation"
+gan_training = "GAN and WGAN adversarial training"
+text_generation = "Autoregressive text generation"
+transformer_lm = "Causal transformer language model"
+vae_generation = "Variational autoencoder generation"
+

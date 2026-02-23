@@ -1,0 +1,35 @@
+# Nyloss Engine Package Configuration
+
+name = "Nyloss"
+version = "2.0.0"
+description = "Nyx Loss Functions Engine - cross-entropy, MSE, contrastive, triplet, RL losses"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyloss"
+
+keywords = ["nyx", "loss", "cross-entropy", "mse", "contrastive", "triplet", "ppo", "reward"]
+
+dependencies = ["nyx >= 2.0.0", "nytensor"]
+
+[scripts]
+Nyloss = "nyloss:create_loss"
+
+[modules]
+classification = "CrossEntropy, BCE, multi-label losses"
+custom = "Custom loss function builder"
+divergence = "KL divergence, JS, Wasserstein"
+metric = "Contrastive, triplet, cosine embedding"
+regression = "MSE, MAE, Huber, quantile losses"
+rl = "Policy gradient, PPO clip, TD losses"
+
+[platform]
+any = true
+
+[capabilities]
+classification_losses = "Cross-entropy, focal, label-smoothing"
+custom_losses = "Composable custom loss functions"
+metric_learning = "Contrastive, triplet margin losses"
+regression_losses = "MSE, MAE, Huber, smooth L1"
+rl_losses = "PPO clip, policy gradient, TD losses"
+

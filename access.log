@@ -1,0 +1,10 @@
+127.0.0.1 - - [23/Feb/2026:21:35:27 India Standard Time] "GET / HTTP/1.1" 200 303
+127.0.0.1 - - [23/Feb/2026:21:35:31 India Standard Time] "GET /api/status HTTP/1.1" 200 105
+127.0.0.1 - - [23/Feb/2026:21:35:41 India Standard Time] "GET / HTTP/1.1" 200 303
+127.0.0.1 - - [23/Feb/2026:21:35:43 India Standard Time] "GET / HTTP/1.1" 200 303
+127.0.0.1 - - [23/Feb/2026:21:35:43 India Standard Time] "GET /favicon.ico HTTP/1.1" 404 97
+127.0.0.1 - - [23/Feb/2026:21:35:49 India Standard Time] "GET / HTTP/1.1" 200 303
+127.0.0.1 - - [23/Feb/2026:21:35:51 India Standard Time] "GET /api/status HTTP/1.1" 200 105
+127.0.0.1 - - [23/Feb/2026:21:35:54 India Standard Time] "GET /test HTTP/1.1" 200 156
+127.0.0.1 - - [23/Feb/2026:21:36:22 India Standard Time] "GET /api/status HTTP/1.1" 200 105
+127.0.0.1 - - [23/Feb/2026:21:36:32 India Standard Time] "GET / HTTP/1.1" 200 303

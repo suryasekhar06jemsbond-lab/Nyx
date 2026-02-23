@@ -1,0 +1,34 @@
+# Nycluster Engine Package Configuration
+
+name = "Nycluster"
+version = "1.0.0"
+description = "Nyx Distributed Orchestration Engine - service discovery, load balancing, circuit breaker"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nycluster"
+
+keywords = ["nyx", "cluster", "distributed", "service-discovery", "load-balancing", "circuit-breaker", "retry"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nycluster = "nycluster:create_cluster"
+
+[modules]
+circuit = "Circuit breaker: closed/open/half-open states"
+ClusterEngine = "Main cluster orchestrator"
+discovery = "Service registry with heartbeat eviction"
+health = "Health check with consecutive failure tracking"
+loadbalancer = "Round-robin, random, least-connections, weighted"
+retry = "Exponential and linear backoff retry"
+
+[platform]
+any = true
+
+[capabilities]
+circuit_breaker = "Fault-tolerant circuit breaker pattern"
+load_balancing = "Multiple load balancing algorithms"
+retry_policies = "Configurable retry with backoff"
+service_discovery = "Dynamic service registration and lookup"
+

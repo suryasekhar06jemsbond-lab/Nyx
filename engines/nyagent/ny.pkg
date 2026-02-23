@@ -1,0 +1,34 @@
+# Nyagent Engine Package Configuration
+
+name = "Nyagent"
+version = "1.0.0"
+description = "Nyx Autonomous Agent Engine - planning, memory, reflection, coordination"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyagent"
+
+keywords = ["nyx", "agent", "nyx", "autonomous", "nyx", "planning", "nyx", "memory", "nyx", "reflection", "nyx", "coordination"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyagent = "nyagent:create_agent"
+
+[modules]
+Agent = "Main agent orchestrator"
+coordination = "Agent registry and delegation"
+core = "Agent config, tools, state"
+memory = "Short-term, long-term, episodic memory with vector search"
+planning = "Goal decomposition and task planning"
+reflection = "Critique, retry, and self-improvement"
+
+[platform]
+any = true
+
+[capabilities]
+episodic_memory = "Vector-indexed episodic memory recall"
+multi_agent_delegation = "Cross-agent task delegation"
+plan_execute_reflect = "Plan-execute-reflect-learn agent loop"
+tool_use = "Dynamic tool binding and execution"
+

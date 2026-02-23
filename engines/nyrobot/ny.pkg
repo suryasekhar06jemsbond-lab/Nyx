@@ -1,0 +1,35 @@
+# Nyrobot Engine Package Configuration
+
+name = "Nyrobot"
+version = "1.0.0"
+description = "Nyx Kinematics & Robotics Engine - DH parameters, path planning, RRT, motion"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyrobot"
+
+keywords = ["nyx", "robotics", "kinematics", "rrt", "path-planning", "motion", "actuator", "simulation"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyrobot = "nyrobot:create_robot"
+
+[modules]
+hal = "Actuator/Encoder/ForceTorque sensor HAL"
+kinematics = "DH parameters, forward/inverse kinematics, Jacobian"
+motion = "Motion controller with linear/circular profiles"
+path_planning = "RRT/RRT*/PRM path planning, trajectory optimization"
+Robot = "Main robot orchestrator"
+simulation = "Simulated robot for testing"
+
+[platform]
+any = true
+
+[capabilities]
+forward_kinematics = "DH-parameter forward kinematics"
+inverse_kinematics = "Numerical inverse kinematics solving"
+motion_control = "Linear and circular motion profiles"
+rrt_planning = "RRT and RRT* path planning"
+sensor_integration = "Force-torque and encoder integration"
+

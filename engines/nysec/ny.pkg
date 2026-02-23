@@ -2,30 +2,32 @@
 
 name = "Nysec"
 version = "2.0.0"
-description = "Nyx Security Engine - Penetration Testing, Vulnerability Scanning, Hardening"
+description = "Nyx Security Tools Engine - packet crafting, binary exploitation, forensics, pen testing"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
 homepage = "https://github.com/nyxlang/Nysec"
 
-keywords = ["nyx", "security", "penetration-testing", "vulnerability", "audit"]
+keywords = ["nyx", "security", "packet", "exploit", "forensic", "pentest", "scapy", "pwntools"]
 
-dependencies = ["nyx >= 2.0.0", "Nynetwork >= 2.0.0"]
+dependencies = ["nyx >= 2.0.0", "nynetwork"]
 
 [scripts]
-Nysec = "Nysec:main"
+Nysec = "nysec:create_sec"
 
 [modules]
-Nysec = "Main security engine"
-pentest = "Penetration testing"
-scan = "Vulnerability scanning"
-audit = "Security auditing"
-harden = "System hardening"
-crypto = "Cryptographic tools"
-forensics = "Digital forensics"
- IDS = "Intrusion detection"
-exploit = "Exploitation frameworks"
-report = "Security reporting"
+nyforensics = "Digital forensics analysis"
+nypentesting = "Penetration testing framework"
+nypwntools = "Binary exploitation toolkit"
+nyscapy = "Packet crafting: IP, TCP, UDP, ARP, DNS"
 
 [platform]
 any = true
+
+[capabilities]
+binary_analysis = "ELF/PE analysis and ROP chain building"
+forensics = "Memory dump and disk forensics"
+packet_crafting = "Layer 2-7 packet construction and parsing"
+pcap_analysis = "PCAP capture and deep packet inspection"
+recon = "Network reconnaissance and enumeration"
+

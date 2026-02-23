@@ -1,0 +1,34 @@
+# Nybacktest Engine Package Configuration
+
+name = "Nybacktest"
+version = "1.0.0"
+description = "Nyx Backtesting Engine - event-driven strategy testing, portfolio analytics"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nybacktest"
+
+keywords = ["nyx", "backtesting", "nyx", "trading", "nyx", "strategy", "nyx", "portfolio", "nyx", "sharpe", "nyx", "drawdown", "nyx", "analytics"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nybacktest = "nybacktest:create_backtest"
+
+[modules]
+analytics = "Sharpe, Sortino, drawdown, win rate, Calmar"
+BacktestEngine = "Main backtesting orchestrator"
+events = "Event queue for bar/tick/signal/fill"
+execution = "Fill model with slippage simulation"
+portfolio = "Position tracking, equity curve, trade log"
+strategy = "Strategy config, signals, bar/tick handlers"
+
+[platform]
+any = true
+
+[capabilities]
+equity_tracking = "Full equity curve and trade log"
+event_driven = "Event-driven backtesting loop"
+performance_analytics = "Sharpe/Sortino/Calmar risk metrics"
+realistic_fills = "Slippage and commission modeling"
+

@@ -2,13 +2,13 @@
 
 name = "Nynet"
 version = "1.0.0"
-description = "Nyx Multiplayer Infrastructure - authoritative server, deterministic sync, anti-cheat, scaling"
+description = "Nyx Neural Network Architecture Engine - layers, attention, RNN, transformers"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
 homepage = "https://github.com/nyxlang/Nynet"
 
-keywords = ["nyx", "multiplayer", "networking", "authoritative", "lag-compensation", "anti-cheat", "scaling"]
+keywords = ["nyx", "neural-network", "layers", "attention", "transformer", "rnn", "lstm", "cnn"]
 
 dependencies = ["nyx >= 2.0.0"]
 
@@ -16,52 +16,21 @@ dependencies = ["nyx >= 2.0.0"]
 Nynet = "nynet:create_net"
 
 [modules]
-core = "Authoritative server core"
-replication = "Snapshots, interpolation, rewind"
-anti_cheat = "Validation and anomaly detection"
-scale = "Region servers, balancer, microservices"
-transport = "Multi-channel packet transport core"
-session = "Lobby, party, and matchmaking systems"
-security = "Auth, encryption, and key rotation"
-interest = "Replication graph and interest buckets"
-qos = "Quality-of-service adaptation"
-operations = "Autoscaling, failover, observability"
-partitioning = "Server-side simulation partition manager"
-determinism_guard = "Cross-node determinism validation"
-production = "Network production health and SLO model"
-ProductionNetProfile = "Production-ready network profile"
-WorldClassNetSuite = "High-end network orchestration suite"
-NetEngine = "Main network orchestrator"
-replication_autodiscovery = "Auto-discovered replication schema"
-auto_interest_management = "Automatic relevance zone generation"
-deterministic_validator = "Deterministic desync source validator"
-NoCodeNetRuntime = "No-code networking orchestration runtime"
+activations = "ReLU, GELU, Sigmoid, Tanh, Softmax"
+attention = "Multi-head attention and transformer blocks"
+containers = "Sequential and ResidualBlock"
+embedding = "Embedding and positional encoding"
+layers = "Linear, Conv2d, BatchNorm, LayerNorm layers"
+pooling = "MaxPool, AvgPool, AdaptivePool"
+recurrent = "RNN, LSTM, GRU layers"
 
 [platform]
 any = true
 
 [capabilities]
-authoritative_server = "Server-authoritative gameplay flow"
-deterministic_sync = "Deterministic frame checksum sync"
-snapshot_interpolation = "Remote smooth state blending"
-rewind_compensation = "Lag compensation via rewind"
-anti_cheat = "Kernel/anomaly/sanity validation surfaces"
-regional_scaling = "Region-based balancing and service mesh"
-transport_channels = "Reliable/unreliable channel model"
-matchmaking = "Playlist queues and lobby formation"
-secure_networking = "Session auth and encryption surfaces"
-interest_management = "Entity relevance replication graph"
-adaptive_qos = "Dynamic snapshot and rate adaptation"
-failover_ops = "Region failover and autoscaling controls"
-server_partitioning = "Simulation shard partitioning"
-determinism_validation = "Cross-node deterministic checksum guard"
-production_health = "Network health telemetry and readiness"
-replication_auto_discovery = "Auto-detect replicated components and packet layout"
-automatic_interest_management = "Auto-built relevance graph from proximity/visibility/probability"
-deterministic_desync_validation = "Automatic desync detection surface"
-no_manual_network_schema = "No manual replication schema coding path"
-anomaly_detection = "AAA contract: anomaly detection"
-kernel_validation = "AAA contract: kernel validation"
-load_balancing = "AAA contract: load balancing"
-microservices_backend = "AAA contract: microservices backend"
-server_sanity_checks = "AAA contract: server sanity checks"
+convolutional = "2D convolution with padding and stride"
+normalization = "Batch and layer normalization"
+recurrent_networks = "RNN/LSTM/GRU with bidirectional support"
+residual_connections = "Skip connection residual blocks"
+transformer_blocks = "Multi-head attention transformer layers"
+

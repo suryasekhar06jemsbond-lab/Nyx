@@ -1,0 +1,31 @@
+# Nykernel Engine Package Configuration
+
+name = "Nykernel"
+version = "1.0.0"
+description = "Nyx Compute Kernel Engine - kernel compilation, execution, optimization"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nykernel"
+
+keywords = ["nyx", "kernel", "compute", "compilation", "execution", "optimization", "gpu"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nykernel = "nykernel:create_kernel"
+
+[modules]
+compiler = "Kernel source compilation"
+executor = "Kernel launch and execution"
+memory = "Kernel memory management"
+optimizer = "Kernel auto-optimization"
+
+[platform]
+any = true
+
+[capabilities]
+auto_optimization = "Automatic kernel optimization"
+kernel_compilation = "JIT kernel compilation"
+multi_backend = "CPU/GPU/FPGA kernel targets"
+

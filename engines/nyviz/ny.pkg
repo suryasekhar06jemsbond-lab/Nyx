@@ -1,0 +1,38 @@
+# Nyviz Engine Package Configuration
+
+name = "Nyviz"
+version = "1.0.0"
+description = "Nyx Visualization Engine - 2D/3D plots, dashboards, real-time charts, GPU rendering"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyviz"
+
+keywords = ["nyx", "visualization", "plotting", "charts", "dashboard", "3d", "gpu", "real-time"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyviz = "nyviz:create_viz"
+
+[modules]
+dashboard = "Multi-panel dashboard builder"
+engine_2d = "2D rendering engine"
+engine_3d = "3D surface and scatter plots"
+gpu_render = "GPU-accelerated rendering"
+interactive = "Interactive chart with zoom/pan"
+plots = "Line, bar, scatter, histogram plot types"
+realtime = "Real-time streaming charts"
+statistical = "Box plots, violin, heatmaps"
+themes = "Color schemes and visual themes"
+
+[platform]
+any = true
+
+[capabilities]
+2d_plotting = "Publication-quality 2D plots"
+3d_visualization = "Interactive 3D surface/scatter"
+dashboard_builder = "Multi-panel dashboard layout"
+gpu_rendering = "GPU-accelerated chart rendering"
+realtime_streaming = "Live streaming data visualization"
+

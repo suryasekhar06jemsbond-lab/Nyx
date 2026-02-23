@@ -1,0 +1,37 @@
+name = "NyTensor"
+version = "1.0.0"
+description = "Core Mathematical Computation Engine - Backbone of all ML in Nyx"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "SEE LICENSE IN LICENSE"
+homepage = "https://github.com/suryasekhar06jemsbond-lab/Nyx"
+keywords = ["tensor", "linear-algebra", "blas", "gpu", "simd", "computation", "ml"]
+dependencies = ["nyx >= 3.0.0", "nycore >= 1.0.0"]
+
+[scripts]
+NyTensor = "NyTensor:main"
+
+[modules]
+Tensor = "Multidimensional tensor type with shape, strides, dtype"
+TensorOps = "Element-wise, reduction, broadcasting operations"
+LinAlg = "BLAS/LAPACK-grade linear algebra (matmul, svd, eigendecomp)"
+Broadcasting = "Automatic shape broadcasting system"
+SIMD = "CPU vectorization for AVX2/AVX-512/NEON"
+GPUTensor = "GPU-accelerated tensor operations (CUDA/ROCm)"
+MixedPrecision = "FP32, FP16, BF16 mixed precision support"
+SparseTensor = "CSR/CSC/COO sparse tensor formats"
+MemoryPool = "Tensor memory pooling and arena allocation"
+KernelFusion = "Operation fusion and optimization passes"
+Random = "Tensor random number generation and sampling"
+
+[platform]
+architectures = ["x86_64", "aarch64"]
+simd = ["avx2", "avx512", "neon"]
+gpu = ["cuda", "rocm"]
+
+[capabilities]
+blas = true
+lapack = true
+sparse = true
+mixed_precision = true
+gpu_acceleration = true

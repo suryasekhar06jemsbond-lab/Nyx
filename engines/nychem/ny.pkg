@@ -1,0 +1,32 @@
+# Nychem Engine Package Configuration
+
+name = "Nychem"
+version = "1.0.0"
+description = "Nyx Computational Chemistry Engine - molecular dynamics, quantum chemistry"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nychem"
+
+keywords = ["nyx", "chemistry", "nyx", "molecular-dynamics", "nyx", "quantum", "nyx", "hartree-fock", "nyx", "reactions", "nyx", "molecules"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nychem = "nychem:create_chem"
+
+[modules]
+dynamics = "Molecular dynamics simulation"
+quantum = "Hartree-Fock quantum chemistry"
+reactions = "Reaction modeling and kinetics"
+structure = "Molecular structure representation"
+
+[platform]
+any = true
+
+[capabilities]
+molecular_dynamics = "Classical MD simulation"
+molecular_visualization = "3D molecular structure output"
+quantum_chemistry = "Hartree-Fock electronic structure"
+reaction_modeling = "Chemical reaction network modeling"
+

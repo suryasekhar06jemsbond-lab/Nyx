@@ -1,0 +1,35 @@
+# Nyalign Engine Package Configuration
+
+name = "Nyalign"
+version = "1.0.0"
+description = "Nyx AI Safety & Alignment Engine - bias detection, explainability, kill switch"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyalign"
+
+keywords = ["nyx", "safety", "nyx", "alignment", "nyx", "bias", "nyx", "fairness", "nyx", "explainability", "nyx", "ethics", "nyx", "kill-switch"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyalign = "nyalign:create_align"
+
+[modules]
+AlignEngine = "Main alignment orchestrator"
+ethics = "Weighted ethical framework evaluation"
+explainability = "SHAP, feature importance, counterfactuals"
+fairness = "Bias detection: demographic parity, equalized odds"
+goals = "Goal constraints and alignment verification"
+policy = "Safety policy and rule engine"
+safety = "Kill switch with authorization"
+
+[platform]
+any = true
+
+[capabilities]
+bias_detection = "Demographic parity and equalized odds"
+ethical_reasoning = "Multi-principle ethical evaluation"
+explainability = "SHAP and feature importance analysis"
+kill_switch = "Emergency safety override with auth"
+

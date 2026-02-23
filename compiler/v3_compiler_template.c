@@ -40,6 +40,7 @@ typedef enum {
     TOK_FN,
     TOK_RETURN,
     TOK_IMPORT,
+    TOK_USE,
     TOK_TRUE,
     TOK_FALSE,
     TOK_NULL,
@@ -775,6 +776,7 @@ static TokenType keyword_type(const char *ident) {
     if (strcmp(ident, "fn") == 0) return TOK_FN;
     if (strcmp(ident, "return") == 0) return TOK_RETURN;
     if (strcmp(ident, "import") == 0) return TOK_IMPORT;
+    if (strcmp(ident, "use") == 0) return TOK_USE;
     if (strcmp(ident, "true") == 0) return TOK_TRUE;
     if (strcmp(ident, "false") == 0) return TOK_FALSE;
     if (strcmp(ident, "null") == 0) return TOK_NULL;
@@ -1632,8 +1634,16 @@ static Stmt *parse_import_statement(Parser *p) {
     int col = p->cur.col;
 
     next_token(p);
-    expect_current(p, TOK_STRING, "expected string path after import");
-    char *path = xstrdup(p->cur.text);
+    
+    char *path = NULL;
+    // Accept both quoted strings ("module") and unquoted identifiers (module)
+    if (p->cur.type == TOK_STRING) {
+        path = xstrdup(p->cur.text);
+    } else if (p->cur.type == TOK_IDENT) {
+        path = xstrdup(p->cur.text);
+    } else {
+        fail_at(p->cur.line, p->cur.col, "expected module name or string path after import");
+    }
 
     next_token(p);
     expect_current(p, TOK_SEMI, "expected ';' after import");
@@ -1701,7 +1711,7 @@ static Stmt *parse_statement(Parser *p) {
     if (p->cur.type == TOK_FN) return parse_fn_statement(p);
     if (p->cur.type == TOK_RETURN) return parse_return_statement(p);
     if (p->cur.type == TOK_THROW) return parse_throw_statement(p);
-    if (p->cur.type == TOK_IMPORT) return parse_import_statement(p);
+    if (p->cur.type == TOK_IMPORT || p->cur.type == TOK_USE) return parse_import_statement(p);
     return parse_expr_or_assignment_statement(p);
 }
 

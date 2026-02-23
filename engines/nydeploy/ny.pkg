@@ -1,0 +1,33 @@
+# Nydeploy Engine Package Configuration
+
+name = "Nydeploy"
+version = "1.0.0"
+description = "Nyx Deployment Engine - blue-green, canary, rolling, multi-region"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nydeploy"
+
+keywords = ["nyx", "deploy", "blue-green", "canary", "rolling-update", "serverless", "multi-region"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nydeploy = "nydeploy:create_deployer"
+
+[modules]
+blue_green = "Blue-green deployment with traffic switch"
+canary = "Canary deployment with percentage rollout"
+multi_region = "Multi-region deployment orchestration"
+rolling = "Rolling update with batch sizing"
+serverless = "Serverless function deployment"
+
+[platform]
+any = true
+
+[capabilities]
+blue_green = "Zero-downtime blue-green deployment"
+canary_release = "Gradual canary rollout with metrics"
+multi_region = "Cross-region deployment orchestration"
+rolling_update = "Configurable batch rolling updates"
+

@@ -5,7 +5,27 @@ ROOT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$ROOT_DIR"
 
 echo "[eco] building native runtime..."
-make >/dev/null
+if ! command -v cc >/dev/null 2>&1; then
+  if command -v clang >/dev/null 2>&1; then
+    CC=clang make >/dev/null
+  elif [ -x "./build/nyx" ] || [ -x "./build/nyx.exe" ] || [ -x "./nyx" ] || [ -x "./nyx.exe" ]; then
+    echo "[eco] compiler missing; using existing runtime binary"
+  else
+    echo "FAIL: no C compiler found (expected cc or clang)"
+    exit 1
+  fi
+else
+  make >/dev/null
+fi
+
+RUNTIME="./nyx"
+if [ -x "./build/nyx" ]; then
+  RUNTIME="./build/nyx"
+elif [ -x "./build/nyx.exe" ]; then
+  RUNTIME="./build/nyx.exe"
+elif [ -x "./nyx.exe" ]; then
+  RUNTIME="./nyx.exe"
+fi
 
 tmpd=$(mktemp -d)
 trap 'rm -rf "$tmpd"' EXIT
@@ -35,7 +55,7 @@ print(object_get(p, "x"));
 print(object_get(p, "y"));
 EOCY
 
-out=$(./nyx "$tmpd/ecosystem.ny")
+out=$("$RUNTIME" "$tmpd/ecosystem.ny" | tr -d '\r')
 expected='2
 20
 1

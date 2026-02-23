@@ -1,6 +1,11 @@
+from __future__ import annotations
+
+API_VERSION = "1.0.0"
+
 from enum import IntEnum
+from dataclasses import dataclass
 from src.lexer import Lexer
-from src.token_types import TokenType, Token
+from src.token_types import ASSIGNMENT_TOKENS, DEFAULT_REGISTRY, TokenRegistry, TokenType, Token
 from src.ast_nodes import (
     Program, LetStatement, Identifier, Expression, ReturnStatement,
     ExpressionStatement, IntegerLiteral, PrefixExpression, InfixExpression,
@@ -8,7 +13,7 @@ from src.ast_nodes import (
     CallExpression, ArrayLiteral, IndexExpression, NullLiteral, StringLiteral,
     FloatLiteral, ForStatement, AssignExpression, WhileStatement,
     BinaryLiteral, OctalLiteral, HexLiteral, ClassStatement, SuperExpression,
-    SelfExpression, NewExpression, ImportStatement, FromStatement, TryStatement,
+    SelfExpression, NewExpression, ImportStatement, UseStatement, FromStatement, TryStatement,
     RaiseStatement, AssertStatement, WithStatement, YieldExpression,
     AsyncStatement, AwaitExpression, PassStatement, BreakStatement, ContinueStatement, ForInStatement
 )
@@ -34,6 +39,9 @@ PRECEDENCES = {
     TokenType.SLASH_ASSIGN: Precedence.ASSIGN,
     TokenType.MODULO_ASSIGN: Precedence.ASSIGN,
     TokenType.FLOOR_DIVIDE_ASSIGN: Precedence.ASSIGN,
+    TokenType.COLON_ASSIGN: Precedence.ASSIGN,
+    TokenType.LOGICAL_AND: Precedence.LOGICAL,
+    TokenType.LOGICAL_OR: Precedence.LOGICAL,
     TokenType.EQ: Precedence.EQUALS,
     TokenType.NOT_EQ: Precedence.EQUALS,
     TokenType.LT: Precedence.LESSGREATER,
@@ -54,11 +62,20 @@ PRECEDENCES = {
 }
 
 class Parser:
-    def __init__(self, lexer: Lexer):
+    @dataclass
+    class Options:
+        max_errors: int = 200
+        stop_on_first_error: bool = False
+
+    def __init__(self, lexer: Lexer, options: "Parser.Options" | None = None):
         self.l = lexer
         self.cur_token: Token = None
         self.peek_token: Token = None
         self.errors = []
+        self.registry: TokenRegistry = getattr(lexer, "registry", DEFAULT_REGISTRY)
+        self.statement_hooks = {}
+        self.error_hooks = []
+        self.options = options or Parser.Options()
 
         self.prefix_parse_fns = {
             TokenType.IDENT: self.parse_identifier,
@@ -84,10 +101,10 @@ class Parser:
             TokenType.NEW: self.parse_new_expression,
             TokenType.AWAIT: self.parse_await_expression,
             TokenType.YIELD: self.parse_yield_expression,
+            TokenType.PRINT: self.parse_print_identifier,
         }
 
         self.infix_parse_fns = {
-            TokenType.ASSIGN: self.parse_assign_expression,
             TokenType.PLUS: self.parse_infix_expression,
             TokenType.MINUS: self.parse_infix_expression,
             TokenType.SLASH: self.parse_infix_expression,
@@ -101,10 +118,14 @@ class Parser:
             TokenType.GT: self.parse_infix_expression,
             TokenType.LE: self.parse_infix_expression,
             TokenType.GE: self.parse_infix_expression,
+            TokenType.LOGICAL_AND: self.parse_infix_expression,
+            TokenType.LOGICAL_OR: self.parse_infix_expression,
             TokenType.LPAREN: self.parse_call_expression,
             TokenType.LBRACKET: self.parse_index_expression,
             TokenType.DOT: self.parse_infix_expression,
         }
+        for assign_tok in self.registry.assignment_tokens or ASSIGNMENT_TOKENS:
+            self.infix_parse_fns[assign_tok] = self.parse_assign_expression
 
         self.next_token()
         self.next_token()
@@ -122,8 +143,34 @@ class Parser:
             self.next_token()
         return program
 
+    def parse(self) -> Program:
+        # Compatibility helper for older callers/tests.
+        return self.parse_program()
+
+    def register_prefix(self, token_type: TokenType, fn):
+        self.prefix_parse_fns[token_type] = fn
+
+    def register_infix(self, token_type: TokenType, fn):
+        self.infix_parse_fns[token_type] = fn
+
+    def register_statement(self, token_type: TokenType, fn):
+        self.statement_hooks[token_type] = fn
+
+    def register_error_hook(self, fn):
+        self.error_hooks.append(fn)
+
+    def _record_error(self, message: str):
+        if len(self.errors) >= self.options.max_errors:
+            return
+        self.errors.append(message)
+        for hook in self.error_hooks:
+            hook(message, self)
+
     def parse_statement(self):
         token_type = self.cur_token.type
+        custom = self.statement_hooks.get(token_type)
+        if custom:
+            return custom()
         if token_type == TokenType.SEMICOLON:
             return None
         if token_type == TokenType.LET:
@@ -134,6 +181,8 @@ class Parser:
             return self.parse_class_statement()
         elif token_type == TokenType.IMPORT:
             return self.parse_import_statement()
+        elif token_type == TokenType.USE:
+            return self.parse_use_statement()
         elif token_type == TokenType.FROM:
             return self.parse_from_statement()
         elif token_type == TokenType.TRY:
@@ -156,6 +205,10 @@ class Parser:
             return self.parse_while_statement()
         elif token_type == TokenType.FOR:
             return self.parse_for_statement()
+        elif token_type == TokenType.ILLEGAL:
+            self._record_error(f"Illegal token at line={self.cur_token.line} col={self.cur_token.column}: {self.cur_token.literal!r}")
+            self._synchronize_statement()
+            return None
         else:
             return self.parse_expression_statement()
 
@@ -191,8 +244,9 @@ class Parser:
     def parse_expression(self, precedence: Precedence):
         prefix = self.prefix_parse_fns.get(self.cur_token.type)
         if not prefix:
-            self.errors.append(f"No prefix parsing function for {self.cur_token.type}")
-            return None
+            self._record_error(f"No prefix parsing function for {self.cur_token.type}")
+            self._synchronize_expression()
+            return NullLiteral(token=self.cur_token)
         
         left_exp = prefix()
 
@@ -208,11 +262,25 @@ class Parser:
     def parse_identifier(self):
         return Identifier(token=self.cur_token, value=self.cur_token.literal)
 
+    def parse_print_identifier(self):
+        # Keep `print(...)` usable in expression contexts.
+        return Identifier(token=self.cur_token, value="print")
+
     def parse_integer_literal(self):
-        return IntegerLiteral(token=self.cur_token, value=int(self.cur_token.literal))
+        try:
+            value = int(self.cur_token.literal)
+        except ValueError:
+            self._record_error(f"Invalid integer literal: {self.cur_token.literal!r}")
+            value = 0
+        return IntegerLiteral(token=self.cur_token, value=value)
     
     def parse_float_literal(self):
-        return FloatLiteral(token=self.cur_token, value=float(self.cur_token.literal))
+        try:
+            value = float(self.cur_token.literal)
+        except ValueError:
+            self._record_error(f"Invalid float literal: {self.cur_token.literal!r}")
+            value = 0.0
+        return FloatLiteral(token=self.cur_token, value=value)
 
     def parse_binary_literal(self):
         return BinaryLiteral(token=self.cur_token, value=self.cur_token.literal)
@@ -250,7 +318,7 @@ class Parser:
     def parse_assign_expression(self, name):
         # Accept Identifier or InfixExpression (member access) as assignment target
         if not isinstance(name, (Identifier, InfixExpression)):
-            self.errors.append(f"Expected identifier on left side of assignment, got {type(name)}")
+            self._record_error(f"Expected identifier on left side of assignment, got {type(name)}")
             return None
             
         token = self.cur_token
@@ -298,16 +366,32 @@ class Parser:
         if not self.expect_peek(TokenType.LPAREN): return None
         self.next_token()
 
-        # check for 'in' keyword for for-in loop
-        if self.peek_token_is(TokenType.IN):
+        # for-in loop variants:
+        # for (x in xs) { ... }
+        # for (k, v in xs) { ... }  -> keeps `v` as iterator for compatibility
+        if self.cur_token_is(TokenType.IDENT) and self.peek_token_is(TokenType.IN):
             iterator = self.parse_identifier()
-            self.next_token() # consume 'in'
-            self.next_token()
+            self.next_token()  # in
+            self.next_token()  # iterable start
             iterable = self.parse_expression(Precedence.LOWEST)
             if not self.expect_peek(TokenType.RPAREN): return None
             if not self.expect_peek(TokenType.LBRACE): return None
             body = self.parse_block_statement()
             return ForInStatement(token=token, iterator=iterator, iterable=iterable, body=body)
+
+        if self.cur_token_is(TokenType.IDENT) and self.peek_token_is(TokenType.COMMA):
+            first_iter = self.parse_identifier()
+            self.next_token()  # comma
+            if not self.expect_peek(TokenType.IDENT): return None
+            second_iter = self.parse_identifier()
+            if not self.expect_peek(TokenType.IN): return None
+            self.next_token()
+            iterable = self.parse_expression(Precedence.LOWEST)
+            if not self.expect_peek(TokenType.RPAREN): return None
+            if not self.expect_peek(TokenType.LBRACE): return None
+            body = self.parse_block_statement()
+            # Preserve compatibility with existing AST shape.
+            return ForInStatement(token=token, iterator=second_iter, iterable=iterable, body=body)
             
         initialization = self.parse_statement()
         self.next_token()
@@ -394,14 +478,14 @@ class Parser:
 
     def parse_hash_literal(self) -> Expression | None:
         token = self.cur_token
-        pairs = {}
+        pairs = []
         while not self.peek_token_is(TokenType.RBRACE):
             self.next_token()
             key = self.parse_expression(Precedence.LOWEST)
             if not self.expect_peek(TokenType.COLON): return None
             self.next_token()
             value = self.parse_expression(Precedence.LOWEST)
-            pairs[key] = value
+            pairs.append((key, value))
             if not self.peek_token_is(TokenType.RBRACE) and not self.expect_peek(TokenType.COMMA): return None
         if not self.expect_peek(TokenType.RBRACE): return None
         return HashLiteral(token=token, pairs=pairs)
@@ -441,17 +525,34 @@ class Parser:
     def parse_import_statement(self):
         token = self.cur_token
         self.next_token()
+        if not self.cur_token_is(TokenType.STRING):
+            self._record_error("import expects a string literal path")
+            return None
         path = self.parse_string_literal()
         return ImportStatement(token=token, path=path)
-        
+
+    def parse_use_statement(self):
+        token = self.cur_token
+        self.next_token()
+        if not self.cur_token_is(TokenType.IDENT):
+            self._record_error("use expects a module name")
+            return None
+        module_name = self.cur_token.literal
+        self.next_token()  # advance past module name
+        return UseStatement(token=token, module=module_name)
+
     def parse_from_statement(self):
         token = self.cur_token
         self.next_token()
+        if not self.cur_token_is(TokenType.STRING):
+            self._record_error("from expects a string literal path")
+            return None
         path = self.parse_string_literal()
         if not self.expect_peek(TokenType.IMPORT): return None
         self.next_token()
         imports = []
-        if self.cur_token_is(TokenType.ASTERISK):
+        star_type = getattr(TokenType, "ASTERISK", None)
+        if star_type is not None and self.cur_token_is(star_type):
             imports.append(Identifier(token=self.cur_token, value='*'))
         else:
             while self.cur_token_is(TokenType.IDENT):
@@ -548,8 +649,30 @@ class Parser:
             self.next_token()
             return True
         self.peek_error(t)
+        if self.options.stop_on_first_error:
+            raise SyntaxError(self.errors[-1])
         return False
     
     def peek_error(self, t: TokenType):
-        self.errors.append(f"Expected next token to be {t}, got {self.peek_token.type} instead")
+        self._record_error(f"Expected next token to be {t}, got {self.peek_token.type} instead")
+
+    def _synchronize_statement(self):
+        sync_tokens = {
+            TokenType.SEMICOLON,
+            TokenType.RBRACE,
+            TokenType.EOF,
+        }
+        while self.cur_token.type not in sync_tokens:
+            self.next_token()
+
+    def _synchronize_expression(self):
+        sync_tokens = {
+            TokenType.SEMICOLON,
+            TokenType.COMMA,
+            TokenType.RPAREN,
+            TokenType.RBRACKET,
+            TokenType.EOF,
+        }
+        while self.cur_token.type not in sync_tokens:
+            self.next_token()
 

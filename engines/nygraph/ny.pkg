@@ -1,0 +1,36 @@
+# Nygraph Engine Package Configuration
+
+name = "Nygraph"
+version = "1.0.0"
+description = "Nyx Knowledge & Relationship Engine - graph traversal, search, inference"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nygraph"
+
+keywords = ["nyx", "graph", "knowledge", "traversal", "pagerank", "community", "vector-search", "distributed"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nygraph = "nygraph:create_knowledge_graph"
+
+[modules]
+core = "Node, Edge, Graph data structures"
+distributed = "Hash-partitioned distributed graph"
+inference = "Transitive closure, link prediction, embeddings"
+KnowledgeGraph = "Main knowledge graph orchestrator"
+query = "Fluent graph query API"
+search = "ANN vector search"
+traversal = "BFS/DFS/Dijkstra/A*/PageRank/SCC/community"
+
+[platform]
+any = true
+
+[capabilities]
+community_detection = "Graph community detection"
+distributed_graph = "Hash-partitioned graph sharding"
+graph_traversal = "BFS/DFS/Dijkstra/A* path finding"
+pagerank = "PageRank centrality computation"
+vector_search = "Approximate nearest neighbor search"
+

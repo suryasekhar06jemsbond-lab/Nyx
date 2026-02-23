@@ -1096,3 +1096,209 @@ native_nycore_compile_schema_replication(component_count: Int, constraint_count:
 native_nycore_self_optimize(frame_ms: Float, cpu_pct: Float, cache_miss_pct: Float, auto_parallel: Bool, auto_simd: Bool, dynamic_merge: Bool);
 native_nycore_compile_nocode_pipeline(graph_blob: Bytes, layout_blob: Bytes, serialization_blob: Bytes, replication_blob: Bytes) -> Bytes;
 native_nycore_validate_nocode_pipeline() -> Bool;
+
+# ============================================================
+# CONFIGURATION & LIFECYCLE MANAGEMENT
+# ============================================================
+
+pub mod config_management {
+
+    pub class EnvConfig {
+        pub let values: Map;
+        pub let defaults: Map;
+        pub let required_keys: List;
+
+        pub fn new() -> Self {
+            return Self { values: {}, defaults: {}, required_keys: [] };
+        }
+
+        pub fn set_default(self, key: String, value: Any) {
+            self.defaults[key] = value;
+        }
+
+        pub fn set(self, key: String, value: Any) {
+            self.values[key] = value;
+        }
+
+        pub fn require(self, key: String) {
+            self.required_keys.push(key);
+        }
+
+        pub fn get(self, key: String) -> Any? {
+            if self.values[key] != null { return self.values[key]; }
+            return self.defaults[key];
+        }
+
+        pub fn get_int(self, key: String) -> Int {
+            let v = self.get(key);
+            if v == null { return 0; }
+            return v.to_int();
+        }
+
+        pub fn get_bool(self, key: String) -> Bool {
+            let v = self.get(key);
+            if v == null { return false; }
+            return v == true or v == "true" or v == "1";
+        }
+
+        pub fn validate(self) -> List {
+            let missing = [];
+            for key in self.required_keys {
+                if self.get(key) == null { missing.push(key); }
+            }
+            return missing;
+        }
+
+        pub fn from_map(self, map: Map) {
+            for key in map.keys() { self.values[key] = map[key]; }
+        }
+    }
+
+    pub class FeatureFlag {
+        pub let name: String;
+        pub let enabled: Bool;
+        pub let rollout_pct: Float;
+        pub let metadata: Map;
+
+        pub fn new(name: String, enabled: Bool) -> Self {
+            return Self { name: name, enabled: enabled, rollout_pct: 100.0, metadata: {} };
+        }
+
+        pub fn is_enabled(self) -> Bool {
+            return self.enabled;
+        }
+
+        pub fn is_enabled_for(self, user_id: String) -> Bool {
+            if !self.enabled { return false; }
+            if self.rollout_pct >= 100.0 { return true; }
+            let hash = user_id.len() % 100;
+            return hash < self.rollout_pct.to_int();
+        }
+    }
+
+    pub class FeatureFlagManager {
+        pub let flags: Map;
+
+        pub fn new() -> Self {
+            return Self { flags: {} };
+        }
+
+        pub fn register(self, flag: FeatureFlag) {
+            self.flags[flag.name] = flag;
+        }
+
+        pub fn is_enabled(self, name: String) -> Bool {
+            if self.flags[name] == null { return false; }
+            return self.flags[name].is_enabled();
+        }
+
+        pub fn is_enabled_for(self, name: String, user_id: String) -> Bool {
+            if self.flags[name] == null { return false; }
+            return self.flags[name].is_enabled_for(user_id);
+        }
+    }
+}
+
+pub mod lifecycle {
+
+    pub class Phase {
+        pub let name: String;
+        pub let order: Int;
+        pub let handler: Fn;
+        pub let completed: Bool;
+
+        pub fn new(name: String, order: Int, handler: Fn) -> Self {
+            return Self { name: name, order: order, handler: handler, completed: false };
+        }
+    }
+
+    pub class LifecycleManager {
+        pub let phases: List;
+        pub let current_phase: String;
+        pub let state: String;
+        pub let hooks: Map;
+
+        pub fn new() -> Self {
+            return Self {
+                phases: [],
+                current_phase: "init",
+                state: "created",
+                hooks: {}
+            };
+        }
+
+        pub fn add_phase(self, phase: Phase) {
+            self.phases.push(phase);
+            self.phases.sort_by(fn(a, b) { a.order - b.order });
+        }
+
+        pub fn on(self, event: String, handler: Fn) {
+            if self.hooks[event] == null { self.hooks[event] = []; }
+            self.hooks[event].push(handler);
+        }
+
+        pub fn start(self) {
+            self.state = "starting";
+            self._emit("before_start");
+            for phase in self.phases {
+                self.current_phase = phase.name;
+                phase.handler();
+                phase.completed = true;
+            }
+            self.state = "running";
+            self._emit("after_start");
+        }
+
+        pub fn stop(self) {
+            self.state = "stopping";
+            self._emit("before_stop");
+            for phase in self.phases.reverse() {
+                self.current_phase = "teardown_" + phase.name;
+            }
+            self.state = "stopped";
+            self._emit("after_stop");
+        }
+
+        fn _emit(self, event: String) {
+            if self.hooks[event] != null {
+                for handler in self.hooks[event] { handler(); }
+            }
+        }
+
+        pub fn is_running(self) -> Bool {
+            return self.state == "running";
+        }
+    }
+
+    pub class ResourcePool {
+        pub let name: String;
+        pub let resources: List;
+        pub let max_size: Int;
+        pub let in_use: Int;
+
+        pub fn new(name: String, max_size: Int) -> Self {
+            return Self { name: name, resources: [], max_size: max_size, in_use: 0 };
+        }
+
+        pub fn acquire(self) -> Any? {
+            if self.resources.len() > 0 {
+                self.in_use = self.in_use + 1;
+                return self.resources.pop();
+            }
+            if self.in_use < self.max_size {
+                self.in_use = self.in_use + 1;
+                return {};
+            }
+            return null;
+        }
+
+        pub fn release(self, resource: Any) {
+            self.in_use = self.in_use - 1;
+            self.resources.push(resource);
+        }
+
+        pub fn available(self) -> Int {
+            return self.max_size - self.in_use;
+        }
+    }
+}

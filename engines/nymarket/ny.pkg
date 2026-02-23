@@ -1,0 +1,36 @@
+# Nymarket Engine Package Configuration
+
+name = "Nymarket"
+version = "1.0.0"
+description = "Nyx Market Data Engine - real-time ticks, order book, bar aggregation"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nymarket"
+
+keywords = ["nyx", "market", "data", "tick", "orderbook", "feed", "bars", "financial"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nymarket = "nymarket:create_market"
+
+[modules]
+bars = "OHLCV bar aggregation from trades"
+feed = "Market data feed with multi-exchange support"
+historical = "Historical data store"
+MarketEngine = "Main market data orchestrator"
+normalizer = "Symbol mapping and data normalization"
+orderbook = "Order book with microprice and imbalance"
+types = "Tick, Trade, Bar, Level data types"
+
+[platform]
+any = true
+
+[capabilities]
+bar_aggregation = "Trade-to-bar OHLCV aggregation"
+historical_store = "Tick/trade/bar historical storage"
+multi_exchange = "Multi-exchange feed normalization"
+order_book = "Full depth order book with microprice"
+realtime_ticks = "Sub-millisecond tick ingestion"
+

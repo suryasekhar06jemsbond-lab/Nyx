@@ -1,0 +1,36 @@
+# Nystream Engine Package Configuration
+
+name = "Nystream"
+version = "1.0.0"
+description = "Nyx Stream Processing Engine - event streams, windows, CEP, Kafka-compatible"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nystream"
+
+keywords = ["nyx", "stream", "event", "kafka", "window", "cep", "real-time", "pipeline"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nystream = "nystream:create_stream"
+
+[modules]
+aggregation = "Window aggregation functions"
+cep = "Complex event processing engine"
+core = "Event stream core types"
+join = "Stream join operations"
+pipeline = "Stream processing pipeline"
+source = "Stream source and sink connectors"
+window = "Tumbling, sliding, session windows"
+
+[platform]
+any = true
+
+[capabilities]
+complex_event_processing = "Pattern-based CEP engine"
+event_streaming = "High-throughput event stream processing"
+kafka_compatible = "Kafka-compatible source/sink"
+stream_joins = "Temporal stream join operations"
+windowing = "Tumbling/sliding/session windows"
+

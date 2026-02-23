@@ -1,0 +1,33 @@
+# Nybio Engine Package Configuration
+
+name = "Nybio"
+version = "1.0.0"
+description = "Nyx Bioinformatics Engine - DNA/RNA sequences, alignment, phylogenetics"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nybio"
+
+keywords = ["nyx", "bioinformatics", "nyx", "dna", "nyx", "rna", "nyx", "protein", "nyx", "alignment", "nyx", "genomics", "nyx", "phylogenetics"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nybio = "nybio:create_bio"
+
+[modules]
+alignment = "Needleman-Wunsch and Smith-Waterman alignment"
+genomics = "Genomics algorithms"
+motifs = "Sequence motif finding"
+phylogenetics = "Phylogenetic tree construction"
+sequences = "DNA/RNA/Protein sequence types"
+
+[platform]
+any = true
+
+[capabilities]
+genome_analysis = "Genome-scale analysis pipeline"
+motif_discovery = "Regulatory motif identification"
+phylogenetic_analysis = "Evolutionary tree reconstruction"
+sequence_alignment = "Global and local sequence alignment"
+

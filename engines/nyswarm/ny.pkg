@@ -1,0 +1,37 @@
+# Nyswarm Engine Package Configuration
+
+name = "Nyswarm"
+version = "1.0.0"
+description = "Nyx Swarm Intelligence Engine - multi-agent, PSO, flocking, consensus, fault tolerance"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyswarm"
+
+keywords = ["nyx", "swarm", "multi-agent", "pso", "flocking", "consensus", "distributed", "collective"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyswarm = "nyswarm:create_swarm"
+
+[modules]
+collective = "PSO, pheromone trails, flocking behavior"
+consensus = "Proposal/vote consensus, conflict resolution"
+core = "Swarm agent and messaging"
+fault = "Health monitor and replicator"
+shared_state = "Shared memory, blackboard with pub/sub"
+Swarm = "Main swarm orchestrator"
+tasks = "Task allocation (round-robin/least-loaded)"
+topology = "Ring/star/mesh topology, leader election"
+
+[platform]
+any = true
+
+[capabilities]
+collective_consensus = "Quorum-based decision making"
+fault_tolerance = "Health monitoring and replication"
+flocking_behavior = "Separation/alignment/cohesion flocking"
+leader_election = "Distributed leader election"
+swarm_intelligence = "Particle swarm optimization"
+

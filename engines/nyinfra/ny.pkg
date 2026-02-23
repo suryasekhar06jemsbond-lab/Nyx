@@ -1,0 +1,35 @@
+# Nyinfra Engine Package Configuration
+
+name = "Nyinfra"
+version = "1.0.0"
+description = "Nyx Infrastructure as Code Engine - declarative DSL, drift detection, multi-cloud"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyinfra"
+
+keywords = ["nyx", "infrastructure", "iac", "terraform", "drift", "provisioning", "multi-cloud"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyinfra = "nyinfra:create_infra"
+
+[modules]
+InfraEngine = "Main infrastructure orchestrator"
+planner = "Execution plan computation"
+providers = "Multi-cloud provider registry"
+resources = "Resource spec and state model"
+stack = "Declarative stack DSL"
+state = "State store and drift detection"
+
+[platform]
+any = true
+
+[capabilities]
+declarative_dsl = "Declarative resource definition language"
+drift_detection = "Live drift detection and repair"
+execution_planning = "Preview changes before apply"
+idempotent_ops = "Idempotent create/update/destroy"
+multi_cloud = "AWS/Azure/GCP provider support"
+

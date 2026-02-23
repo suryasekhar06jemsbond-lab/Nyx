@@ -1,0 +1,35 @@
+# Nyserve Engine Package Configuration
+
+name = "Nyserve"
+version = "2.0.0"
+description = "Nyx Model Serving Engine - inference, batching, A/B testing, model registry, preprocessing"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyserve"
+
+keywords = ["nyx", "serving", "inference", "batching", "ab-testing", "model-registry", "deployment"]
+
+dependencies = ["nyx >= 2.0.0", "nytensor"]
+
+[scripts]
+Nyserve = "nyserve:create_serve"
+
+[modules]
+ab_test = "A/B test routing with traffic split"
+batcher = "Dynamic request batching"
+inference = "Inference engine with device placement"
+postprocessor = "Output postprocessing pipeline"
+preprocessor = "Input preprocessing pipeline"
+registry = "Model version registry"
+
+[platform]
+any = true
+
+[capabilities]
+ab_testing = "Traffic-split A/B test routing"
+dynamic_batching = "Latency-optimized dynamic batching"
+model_inference = "GPU/CPU inference with auto-batching"
+model_registry = "Multi-version model management"
+preprocessing = "Input normalization and augmentation"
+

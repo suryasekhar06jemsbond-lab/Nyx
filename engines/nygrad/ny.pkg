@@ -1,0 +1,29 @@
+name = "NyGrad"
+version = "1.0.0"
+description = "Automatic Differentiation Engine - Enables training via backpropagation"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "SEE LICENSE IN LICENSE"
+homepage = "https://github.com/suryasekhar06jemsbond-lab/Nyx"
+keywords = ["autograd", "autodiff", "backpropagation", "gradient", "differentiation"]
+dependencies = ["nyx >= 3.0.0", "nytensor >= 1.0.0"]
+
+[scripts]
+NyGrad = "NyGrad:main"
+
+[modules]
+AutoGrad = "Reverse-mode automatic differentiation core"
+ComputeGraph = "Dynamic computational graph construction and execution"
+StaticGraph = "Static graph compilation and optimization"
+GradCheckpoint = "Gradient checkpointing for memory-efficient training"
+HigherOrder = "Higher-order gradient computation"
+CustomGrad = "User-defined custom gradient functions"
+TapeRecorder = "Operation recording tape for backward pass"
+GradAccumulator = "Gradient accumulation for large batch simulation"
+
+[capabilities]
+reverse_mode = true
+forward_mode = true
+higher_order = true
+checkpointing = true
+static_compilation = true

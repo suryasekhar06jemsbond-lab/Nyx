@@ -1,0 +1,35 @@
+# Nyapi Engine Package Configuration
+
+name = "Nyapi"
+version = "1.0.0"
+description = "Nyx API Framework Engine - REST routing, middleware, DI, OpenAPI"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyapi"
+
+keywords = ["nyx", "api", "nyx", "rest", "nyx", "http", "nyx", "middleware", "nyx", "routing", "nyx", "openapi", "nyx", "dependency-injection"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyapi = "nyapi:create_api"
+
+[modules]
+APIEngine = "Main API framework orchestrator"
+di = "Dependency injection container"
+http = "Request, Response, Context types"
+middleware = "CORS, rate limiter, logger, auth bearer"
+openapi = "OpenAPI schema generation"
+router = "Route groups with GET/POST/PUT/DELETE"
+
+[platform]
+any = true
+
+[capabilities]
+dependency_injection = "Singleton and factory DI"
+middleware_chain = "Composable middleware pipeline"
+openapi_gen = "Automatic OpenAPI spec generation"
+rate_limiting = "Token bucket rate limiting"
+rest_routing = "Path-based REST routing with groups"
+

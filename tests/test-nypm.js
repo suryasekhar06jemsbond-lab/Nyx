@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-const nypmPath = path.join(__dirname, 'nypm.js');
-const registryPath = path.join(__dirname, 'packages');
+const nypmPath = path.join(__dirname, '..', 'nypm.js');
+const registryPath = path.join(__dirname, '..', 'packages');
 const testDir = path.join(os.tmpdir(), 'nypm-test-' + Date.now());
 const testPkgName = `nyx-test-pkg-${Date.now()}`;
 

@@ -1,0 +1,34 @@
+# Nyshell Engine Package Configuration
+
+name = "Nyshell"
+version = "1.0.0"
+description = "Nyx Shell Engine - command parser, pipeline executor, REPL, structured output"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyshell"
+
+keywords = ["nyx", "shell", "command", "pipeline", "repl", "terminal", "structured-output"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyshell = "nyshell:create_shell"
+
+[modules]
+executor = "Pipeline execution engine"
+output = "Structured output formatting"
+package = "Package manager commands"
+parser = "Command and pipeline parser"
+repl = "Interactive REPL loop"
+script = "Shell script interpreter"
+
+[platform]
+any = true
+
+[capabilities]
+pipeline_execution = "Unix-style pipeline execution"
+repl = "Interactive read-eval-print loop"
+script_interpreter = "Shell script execution"
+structured_output = "Typed structured command output"
+

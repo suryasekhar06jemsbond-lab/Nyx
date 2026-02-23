@@ -79,8 +79,8 @@ def test_allocate_many_objects(result: TestResult):
     # Create code that allocates many objects
     source = """
 let result = 0
-for i in range(1000) {
-    let obj = { x: i, y: i * 2, z: i * 3 }
+for (i in range(1000)) {
+    let obj = { "x": i, "y": i * 2, "z": i * 3 }
     result = result + obj.x
 }
 result
@@ -102,7 +102,7 @@ def test_large_array(result: TestResult):
     
     source = """
 let arr = []
-for i in range(1000) {
+for (i in range(1000)) {
     arr = arr + [i]
 }
 len(arr)
@@ -124,7 +124,7 @@ def test_string_concatenation(result: TestResult):
     
     source = """
 let s = ""
-for i in range(500) {
+for (i in range(500)) {
     s = s + "x"
 }
 len(s)
@@ -145,7 +145,7 @@ def test_deeply_nested_structures(result: TestResult):
     print("\n🌳 Deeply Nested Structures:")
     
     source = """
-let obj = { a: { b: { c: { d: { e: 1 } } } } }
+let obj = { "a": { "b": { "c": { "d": { "e": 1 } } } } }
 obj.a.b.c.d.e
 """
     

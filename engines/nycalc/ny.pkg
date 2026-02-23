@@ -1,0 +1,34 @@
+# Nycalc Engine Package Configuration
+
+name = "Nycalc"
+version = "1.0.0"
+description = "Nyx Symbolic & Numerical Calculus Engine - differentiation, integration, solvers"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nycalc"
+
+keywords = ["nyx", "calculus", "nyx", "symbolic", "nyx", "differentiation", "nyx", "integration", "nyx", "equations", "nyx", "algebra"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nycalc = "nycalc:create_calc"
+
+[modules]
+differentiation = "Symbolic and numerical differentiation"
+integration = "Numerical integration (Simpson, Gauss)"
+series = "Taylor and Fourier series expansion"
+simplification = "Expression simplification"
+solvers = "Equation solvers (bisection, Newton)"
+symbolic = "Symbolic expression system"
+
+[platform]
+any = true
+
+[capabilities]
+numerical_integration = "Adaptive quadrature integration"
+root_finding = "Bisection and Newton root finding"
+series_expansion = "Taylor and power series"
+symbolic_math = "Symbolic algebra and calculus"
+

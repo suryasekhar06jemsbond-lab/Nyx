@@ -1,0 +1,39 @@
+# Nystudio Engine Package Configuration
+
+name = "Nystudio"
+version = "1.0.0"
+description = "Nyx Developer Studio Engine - GUI builder, profiler, memory debugger, hot reload"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nystudio"
+
+keywords = ["nyx", "studio", "gui-builder", "profiler", "debugger", "hot-reload", "inspector", "devtools"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nystudio = "nystudio:create_studio"
+
+[modules]
+accessibility = "Accessibility audit and checker"
+codegen = "Code generation from visual layouts"
+design_system = "Design token and theme management"
+gui_builder = "Visual GUI layout builder"
+hot_reload = "Hot module reload with file watching"
+inspector = "Component inspector and property editor"
+memory_debug = "Memory leak detection and analysis"
+preview = "Live preview rendering"
+profiler = "Performance profiler with flame graphs"
+Studio = "Main studio orchestrator"
+
+[platform]
+any = true
+
+[capabilities]
+accessibility_audit = "WCAG compliance checking"
+hot_reload = "Sub-second hot module replacement"
+memory_debugger = "Leak detection and allocation tracking"
+performance_profiler = "CPU/GPU flame graph profiling"
+visual_gui_builder = "Drag-and-drop UI layout builder"
+

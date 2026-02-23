@@ -1,0 +1,35 @@
+# Nysync Engine Package Configuration
+
+name = "Nysync"
+version = "1.0.0"
+description = "Nyx Distributed Sync Engine - CRDTs, vector clocks, gossip protocol, partition healing"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nysync"
+
+keywords = ["nyx", "sync", "crdt", "vector-clock", "gossip", "replication", "partition", "eventual-consistency"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nysync = "nysync:create_sync"
+
+[modules]
+clocks = "Vector clocks and hybrid logical clocks"
+crdt = "GCounter, PNCounter, GSet, ORSet, LWW types"
+gossip = "Gossip protocol with fanout rounds"
+partition = "Partition detection and healing"
+replication = "Replication log with commit/snapshot"
+SyncEngine = "Main sync orchestrator"
+
+[platform]
+any = true
+
+[capabilities]
+crdt_types = "Conflict-free replicated data types"
+eventual_consistency = "Guaranteed eventual consistency"
+gossip_protocol = "Epidemic gossip dissemination"
+partition_healing = "Network partition detection and repair"
+vector_clocks = "Causal ordering with vector clocks"
+

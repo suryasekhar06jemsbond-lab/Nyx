@@ -1,0 +1,34 @@
+# Nyci Engine Package Configuration
+
+name = "Nyci"
+version = "1.0.0"
+description = "Nyx CI/CD Pipeline Engine - build automation, test orchestration, artifacts"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyci"
+
+keywords = ["nyx", "ci", "cd", "pipeline", "build", "test", "automation", "artifacts"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyci = "nyci:create_pipeline"
+
+[modules]
+artifacts = "Artifact generation and versioning"
+build = "Build automation with caching"
+executor = "Pipeline execution engine"
+pipeline = "Pipeline builder and stage definition"
+rollback = "Version rollback management"
+test = "Test orchestration and reporting"
+
+[platform]
+any = true
+
+[capabilities]
+artifact_management = "Versioned artifact storage"
+parallel_stages = "Parallel stage execution"
+pipeline_dsl = "Declarative pipeline definition"
+rollback = "Automated rollback on failure"
+

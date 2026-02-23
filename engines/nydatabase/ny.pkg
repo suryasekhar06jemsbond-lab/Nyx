@@ -2,53 +2,33 @@
 
 name = "Nydatabase"
 version = "2.0.0"
-description = "Nyx Database Engine - SQL, ORM, Transactions, Migrations"
+description = "Nyx Database Engine - SQL query builder, connection pooling, ORM, migrations"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
 homepage = "https://github.com/nyxlang/Nydatabase"
 
-keywords = ["nyx", "database", "sql", "orm", "transactions", "migrations", "pooling"]
+keywords = ["nyx", "database", "sql", "orm", "query", "connection-pool", "migration", "schema"]
 
 dependencies = ["nyx >= 2.0.0"]
 
 [scripts]
-Nydatabase = "Nydatabase:main"
+Nydatabase = "nydatabase:create_database"
 
 [modules]
-Main = "Main database engine module"
-types = "SQL data types and constants"
-Column = "Column definition class"
-ForeignKey = "Foreign key constraints"
-Table = "Table definition builder"
-Index = "Index creation"
-ConnectionConfig = "Database connection configuration"
-Connection = "Database connection class"
-ConnectionPool = "Connection pooling"
-Result = "Query result wrapper"
-Row = "Result row class"
-QueryBuilder = "SQL query builder"
-InsertBuilder = "Insert query builder"
-UpdateBuilder = "Update query builder"
-DeleteBuilder = "Delete query builder"
-Model = "ORM model base class"
-Repository = "Repository pattern implementation"
-Migration = "Database migration class"
-MigrationRunner = "Migration runner class"
-Database = "Database manager class"
+connection = "Connection pooling and management"
+migration = "Schema migration runner"
+orm = "Object-relational mapper"
+query = "SQL query builder: select, insert, update, delete"
+types = "Column, table, index, connection definitions"
 
-[features]
-sqlite = "SQLite database support"
-postgresql = "PostgreSQL database support"
-mysql = "MySQL database support"
-pooling = "Connection pooling"
-orm = "Object-relational mapping"
-migrations = "Database migrations"
-transactions = "ACID transactions"
-query_builder = "Chainable query builder"
+[platform]
+any = true
 
-[examples]
-basic = "Basic CRUD operations"
-orm = "ORM usage example"
-migrations = "Migration examples"
-pooling = "Connection pooling example"
+[capabilities]
+connection_pooling = "Async connection pool management"
+migrations = "Versioned schema migrations"
+orm = "Active record and data mapper ORM"
+query_builder = "Type-safe SQL query construction"
+transactions = "ACID transaction support"
+

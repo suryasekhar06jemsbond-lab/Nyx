@@ -1,36 +1,37 @@
-# NYUI Package Configuration
-# Native UI Framework for Nyx
+# Nyui Engine Package Configuration
 
-{
-    name: "nyui",
-    version: "1.0.0",
-    description: "Native UI Framework - Web + Strict + Desktop orchestrated under one import",
-    author: "Nyx Team",
-    license: "MIT",
-    keywords: ["ui", "web", "framework", "vdom", "ssr", "reactive", "strict-mode"],
-    targets: [
-        { type: "library", output: "nyui" },
-        { type: "wasm", output: "nyui_wasm" }
-    ],
-    dependencies: {
-        nyweb: "*",
-        nygui: "*"
-    },
-    exports: [
-        "vnode",
-        "component", 
-        "router",
-        "events",
-        "forms",
-        "ssr",
-        "compiler",
-        "website",
-        "host",
-        "strict",
-        "pure",
-        "gui",
-        "desktop",
-        "nyui_strict",
-        "nygui"
-    ]
-}
+name = "Nyui"
+version = "2.0.0"
+description = "Nyx Reactive UI Engine - virtual DOM, signals, routing, forms, SSR, template compiler"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyui"
+
+keywords = ["nyx", "ui", "reactive", "virtual-dom", "signal", "router", "ssr", "component", "form"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyui = "nyui:create_ui"
+
+[modules]
+client = "Client-side hydration runtime"
+component = "Component lifecycle and composition"
+forms = "Form fields with validation"
+reactive = "Reactive, Computed, Signal state"
+router = "Client-side router with guards"
+ssr = "Server-side rendering engine"
+template = "Template compiler to render functions"
+vdom = "Virtual DOM with diffing and patching"
+
+[platform]
+any = true
+
+[capabilities]
+form_validation = "Declarative form field validation"
+reactivity = "Fine-grained signal-based reactivity"
+routing = "Client-side SPA routing with guards"
+ssr = "Server-side rendering with hydration"
+virtual_dom = "Efficient virtual DOM diffing"
+

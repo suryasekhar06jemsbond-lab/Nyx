@@ -1,0 +1,10 @@
+{
+  "signup": {
+    "created_at": "client-generated",
+    "email": "dev@example.com",
+    "focus": "Runtime",
+    "name": "Dev User",
+    "role": "Engineer",
+    "signup_no": "NYX-000001"
+  }
+}

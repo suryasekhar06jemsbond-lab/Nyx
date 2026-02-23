@@ -1,0 +1,33 @@
+# Nyrisk Engine Package Configuration
+
+name = "Nyrisk"
+version = "1.0.0"
+description = "Nyx Risk Management Engine - VaR, Greeks, stress testing, exposure monitoring"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyrisk"
+
+keywords = ["nyx", "risk", "var", "greeks", "black-scholes", "stress-testing", "exposure", "monte-carlo"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyrisk = "nyrisk:create_risk"
+
+[modules]
+exposure = "Exposure monitoring with limit checking"
+greeks = "Black-Scholes pricing and Greeks, implied vol"
+metrics = "VaR (historical/parametric/Monte Carlo), Expected Shortfall"
+RiskEngine = "Main risk orchestrator"
+stress = "Stress testing with historical scenarios"
+
+[platform]
+any = true
+
+[capabilities]
+black_scholes = "Option pricing with Greeks"
+exposure_monitoring = "Real-time exposure limit checking"
+stress_testing = "Crisis scenario simulation"
+value_at_risk = "Historical, parametric, Monte Carlo VaR"
+

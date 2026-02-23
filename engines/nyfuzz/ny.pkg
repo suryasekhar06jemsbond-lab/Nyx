@@ -1,0 +1,32 @@
+# Nyfuzz Engine Package Configuration
+
+name = "Nyfuzz"
+version = "1.0.0"
+description = "Nyx Fuzzing Engine - mutation-based, coverage-guided, crash triage"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyfuzz"
+
+keywords = ["nyx", "fuzzing", "testing", "mutation", "coverage", "crash", "security", "afl"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyfuzz = "nyfuzz:create_fuzzer"
+
+[modules]
+coverage = "Coverage-guided fuzzing with bitmap"
+crash = "Crash detection and triage"
+distributed = "Distributed fuzzing coordinator"
+mutation = "Input mutation engine (havoc, splice, bit-flip)"
+
+[platform]
+any = true
+
+[capabilities]
+coverage_guided = "Edge-coverage guided input generation"
+crash_triage = "Crash deduplication and severity classification"
+distributed_fuzzing = "Multi-node distributed fuzzing"
+mutation_strategies = "Havoc, splice, arithmetic, dictionary mutation"
+

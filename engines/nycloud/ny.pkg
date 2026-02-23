@@ -1,0 +1,32 @@
+# Nycloud Engine Package Configuration
+
+name = "Nycloud"
+version = "1.0.0"
+description = "Nyx Cloud Security Engine - cloud posture, IAM audit, compliance"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nycloud"
+
+keywords = ["nyx", "cloud", "security", "iam", "posture", "compliance", "aws", "azure", "gcp"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nycloud = "nycloud:create_cloud"
+
+[modules]
+compliance = "Cloud compliance scanning"
+iam = "IAM policy analysis and audit"
+posture = "Cloud security posture management"
+secrets = "Secret detection and rotation"
+
+[platform]
+any = true
+
+[capabilities]
+cspm = "Cloud security posture management"
+iam_audit = "IAM policy misconfiguration detection"
+multi_cloud = "AWS/Azure/GCP support"
+secret_scanning = "Credential and secret detection"
+

@@ -1,0 +1,33 @@
+# Nyquery Engine Package Configuration
+
+name = "Nyquery"
+version = "1.0.0"
+description = "Nyx Query Optimization Engine - cost-based optimizer, vectorized execution"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyquery"
+
+keywords = ["nyx", "query", "optimizer", "sql", "execution", "vectorized", "distributed", "cost-based"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyquery = "nyquery:create_query"
+
+[modules]
+distributed = "Distributed query support"
+execution = "Vectorized execution engine"
+optimizer = "Cost-based query optimizer"
+plan = "Query plan representation"
+visualization = "Query plan visualization"
+
+[platform]
+any = true
+
+[capabilities]
+cost_based_optimization = "Statistics-based cost estimation"
+distributed_queries = "Cross-node query execution"
+plan_visualization = "Visual query plan output"
+vectorized_execution = "SIMD-accelerated batch execution"
+

@@ -1,29 +1,35 @@
-# NyBuild - Nyx Build System
-# ===========================
+# Nybuild Engine Package Configuration
 
-name = "NyBuild"
-version = "3.0.0"
-description = "Nyx Build System - Deterministic builds, incremental compilation, testing, release automation"
+name = "Nybuild"
+version = "2.0.0"
+description = "Nyx Build System Engine - task runner, dependency graph, testing, CI integration"
 author = "Nyx Team"
 author_email = "team@nyxlang.dev"
 license = "MIT"
-homepage = "https://github.com/nyxlang/NyBuild"
+homepage = "https://github.com/nyxlang/Nybuild"
 
-keywords = ["nyx", "build", "compiler", "test", "release", "ci"]
+keywords = ["nyx", "build", "task", "ci", "testing", "lint", "release", "dependency-graph"]
 
-dependencies = ["nyx >= 2.0.0", "nypm >= 3.0.0"]
+dependencies = ["nyx >= 2.0.0"]
 
 [scripts]
-NyBuild = "NyBuild:main"
+Nybuild = "nybuild:create_build"
 
 [modules]
-Main = "Main build engine"
-graph = "Dependency graph & DAG"
-cache = "Build cache"
-compiler = "Compilation"
-tester = "Testing system"
-formatter = "Code formatter"
-linter = "Linter"
-packager = "Release packaging"
-workspace = "Workspace support"
-analyzer = "Build analyzer"
+graph = "Dependency graph builder and resolver"
+lint = "Code quality and lint checks"
+release = "Release management and versioning"
+runner = "Parallel task execution engine"
+testing = "Test runner with assertions"
+types = "Build targets, tasks, configs"
+
+[platform]
+any = true
+
+[capabilities]
+build_graph = "DAG-based dependency resolution"
+ci_integration = "CI/CD pipeline generation"
+parallel_tasks = "Multi-core parallel task execution"
+release_management = "Semantic versioning and changelogs"
+test_framework = "Built-in test runner with coverage"
+

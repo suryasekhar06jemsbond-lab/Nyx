@@ -1,0 +1,574 @@
+{
+  "test_info": {
+    "start_time": "2026-02-23T19:42:54.374335",
+    "end_time": "2026-02-23T19:47:55.662008",
+    "duration_seconds": 300.28240847587585,
+    "cpu_count": 32,
+    "max_workers": 64,
+    "amplification": {
+      "iterations": 10,
+      "data_size": 5,
+      "concurrency": 2
+    }
+  },
+  "results": {
+    "passed": 2475,
+    "failed": 0,
+    "total": 2475,
+    "cycles": 6
+  },
+  "crash_injection": {
+    "injected": 3,
+    "survived": 3
+  },
+  "deterministic": true,
+  "leak_analysis": null,
+  "snapshots": [
+    {
+      "timestamp": "2026-02-23T19:42:54.374334",
+      "elapsed_seconds": 0.0,
+      "phase": "INITIAL",
+      "memory": {
+        "process_mb": 25.16796875,
+        "system_percent": 59.7,
+        "available_mb": 13083.4921875
+      },
+      "threads": 4,
+      "cpu_percent": 4.8,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:43:07.216186",
+      "elapsed_seconds": 12.841850996017456,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 35.48828125,
+        "system_percent": 59.6,
+        "available_mb": 13098.86328125
+      },
+      "threads": 4,
+      "cpu_percent": 3.3,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:43:17.034409",
+      "elapsed_seconds": 22.660074472427368,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 36.73828125,
+        "system_percent": 59.6,
+        "available_mb": 13119.15625
+      },
+      "threads": 4,
+      "cpu_percent": 3.4,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:43:26.803496",
+      "elapsed_seconds": 32.4291615486145,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.2578125,
+        "system_percent": 59.4,
+        "available_mb": 13188.49609375
+      },
+      "threads": 6,
+      "cpu_percent": 4.6,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:43:27.809945",
+      "elapsed_seconds": 33.4356107711792,
+      "phase": "IDLE_START",
+      "memory": {
+        "process_mb": 36.97265625,
+        "system_percent": 59.4,
+        "available_mb": 13188.5078125
+      },
+      "threads": 6,
+      "cpu_percent": 3.5,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:43:37.818744",
+      "elapsed_seconds": 43.44440937042236,
+      "phase": "IDLE",
+      "memory": {
+        "process_mb": 36.97265625,
+        "system_percent": 59.4,
+        "available_mb": 13188.67578125
+      },
+      "threads": 6,
+      "cpu_percent": 3.3,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:43:50.772009",
+      "elapsed_seconds": 56.397674560546875,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 36.921875,
+        "system_percent": 59.5,
+        "available_mb": 13154.1015625
+      },
+      "threads": 6,
+      "cpu_percent": 3.6,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:43:54.727935",
+      "elapsed_seconds": 60.35360026359558,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 36.96484375,
+        "system_percent": 59.5,
+        "available_mb": 13160.74609375
+      },
+      "threads": 3,
+      "cpu_percent": 4.7,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:43:58.677901",
+      "elapsed_seconds": 64.3035659790039,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 36.765625,
+        "system_percent": 59.5,
+        "available_mb": 13163.08203125
+      },
+      "threads": 3,
+      "cpu_percent": 4.1,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:44:05.600180",
+      "elapsed_seconds": 71.2258448600769,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.109375,
+        "system_percent": 59.5,
+        "available_mb": 13152.359375
+      },
+      "threads": 3,
+      "cpu_percent": 3.4,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:44:15.377834",
+      "elapsed_seconds": 81.00349926948547,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.20703125,
+        "system_percent": 59.6,
+        "available_mb": 13126.17578125
+      },
+      "threads": 3,
+      "cpu_percent": 3.8,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:44:19.323690",
+      "elapsed_seconds": 84.94935488700867,
+      "phase": "IDLE_START",
+      "memory": {
+        "process_mb": 36.87109375,
+        "system_percent": 59.7,
+        "available_mb": 13077.1640625
+      },
+      "threads": 3,
+      "cpu_percent": 13.4,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:44:29.332463",
+      "elapsed_seconds": 94.95812821388245,
+      "phase": "IDLE",
+      "memory": {
+        "process_mb": 37.4609375,
+        "system_percent": 59.5,
+        "available_mb": 13158.52734375
+      },
+      "threads": 3,
+      "cpu_percent": 4.1,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:44:42.302226",
+      "elapsed_seconds": 107.9278917312622,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.0703125,
+        "system_percent": 59.4,
+        "available_mb": 13192.9453125
+      },
+      "threads": 3,
+      "cpu_percent": 3.7,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:44:46.248049",
+      "elapsed_seconds": 111.87371373176575,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.3046875,
+        "system_percent": 59.4,
+        "available_mb": 13185.796875
+      },
+      "threads": 3,
+      "cpu_percent": 3.9,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:44:50.223947",
+      "elapsed_seconds": 115.84961199760437,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.2890625,
+        "system_percent": 59.3,
+        "available_mb": 13198.09765625
+      },
+      "threads": 3,
+      "cpu_percent": 3.8,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:44:57.145729",
+      "elapsed_seconds": 122.77139449119568,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 36.97265625,
+        "system_percent": 59.4,
+        "available_mb": 13188.50390625
+      },
+      "threads": 3,
+      "cpu_percent": 2.9,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:45:07.079326",
+      "elapsed_seconds": 132.70499110221863,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.01953125,
+        "system_percent": 59.4,
+        "available_mb": 13194.0546875
+      },
+      "threads": 3,
+      "cpu_percent": 3.7,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:45:11.024707",
+      "elapsed_seconds": 136.65037202835083,
+      "phase": "IDLE_START",
+      "memory": {
+        "process_mb": 37.27734375,
+        "system_percent": 59.3,
+        "available_mb": 13197.30078125
+      },
+      "threads": 1,
+      "cpu_percent": 3.4,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:45:21.041653",
+      "elapsed_seconds": 146.66731786727905,
+      "phase": "IDLE",
+      "memory": {
+        "process_mb": 37.078125,
+        "system_percent": 59.4,
+        "available_mb": 13166.12109375
+      },
+      "threads": 1,
+      "cpu_percent": 3.7,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:45:34.018767",
+      "elapsed_seconds": 159.6444320678711,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 36.8359375,
+        "system_percent": 59.6,
+        "available_mb": 13124.8984375
+      },
+      "threads": 1,
+      "cpu_percent": 5.1,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:45:37.975029",
+      "elapsed_seconds": 163.60069489479065,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 36.8203125,
+        "system_percent": 59.6,
+        "available_mb": 13130.34375
+      },
+      "threads": 1,
+      "cpu_percent": 7.5,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:45:41.913430",
+      "elapsed_seconds": 167.53909516334534,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.0546875,
+        "system_percent": 59.4,
+        "available_mb": 13192.578125
+      },
+      "threads": 1,
+      "cpu_percent": 5.9,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:45:45.881692",
+      "elapsed_seconds": 171.50735712051392,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.2109375,
+        "system_percent": 59.5,
+        "available_mb": 13158.52734375
+      },
+      "threads": 1,
+      "cpu_percent": 3.5,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:45:55.857858",
+      "elapsed_seconds": 181.4835228919983,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.4921875,
+        "system_percent": 59.6,
+        "available_mb": 13125.19921875
+      },
+      "threads": 1,
+      "cpu_percent": 4.0,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:46:02.814373",
+      "elapsed_seconds": 188.44003868103027,
+      "phase": "IDLE_START",
+      "memory": {
+        "process_mb": 37.11328125,
+        "system_percent": 59.6,
+        "available_mb": 13121.10546875
+      },
+      "threads": 1,
+      "cpu_percent": 5.2,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:46:12.824033",
+      "elapsed_seconds": 198.44969820976257,
+      "phase": "IDLE",
+      "memory": {
+        "process_mb": 37.7578125,
+        "system_percent": 59.6,
+        "available_mb": 13103.29296875
+      },
+      "threads": 1,
+      "cpu_percent": 5.8,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:46:25.788741",
+      "elapsed_seconds": 211.41440606117249,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.015625,
+        "system_percent": 59.6,
+        "available_mb": 13115.7734375
+      },
+      "threads": 1,
+      "cpu_percent": 3.3,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:46:29.781907",
+      "elapsed_seconds": 215.40757250785828,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.35546875,
+        "system_percent": 59.3,
+        "available_mb": 13205.69921875
+      },
+      "threads": 1,
+      "cpu_percent": 3.7,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:46:33.737120",
+      "elapsed_seconds": 219.3627860546112,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.578125,
+        "system_percent": 59.3,
+        "available_mb": 13211.92578125
+      },
+      "threads": 1,
+      "cpu_percent": 5.3,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:46:37.673206",
+      "elapsed_seconds": 223.29887127876282,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.5390625,
+        "system_percent": 59.3,
+        "available_mb": 13203.984375
+      },
+      "threads": 1,
+      "cpu_percent": 4.4,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:46:44.560146",
+      "elapsed_seconds": 230.18581128120422,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.68359375,
+        "system_percent": 59.3,
+        "available_mb": 13206.546875
+      },
+      "threads": 1,
+      "cpu_percent": 4.2,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:46:54.309849",
+      "elapsed_seconds": 239.93551421165466,
+      "phase": "IDLE_START",
+      "memory": {
+        "process_mb": 37.0078125,
+        "system_percent": 59.3,
+        "available_mb": 13223.09375
+      },
+      "threads": 1,
+      "cpu_percent": 4.7,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:47:04.318832",
+      "elapsed_seconds": 249.94449734687805,
+      "phase": "IDLE",
+      "memory": {
+        "process_mb": 37.64453125,
+        "system_percent": 59.2,
+        "available_mb": 13242.38671875
+      },
+      "threads": 1,
+      "cpu_percent": 4.9,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:47:17.239897",
+      "elapsed_seconds": 262.8655619621277,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.51171875,
+        "system_percent": 59.2,
+        "available_mb": 13237.73046875
+      },
+      "threads": 1,
+      "cpu_percent": 4.5,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:47:21.168340",
+      "elapsed_seconds": 266.7940056324005,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.19921875,
+        "system_percent": 59.2,
+        "available_mb": 13246.44140625
+      },
+      "threads": 1,
+      "cpu_percent": 3.8,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:47:25.098202",
+      "elapsed_seconds": 270.7238676548004,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.12109375,
+        "system_percent": 59.2,
+        "available_mb": 13251.09765625
+      },
+      "threads": 1,
+      "cpu_percent": 4.2,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:47:29.024077",
+      "elapsed_seconds": 274.6497423648834,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 36.92578125,
+        "system_percent": 59.2,
+        "available_mb": 13249.0546875
+      },
+      "threads": 1,
+      "cpu_percent": 3.5,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:47:35.897040",
+      "elapsed_seconds": 281.5227053165436,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.078125,
+        "system_percent": 59.2,
+        "available_mb": 13247.76171875
+      },
+      "threads": 1,
+      "cpu_percent": 4.7,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:47:45.641850",
+      "elapsed_seconds": 291.2675156593323,
+      "phase": "BURST",
+      "memory": {
+        "process_mb": 37.875,
+        "system_percent": 59.2,
+        "available_mb": 13236.7890625
+      },
+      "threads": 1,
+      "cpu_percent": 5.2,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:47:46.649662",
+      "elapsed_seconds": 292.2753279209137,
+      "phase": "IDLE_START",
+      "memory": {
+        "process_mb": 37.8046875,
+        "system_percent": 59.2,
+        "available_mb": 13234.15625
+      },
+      "threads": 1,
+      "cpu_percent": 5.1,
+      "cpu_temp": null
+    },
+    {
+      "timestamp": "2026-02-23T19:47:54.656743",
+      "elapsed_seconds": 300.28240847587585,
+      "phase": "FINAL",
+      "memory": {
+        "process_mb": 37.90234375,
+        "system_percent": 59.2,
+        "available_mb": 13237.92578125
+      },
+      "threads": 3,
+      "cpu_percent": 4.2,
+      "cpu_temp": null
+    }
+  ]
+}

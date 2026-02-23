@@ -1,0 +1,61 @@
+{
+  "src.lexer:Lexer": [
+    "next_token",
+    "tokens",
+    "tokenize",
+    "register_token_hook"
+  ],
+  "src.parser:Parser": [
+    "parse_program",
+    "parse",
+    "register_prefix",
+    "register_infix",
+    "register_statement",
+    "register_error_hook"
+  ],
+  "src.interpreter:Interpreter": [
+    "eval",
+    "eval_node",
+    "register_builtin",
+    "register_module",
+    "register_import_resolver",
+    "resolve_module"
+  ],
+  "src.debugger:ErrorDetector": [
+    "add",
+    "clear",
+    "register_syntax_rule",
+    "register_type_rule",
+    "detect_syntax",
+    "check_types",
+    "report_errors",
+    "has_errors",
+    "detect",
+    "summary"
+  ],
+  "src.ownership:OwnershipTracker": [
+    "declare",
+    "declare_owner",
+    "move",
+    "move_owner",
+    "register_before_move_hook",
+    "borrow_owner",
+    "snapshot"
+  ],
+  "src.borrow_checker:BorrowChecker": [
+    "borrow_immutable",
+    "borrow_shared",
+    "release_immutable",
+    "release_shared",
+    "borrow_mutable",
+    "release_mutable",
+    "snapshot",
+    "register_validator"
+  ],
+  "src.token_types:TokenRegistry": [
+    "create_default",
+    "register_keyword",
+    "register_operator",
+    "lookup_ident"
+  ]
+}

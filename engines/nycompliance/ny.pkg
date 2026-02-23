@@ -1,0 +1,34 @@
+# Nycompliance Engine Package Configuration
+
+name = "Nycompliance"
+version = "1.0.0"
+description = "Nyx Regulatory Compliance Engine - audit logging, rule engine, RBAC"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nycompliance"
+
+keywords = ["nyx", "compliance", "regulatory", "audit", "rbac", "retention", "reporting"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nycompliance = "nycompliance:create_compliance"
+
+[modules]
+access = "RBAC access control with audit"
+audit = "Tamper-proof audit log with hash chain"
+ComplianceEngine = "Main compliance orchestrator"
+reporting = "Trade reporting with status tracking"
+retention = "Data retention policies with encryption"
+rules = "Regulatory rule engine with auto-block"
+
+[platform]
+any = true
+
+[capabilities]
+data_retention = "Policy-driven data retention and archiving"
+rbac = "Role-based access control"
+regulatory_rules = "Configurable regulatory rule engine"
+tamper_proof_audit = "Hash-chain tamper detection"
+

@@ -1,0 +1,33 @@
+# Nydata Engine Package Configuration
+
+name = "Nydata"
+version = "2.0.0"
+description = "Nyx Data Loading Engine - datasets, transforms, augmentation, streaming, data loaders"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nydata"
+
+keywords = ["nyx", "data", "dataset", "dataloader", "transform", "augmentation", "pipeline", "streaming"]
+
+dependencies = ["nyx >= 2.0.0", "nytensor"]
+
+[scripts]
+Nydata = "nydata:create_data"
+
+[modules]
+dataset = "Dataset and streaming dataset"
+loader = "Batched data loader with workers"
+schema = "Column and data schema definitions"
+transform = "Normalize, standardize, augmentation"
+
+[platform]
+any = true
+
+[capabilities]
+augmentation = "Random crop, flip, rotate, noise"
+batch_processing = "Configurable batch collation"
+data_loading = "Multi-worker parallel data loading"
+schema_validation = "Type-safe schema enforcement"
+streaming = "Streaming datasets for large data"
+

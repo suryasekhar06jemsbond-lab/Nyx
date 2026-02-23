@@ -1,0 +1,35 @@
+# Nymonitor Engine Package Configuration
+
+name = "Nymonitor"
+version = "1.0.0"
+description = "Nyx Monitoring Engine - metrics, logs, tracing, alerts, dashboards"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nymonitor"
+
+keywords = ["nyx", "monitoring", "metrics", "logging", "tracing", "alerts", "dashboards", "observability"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nymonitor = "nymonitor:create_monitor"
+
+[modules]
+alerts = "Alert rules with escalation"
+dashboards = "Dashboard builder and visualization"
+health = "Health check monitoring"
+logs = "Structured log aggregation"
+metrics = "Metrics collection with counters/gauges/histograms"
+tracing = "Distributed request tracing"
+
+[platform]
+any = true
+
+[capabilities]
+alerting = "Threshold and anomaly-based alerting"
+distributed_tracing = "Request-scoped distributed tracing"
+health_monitoring = "Periodic health check monitoring"
+metrics_collection = "Counter/gauge/histogram metrics"
+structured_logging = "JSON structured log aggregation"
+

@@ -1,0 +1,34 @@
+# Nypack Engine Package Configuration
+
+name = "Nypack"
+version = "1.0.0"
+description = "Nyx Package & Build Engine - native compilation, plugins, dependency resolution"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nypack"
+
+keywords = ["nyx", "package", "build", "compiler", "plugin", "dependency", "registry", "container"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nypack = "nypack:create_pack"
+
+[modules]
+builder = "Package builder and bundler"
+compiler = "Native compilation to binary"
+container = "Container image builder"
+plugin = "Plugin manager with hot-loading"
+registry = "Package registry server"
+resolver = "Dependency resolution with version constraints"
+
+[platform]
+any = true
+
+[capabilities]
+dependency_resolution = "Semantic version constraint solving"
+native_compilation = "Ahead-of-time native compilation"
+package_registry = "Publish and fetch from registries"
+plugin_system = "Dynamic plugin loading/unloading"
+

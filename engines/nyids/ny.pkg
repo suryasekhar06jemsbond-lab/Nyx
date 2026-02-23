@@ -1,0 +1,32 @@
+# Nyids Engine Package Configuration
+
+name = "Nyids"
+version = "1.0.0"
+description = "Nyx Intrusion Detection Engine - signature matching, anomaly detection, alerts"
+author = "Nyx Team"
+author_email = "team@nyxlang.dev"
+license = "MIT"
+homepage = "https://github.com/nyxlang/Nyids"
+
+keywords = ["nyx", "ids", "intrusion", "detection", "security", "anomaly", "signature", "network"]
+
+dependencies = ["nyx >= 2.0.0"]
+
+[scripts]
+Nyids = "nyids:create_ids"
+
+[modules]
+alerting = "Alert generation and severity classification"
+anomaly = "Statistical anomaly detection"
+log_analysis = "Log parsing and correlation"
+signature = "Signature-based pattern matching engine"
+
+[platform]
+any = true
+
+[capabilities]
+anomaly_detection = "Statistical baseline anomaly detection"
+log_correlation = "Multi-source log correlation"
+real_time_alerting = "Real-time threat alerting"
+signature_matching = "High-speed signature pattern matching"
+
