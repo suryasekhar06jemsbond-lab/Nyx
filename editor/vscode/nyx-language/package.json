@@ -2,7 +2,7 @@
   "name": "nyx-language",
   "displayName": "Nyx Language",
   "description": "NYX syntax highlighting, snippets, and project authoring workflow support.",
-  "version": "3.3.3",
+  "version": "5.5.0",
   "publisher": "SuryaSekharRoy",
   "license": "SEE LICENSE IN LICENSE.md",
   "engines": {
