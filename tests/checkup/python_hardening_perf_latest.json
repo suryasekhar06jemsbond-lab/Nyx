@@ -1,0 +1,13 @@
+{
+  "budget": {
+    "lexer_tokens_per_sec_min": 150000,
+    "parser_nodes_per_sec_min": 20000,
+    "interpreter_evals_per_sec_min": 3000
+  },
+  "metrics": {
+    "lexer_tokens_per_sec": 232352.56988521,
+    "parser_nodes_per_sec": 23932.733087603083,
+    "interpreter_evals_per_sec": 4875.41288867968
+  },
+  "pass": true
+}

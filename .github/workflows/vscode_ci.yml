@@ -60,5 +60,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: nyx-language-${{ matrix.label }}-vsix
-          path: ../../../dist/nyx-language-${{ matrix.label }}.vsix
+          path: dist/nyx-language-${{ matrix.label }}.vsix
           if-no-files-found: error
