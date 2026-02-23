@@ -10,16 +10,16 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-print(f"[perf_baseline] Root: {ROOT}")
-print(f"[perf_baseline] sys.path updated")
+print("[perf_baseline] Root: {}".format(ROOT))
+print("[perf_baseline] sys.path updated")
 
 try:
     from src.interpreter import Environment, Interpreter
     from src.lexer import Lexer
     from src.parser import Parser
-    print(f"[perf_baseline] Imports successful")
+    print("[perf_baseline] Imports successful")
 except ImportError as e:
-    print(f"[perf_baseline] ERROR: Import failed: {e}")
+    print("[perf_baseline] ERROR: Import failed: {}".format(e))
     sys.exit(1)
 
 BUDGET_FILE = ROOT / "tests" / "hardening" / "baselines" / "perf_budget.json"
@@ -64,18 +64,18 @@ def _benchmark_interpreter(iterations: int = 120) -> float:
 def run() -> int:
     try:
         if not BUDGET_FILE.exists():
-            print(f"[perf_baseline] ERROR: Budget file not found: {BUDGET_FILE}")
+            print("[perf_baseline] ERROR: Budget file not found: {}".format(BUDGET_FILE))
             return 1
         
         budget = json.loads(BUDGET_FILE.read_text(encoding="utf-8"))
-        print(f"[perf_baseline] Budget loaded: {budget}")
+        print("[perf_baseline] Budget loaded: {}".format(budget))
         
         metrics = {
             "lexer_tokens_per_sec": _benchmark_lexer(),
             "parser_nodes_per_sec": _benchmark_parser(),
             "interpreter_evals_per_sec": _benchmark_interpreter(),
         }
-        print(f"[perf_baseline] Metrics calculated: {metrics}")
+        print("[perf_baseline] Metrics calculated: {}".format(metrics))
         
         result = {
             "budget": budget,
@@ -91,7 +91,7 @@ def run() -> int:
         print(json.dumps(result, indent=2))
         return 0 if result["pass"] else 1
     except Exception as e:
-        print(f"[perf_baseline] ERROR: {e}")
+        print("[perf_baseline] ERROR: {}".format(e))
         import traceback
         traceback.print_exc()
         return 1
