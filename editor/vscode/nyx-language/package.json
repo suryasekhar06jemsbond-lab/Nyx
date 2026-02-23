@@ -1,35 +1,52 @@
 {
   "name": "nyx-language",
-  "displayName": "Nyx Language",
-  "description": "NYX syntax highlighting, snippets, and project authoring workflow support.",
-  "version": "5.5.0",
-  "publisher": "SuryaSekharRoy",
-  "license": "SEE LICENSE IN LICENSE.md",
+  "displayName": "Nyx Language Support",
+  "description": "Complete language support for Nyx - Multi-paradigm compiled programming language with syntax highlighting, IntelliSense, debugging, and build tools",
+  "version": "6.0.0",
+  "publisher": "Nyx",
+  "license": "MIT",
+  "icon": "nyx-logo.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nyxlang/nyx-vscode-extension"
+  },
+  "bugs": {
+    "url": "https://github.com/nyxlang/nyx-vscode-extension/issues"
+  },
+  "homepage": "https://github.com/nyxlang/nyx-vscode-extension#readme",
   "engines": {
     "vscode": "^1.85.0"
   },
-  "main": "./extension.js",
-  "icon": "assets/nyx-logo.png",
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Snippets",
+    "Debuggers",
+    "Themes",
+    "Formatters",
+    "Linters"
   ],
   "keywords": [
     "nyx",
     "ny",
-    "nx",
-    "language",
-    "runtime",
-    "compiler"
+    "programming language",
+    "compiled",
+    "functional",
+    "imperative",
+    "object-oriented",
+    "rust-like",
+    "python-like",
+    "syntax-highlighting",
+    "autocomplete",
+    "debugging"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/suryasekhar06jemsbond-lab/NYX-language.git",
-    "directory": "editor/vscode/nyx-language"
-  },
-  "bugs": {
-    "url": "https://github.com/suryasekhar06jemsbond-lab/NYX-language/issues"
-  },
-  "homepage": "https://github.com/suryasekhar06jemsbond-lab/NYX-language",
+  "activationEvents": [
+    "onLanguage:nyx",
+    "onCommand:nyx.run",
+    "onCommand:nyx.build",
+    "onCommand:nyx.format",
+    "workspaceContains:**/*.ny"
+  ],
+  "main": "./extension.js",
   "contributes": {
     "languages": [
       {
@@ -39,14 +56,13 @@
           "nyx"
         ],
         "extensions": [
-          ".ny",
-          ".nx"
+          ".ny"
         ],
+        "configuration": "./language-configuration.json",
         "icon": {
-          "light": "./assets/nyx-logo.png",
-          "dark": "./assets/nyx-logo.png"
-        },
-        "configuration": "./language-configuration.json"
+          "light": "./icons/nyx-file.svg",
+          "dark": "./icons/nyx-file.svg"
+        }
       }
     ],
     "grammars": [
@@ -62,29 +78,320 @@
         "path": "./snippets/nyx.json"
       }
     ],
-    "iconThemes": [
+    "themes": [
       {
-        "id": "nyx-file-icons",
-        "label": "NYX File Icons",
-        "path": "./icon-theme/nyx-icon-theme.json"
+        "label": "Nyx Dark",
+        "uiTheme": "vs-dark",
+        "path": "./icon-theme/nyx-dark.json"
+      },
+      {
+        "label": "Nyx Light",
+        "uiTheme": "vs",
+        "path": "./icon-theme/nyx-light.json"
       }
     ],
-    "configurationDefaults": {
-      "workbench.iconTheme": "nyx-file-icons"
-    }
+    "commands": [
+      {
+        "command": "nyx.run",
+        "title": "Nyx: Run File",
+        "description": "Run the current Nyx file",
+        "icon": "$(run)"
+      },
+      {
+        "command": "nyx.build",
+        "title": "Nyx: Build Project",
+        "description": "Build the Nyx project",
+        "icon": "$(wrench)"
+      },
+      {
+        "command": "nyx.format",
+        "title": "Nyx: Format Document",
+        "description": "Format the current Nyx document",
+        "icon": "$(indent)"
+      },
+      {
+        "command": "nyx.check",
+        "title": "Nyx: Check File",
+        "description": "Check the current Nyx file for errors",
+        "icon": "$(check)"
+      },
+      {
+        "command": "nyx.debug",
+        "title": "Nyx: Debug File",
+        "description": "Debug the current Nyx file",
+        "icon": "$(debug-alt)"
+      },
+      {
+        "command": "nyx.createProject",
+        "title": "Nyx: Create New Project",
+        "description": "Create a new Nyx project",
+        "icon": "$(new-folder)"
+      },
+      {
+        "command": "nyx.showDocs",
+        "title": "Nyx: Open Documentation",
+        "description": "Open Nyx language documentation",
+        "icon": "$(book)"
+      },
+      {
+        "command": "nyx.installDependencies",
+        "title": "Nyx: Install Dependencies",
+        "description": "Install project dependencies using nypm",
+        "icon": "$(package)"
+      },
+      {
+        "command": "nyx.updateExtension",
+        "title": "Nyx: Update Extension",
+        "description": "Update the Nyx extension to latest version",
+        "icon": "$(cloud-download)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "nyx.run",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r",
+        "when": "editorLangId == nyx"
+      },
+      {
+        "command": "nyx.build",
+        "key": "ctrl+shift+b",
+        "mac": "cmd+shift+b",
+        "when": "editorLangId == nyx"
+      },
+      {
+        "command": "nyx.format",
+        "key": "shift+alt+f",
+        "mac": "shift+option+f",
+        "when": "editorLangId == nyx"
+      },
+      {
+        "command": "nyx.debug",
+        "key": "f5",
+        "when": "editorLangId == nyx"
+      },
+      {
+        "command": "nyx.check",
+        "key": "ctrl+shift+c",
+        "mac": "cmd+shift+c",
+        "when": "editorLangId == nyx"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "nyx.run",
+          "when": "editorLangId == nyx",
+          "group": "navigation@1"
+        },
+        {
+          "command": "nyx.build",
+          "when": "editorLangId == nyx",
+          "group": "navigation@2"
+        },
+        {
+          "command": "nyx.format",
+          "when": "editorLangId == nyx",
+          "group": "1_modification@1"
+        },
+        {
+          "command": "nyx.check",
+          "when": "editorLangId == nyx",
+          "group": "1_modification@2"
+        },
+        {
+          "command": "nyx.debug",
+          "when": "editorLangId == nyx",
+          "group": "navigation@3"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "nyx.run",
+          "when": "resourceExtname == .ny",
+          "group": "navigation@1"
+        },
+        {
+          "command": "nyx.build",
+          "when": "explorerResourceIsFolder",
+          "group": "navigation@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "nyx.run",
+          "when": "editorLangId == nyx"
+        },
+        {
+          "command": "nyx.build",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "nyx.format",
+          "when": "editorLangId == nyx"
+        },
+        {
+          "command": "nyx.check",
+          "when": "editorLangId == nyx"
+        },
+        {
+          "command": "nyx.debug",
+          "when": "editorLangId == nyx"
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "Nyx Language Configuration",
+      "properties": {
+        "nyx.runtime.path": {
+          "type": "string",
+          "default": "nyx",
+          "description": "Path to the Nyx runtime executable"
+        },
+        "nyx.runtime.arguments": {
+          "type": "array",
+          "default": [],
+          "description": "Additional arguments to pass to the Nyx runtime"
+        },
+        "nyx.compiler.path": {
+          "type": "string",
+          "default": "nyc",
+          "description": "Path to the Nyx compiler executable"
+        },
+        "nyx.formatter.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable automatic formatting"
+        },
+        "nyx.formatter.tabSize": {
+          "type": "integer",
+          "default": 4,
+          "minimum": 1,
+          "description": "Number of spaces per indentation level"
+        },
+        "nyx.formatter.useTabs": {
+          "type": "boolean",
+          "default": false,
+          "description": "Use tabs instead of spaces for indentation"
+        },
+        "nyx.linting.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable linting of Nyx files"
+        },
+        "nyx.linting.level": {
+          "type": "string",
+          "enum": [
+            "error",
+            "warning",
+            "info"
+          ],
+          "default": "warning",
+          "description": "Minimum lint level to report"
+        },
+        "nyx.diagnostics.onSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run diagnostics when saving files"
+        },
+        "nyx.debugger.logLevel": {
+          "type": "string",
+          "enum": [
+            "verbose",
+            "debug",
+            "info",
+            "warn",
+            "error"
+          ],
+          "default": "info",
+          "description": "Debugger log level"
+        },
+        "nyx.debugger.stopOnEntry": {
+          "type": "boolean",
+          "default": false,
+          "description": "Stop debugger on entry"
+        },
+        "nyx.language.inferTypes": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable type inference"
+        },
+        "nyx.language.strictMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable strict type checking"
+        },
+        "nyx.hover.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable hover information"
+        },
+        "nyx.completion.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable code completion"
+        },
+        "nyx.completion.autoTrigger": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically trigger code completion"
+        },
+        "nyx.signature.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable signature help"
+        }
+      }
+    },
+    "breakpoints": [
+      {
+        "language": "nyx"
+      }
+    ],
+    "taskDefinitions": [
+      {
+        "type": "nyx",
+        "required": [
+          "command"
+        ],
+        "properties": {
+          "command": {
+            "type": "string",
+            "description": "Nyx command to execute (run, build, check)"
+          },
+          "file": {
+            "type": "string",
+            "description": "File or project to run"
+          },
+          "args": {
+            "type": "array",
+            "description": "Command arguments"
+          }
+        }
+      }
+    ]
   },
   "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js",
     "package": "vsce package",
     "publish": "vsce publish",
     "publish:openvsx": "ovsx publish"
   },
   "devDependencies": {
-    "@types/node": "^24.10.13",
-    "@types/vscode": "1.85.0",
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
     "@vscode/debugadapter": "^1.68.0",
     "@vscode/debugprotocol": "^1.68.0",
     "@vscode/vsce": "^3.6.2",
     "ovsx": "^0.10.9",
-    "typescript": "^5.9.3"
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
   }
 }

@@ -1,10 +1,13 @@
 import * as vscode from 'vscode';
-import * as fs from 'fs';
+import * as cp from 'child_process';
 import * as path from 'path';
+import * as fs from 'fs';
 import * as os from 'os';
-import { execSync } from 'child_process';
 
+// Language mode identifier
 const NYX_MODE: vscode.DocumentFilter = { language: 'nyx', scheme: 'file' };
+const NYX_OUTPUT_CHANNEL = vscode.window.createOutputChannel('Nyx');
+const NYX_DIAGNOSTICS = vscode.languages.createDiagnosticCollection('nyx');
 
 // Get path to embedded nyx binary
 function getNyxPath(): string {
