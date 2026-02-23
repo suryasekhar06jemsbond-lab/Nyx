@@ -71,7 +71,7 @@ async function ensureNyxInstalled(): Promise<string> {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-    console.log('Nyx extension is now active!');
+    console.log('Nyx Language Support v6.0.0 activated!');
     
     // Try to ensure nyx is available
     ensureNyxInstalled().then(nyxPath => {
@@ -80,119 +80,234 @@ export function activate(context: vscode.ExtensionContext) {
         console.error('Failed to ensure nyx:', err);
     });
 
-    const commands = [
-        'nyx.run.file',
-        'nyx.build.package',
-        'nyx.build.workspace',
-        'nyx.install.package',
-        'nyx.test.package',
-        'nyx.test.file',
-        'nyx.test.cursor',
-        'nyx.test.workspace',
-        'nyx.test.coverage',
-        'nyx.benchmark.package',
-        'nyx.benchmark.file',
-        'nyx.benchmark.cursor',
-        'nyx.debug.cursor',
-        'nyx.lint.package',
-        'nyx.lint.workspace',
-        'nyx.vet.package',
-        'nyx.vet.workspace',
-        'nyx.impl.cursor',
-        'nyx.import.add',
-        'nyx.tools.install',
-        'nyx.playground',
-        'nyx.add.tags',
-        'nyx.remove.tags',
-        'nyx.run.modinit',
-        'nyx.get.package',
-        'nyx.create.project'
-    ];
+    // Register all 9 core commands
+    
+    // 1. nyx.run - Execute Nyx files
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.run', async () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            vscode.window.showErrorMessage('No active file. Please open a .ny file to run.');
+            return;
+        }
+        
+        const filePath = editor.document.uri.fsPath;
+        if (!filePath.endsWith('.ny') && !filePath.endsWith('.nx')) {
+            vscode.window.showErrorMessage('Please open a .ny or .nx file to run');
+            return;
+        }
+        
+        // Save document before running
+        if (editor.document.isDirty) {
+            await editor.document.save();
+        }
+        
+        const terminal = vscode.window.createTerminal('Nyx Run');
+        terminal.show();
+        terminal.sendText(`nyx "${filePath}"`);
+        NYX_OUTPUT_CHANNEL.appendLine(`[Run] Executing: ${filePath}`);
+    }));
 
-    commands.forEach(cmd => {
-        context.subscriptions.push(vscode.commands.registerCommand(cmd, async () => {
-            // Placeholder for command implementation
-            // In a real implementation, this would call the Nyx CLI or Language Server
-            const action = cmd.split('.').slice(1).join(' ');
-            vscode.window.showInformationMessage(`Nyx: ${action} triggered`);
+    // 2. nyx.build - Compile projects
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.build', async () => {
+        if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
+            vscode.window.showErrorMessage('No workspace folder open');
+            return;
+        }
+        
+        const terminal = vscode.window.createTerminal('Nyx Build');
+        terminal.show();
+        terminal.sendText('nyx build .');
+        NYX_OUTPUT_CHANNEL.appendLine('[Build] Building project...');
+    }));
+
+    // 3. nyx.format - Format documents
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.format', async () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            vscode.window.showErrorMessage('No active file');
+            return;
+        }
+        
+        if (editor.document.languageId !== 'nyx') {
+            vscode.window.showErrorMessage('Current file is not a Nyx file');
+            return;
+        }
+        
+        // Save document before formatting
+        if (editor.document.isDirty) {
+            await editor.document.save();
+        }
+        
+        const filePath = editor.document.uri.fsPath;
+        const terminal = vscode.window.createTerminal('Nyx Format');
+        terminal.show();
+        terminal.sendText(`nyx fmt "${filePath}"`);
+        NYX_OUTPUT_CHANNEL.appendLine(`[Format] Formatting: ${filePath}`);
+    }));
+
+    // 4. nyx.check - Check file for syntax errors
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.check', async () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            vscode.window.showErrorMessage('No active file');
+            return;
+        }
+        
+        if (editor.document.languageId !== 'nyx') {
+            vscode.window.showErrorMessage('Current file is not a Nyx file');
+            return;
+        }
+        
+        // Save document before checking
+        if (editor.document.isDirty) {
+            await editor.document.save();
+        }
+        
+        const filePath = editor.document.uri.fsPath;
+        const terminal = vscode.window.createTerminal('Nyx Check');
+        terminal.show();
+        terminal.sendText(`nyx check "${filePath}"`);
+        NYX_OUTPUT_CHANNEL.appendLine(`[Check] Checking: ${filePath}`);
+    }));
+
+    // 5. nyx.debug - Debug file
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.debug', async () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            vscode.window.showErrorMessage('No active file');
+            return;
+        }
+        
+        if (editor.document.languageId !== 'nyx') {
+            vscode.window.showErrorMessage('Current file is not a Nyx file');
+            return;
+        }
+        
+        // Save document before debugging
+        if (editor.document.isDirty) {
+            await editor.document.save();
+        }
+        
+        try {
+            const filePath = editor.document.uri.fsPath;
+            const debugConfig = {
+                type: 'nyx',
+                name: 'Nyx Debug',
+                request: 'launch',
+                program: filePath,
+                stopOnEntry: false,
+                console: 'integratedTerminal'
+            };
             
-            // Run current file with embedded nyx
-            if (cmd === 'nyx.run.file') {
-                const editor = vscode.window.activeTextEditor;
-                if (!editor) {
-                    vscode.window.showErrorMessage('No active file');
-                    return;
-                }
-                const filePath = editor.document.uri.fsPath;
-                if (!filePath.endsWith('.ny') && !filePath.endsWith('.nx')) {
-                    vscode.window.showErrorMessage('Please open a .ny or .nx file to run');
-                    return;
-                }
-                const nyxPath = getNyxPath();
-                const terminal = vscode.window.createTerminal('Nyx Run');
-                terminal.show();
-                terminal.sendText(`"${nyxPath}" "${filePath}"`);
-                return;
+            await vscode.debug.startDebugging(undefined, debugConfig);
+            NYX_OUTPUT_CHANNEL.appendLine(`[Debug] Debugging: ${filePath}`);
+        } catch (err) {
+            // Fallback: Run in terminal with debug flag
+            const filePath = editor.document.uri.fsPath;
+            const terminal = vscode.window.createTerminal('Nyx Debug');
+            terminal.show();
+            terminal.sendText(`nyx debug "${filePath}"`);
+            NYX_OUTPUT_CHANNEL.appendLine(`[Debug] Debugging: ${filePath}`);
+        }
+    }));
+
+    // 6. nyx.createProject - Create new project
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.createProject', async () => {
+        const projectName = await vscode.window.showInputBox({
+            prompt: 'Enter project name',
+            value: 'my_nyx_project'
+        });
+        
+        if (!projectName) return;
+        
+        const folderUri = await vscode.window.showOpenDialog({
+            canSelectFiles: false,
+            canSelectFolders: true,
+            canSelectMany: false,
+            openLabel: 'Select Parent Folder'
+        });
+
+        if (!folderUri || folderUri.length === 0) return;
+
+        const parentPath = folderUri[0].fsPath;
+        const projectPath = path.join(parentPath, projectName);
+
+        try {
+            // Create project directory
+            if (!fs.existsSync(projectPath)) {
+                fs.mkdirSync(projectPath, { recursive: true });
             }
+
+            // Create project files
+            fs.writeFileSync(
+                path.join(projectPath, 'main.ny'),
+                'print("Hello, Nyx!");\n'
+            );
+            fs.writeFileSync(
+                path.join(projectPath, 'nyx.mod'),
+                `module "${projectName}" {\n\tversion "0.1.0"\n}\n`
+            );
+            fs.writeFileSync(
+                path.join(projectPath, 'README.md'),
+                `# ${projectName}\n\nA new Nyx project.\n`
+            );
+
+            vscode.window.showInformationMessage(`Project '${projectName}' created successfully!`);
             
-            // Example integration with CLI for build
-            if (cmd === 'nyx.build.package') {
-                const terminal = vscode.window.createTerminal('Nyx Build');
-                terminal.show();
-                terminal.sendText('nyx build .');
+            // Open project in new window
+            vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectPath), true);
+            NYX_OUTPUT_CHANNEL.appendLine(`[Create] Project created: ${projectPath}`);
+        } catch (err) {
+            vscode.window.showErrorMessage(`Failed to create project: ${err}`);
+            NYX_OUTPUT_CHANNEL.appendLine(`[Error] Failed to create project: ${err}`);
+        }
+    }));
+
+    // 7. nyx.showDocs - Open documentation
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.showDocs', async () => {
+        const docs = [
+            { label: 'Language Specification', url: 'https://github.com/suryasekhar06jemsbond-lab/Nyx/blob/main/docs/LANGUAGE_SPEC.md' },
+            { label: 'Getting Started', url: 'https://github.com/suryasekhar06jemsbond-lab/Nyx/blob/main/docs/BOOTSTRAP.md' },
+            { label: 'Examples', url: 'https://github.com/suryasekhar06jemsbond-lab/Nyx/tree/main/examples' },
+            { label: 'API Reference', url: 'https://github.com/suryasekhar06jemsbond-lab/Nyx/blob/main/docs/ARCHITECTURE.md' },
+            { label: 'GitHub Repository', url: 'https://github.com/suryasekhar06jemsbond-lab/Nyx' }
+        ];
+
+        const selected = await vscode.window.showQuickPick(docs, {
+            placeHolder: 'Select documentation to open'
+        });
+
+        if (selected) {
+            vscode.env.openExternal(vscode.Uri.parse(selected.url));
+            NYX_OUTPUT_CHANNEL.appendLine(`[Docs] Opened: ${selected.label}`);
+        }
+    }));
+
+    // 8. nyx.installDependencies - Install project dependencies
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.installDependencies', async () => {
+        if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
+            vscode.window.showErrorMessage('No workspace folder open');
+            return;
+        }
+
+        const terminal = vscode.window.createTerminal('Nyx Install');
+        terminal.show();
+        terminal.sendText('nypm install');
+        NYX_OUTPUT_CHANNEL.appendLine('[Install] Installing dependencies...');
+    }));
+
+    // 9. nyx.updateExtension - Update extension
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.updateExtension', async () => {
+        vscode.window.showInformationMessage(
+            'Nyx Language Support v6.0.0 - Check VS Code Extensions for updates',
+            'Open Extensions'
+        ).then(selection => {
+            if (selection === 'Open Extensions') {
+                vscode.commands.executeCommand('workbench.extensions.action.showExtensionsWithIds', ['Nyx.nyx-language']);
             }
-
-            // Initialize module
-            if (cmd === 'nyx.run.modinit') {
-                if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
-                    const rootPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
-                    const modPath = path.join(rootPath, 'nyx.mod');
-                    
-                    if (!fs.existsSync(modPath)) {
-                        fs.writeFileSync(modPath, 'module "main" {\n\tversion "1.0.0"\n}\n');
-                        vscode.window.showInformationMessage('Created nyx.mod');
-                        const doc = await vscode.workspace.openTextDocument(modPath);
-                        vscode.window.showTextDocument(doc);
-                    } else {
-                        vscode.window.showWarningMessage('nyx.mod already exists');
-                    }
-                } else {
-                    vscode.window.showErrorMessage('No workspace open');
-                }
-            }
-
-            // Install package
-            if (cmd === 'nyx.install.package') {
-                const pkgName = await vscode.window.showInputBox({ prompt: 'Enter package name to install' });
-                if (pkgName) {
-                    const terminal = vscode.window.createTerminal('Nyx Install');
-                    terminal.show();
-                    terminal.sendText(`nyx install ${pkgName}`);
-                }
-            }
-
-            // Create Project
-            if (cmd === 'nyx.create.project') {
-                const folderUri = await vscode.window.showOpenDialog({
-                    canSelectFiles: false,
-                    canSelectFolders: true,
-                    canSelectMany: false,
-                    openLabel: 'Select Project Folder'
-                });
-
-                if (folderUri && folderUri[0]) {
-                    const projectPath = folderUri[0].fsPath;
-                    const projectName = path.basename(projectPath);
-
-                    fs.writeFileSync(path.join(projectPath, 'main.nx'), 'print("Hello, Nyx!");\n');
-                    fs.writeFileSync(path.join(projectPath, 'nyx.mod'), `module "${projectName}" {\n\tversion "0.1.0"\n}\n`);
-                    fs.writeFileSync(path.join(projectPath, 'README.md'), `# ${projectName}\n\nA new Nyx project.\n`);
-
-                    vscode.commands.executeCommand('vscode.openFolder', folderUri[0]);
-                }
-            }
-        }));
-    });
+        });
+        NYX_OUTPUT_CHANNEL.appendLine('[Update] Check for updates via Extensions panel');
+    }));
 
     // Register CodeLens Provider
     context.subscriptions.push(vscode.languages.registerCodeLensProvider(
@@ -223,41 +338,16 @@ export function activate(context: vscode.ExtensionContext) {
     // Test Controller
     setupTestController(context);
 
-    // Command for CodeLens
+    // Terminal management
     let runTerminal: vscode.Terminal | undefined;
     context.subscriptions.push(vscode.window.onDidCloseTerminal(t => {
         if (t === runTerminal) {
             runTerminal = undefined;
         }
     }));
-
-    context.subscriptions.push(vscode.commands.registerCommand('nyx.run.file', async (uri?: vscode.Uri) => {
-        const targetUri = uri || vscode.window.activeTextEditor?.document.uri;
-        if (targetUri) {
-            const doc = vscode.workspace.textDocuments.find(d => d.uri.toString() === targetUri.toString());
-            if (doc && doc.isDirty) {
-                await doc.save();
-            }
-
-            if (!runTerminal) {
-                runTerminal = vscode.window.createTerminal('Nyx Run');
-            }
-            runTerminal.show();
-            runTerminal.sendText(`nyx "${targetUri.fsPath}"`);
-        }
-    }));
-
-    context.subscriptions.push(vscode.commands.registerCommand('nyx.debug.file', (uri?: vscode.Uri) => {
-        const targetUri = uri || vscode.window.activeTextEditor?.document.uri;
-        if (targetUri) {
-            vscode.debug.startDebugging(undefined, {
-                type: 'nyx',
-                name: 'Debug File',
-                request: 'launch',
-                program: targetUri.fsPath
-            });
-        }
-    }));
+    
+    NYX_OUTPUT_CHANNEL.appendLine('Nyx Language Support v6.0.0 activated successfully');
+    NYX_OUTPUT_CHANNEL.appendLine('All 9 commands ready: run, build, format, check, debug, createProject, showDocs, installDependencies, updateExtension');
 }
 
 export function deactivate() {
