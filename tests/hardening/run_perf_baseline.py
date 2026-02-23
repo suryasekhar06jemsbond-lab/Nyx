@@ -10,9 +10,17 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from src.interpreter import Environment, Interpreter
-from src.lexer import Lexer
-from src.parser import Parser
+print(f"[perf_baseline] Root: {ROOT}")
+print(f"[perf_baseline] sys.path updated")
+
+try:
+    from src.interpreter import Environment, Interpreter
+    from src.lexer import Lexer
+    from src.parser import Parser
+    print(f"[perf_baseline] Imports successful")
+except ImportError as e:
+    print(f"[perf_baseline] ERROR: Import failed: {e}")
+    sys.exit(1)
 
 BUDGET_FILE = ROOT / "tests" / "hardening" / "baselines" / "perf_budget.json"
 REPORT_FILE = ROOT / "tests" / "checkup" / "python_hardening_perf_latest.json"
@@ -54,25 +62,39 @@ def _benchmark_interpreter(iterations: int = 120) -> float:
 
 
 def run() -> int:
-    budget = json.loads(BUDGET_FILE.read_text(encoding="utf-8"))
-    metrics = {
-        "lexer_tokens_per_sec": _benchmark_lexer(),
-        "parser_nodes_per_sec": _benchmark_parser(),
-        "interpreter_evals_per_sec": _benchmark_interpreter(),
-    }
-    result = {
-        "budget": budget,
-        "metrics": metrics,
-        "pass": (
-            metrics["lexer_tokens_per_sec"] >= budget["lexer_tokens_per_sec_min"]
-            and metrics["parser_nodes_per_sec"] >= budget["parser_nodes_per_sec_min"]
-            and metrics["interpreter_evals_per_sec"] >= budget["interpreter_evals_per_sec_min"]
-        ),
-    }
-    REPORT_FILE.parent.mkdir(parents=True, exist_ok=True)
-    REPORT_FILE.write_text(json.dumps(result, indent=2), encoding="utf-8")
-    print(json.dumps(result, indent=2))
-    return 0 if result["pass"] else 1
+    try:
+        if not BUDGET_FILE.exists():
+            print(f"[perf_baseline] ERROR: Budget file not found: {BUDGET_FILE}")
+            return 1
+        
+        budget = json.loads(BUDGET_FILE.read_text(encoding="utf-8"))
+        print(f"[perf_baseline] Budget loaded: {budget}")
+        
+        metrics = {
+            "lexer_tokens_per_sec": _benchmark_lexer(),
+            "parser_nodes_per_sec": _benchmark_parser(),
+            "interpreter_evals_per_sec": _benchmark_interpreter(),
+        }
+        print(f"[perf_baseline] Metrics calculated: {metrics}")
+        
+        result = {
+            "budget": budget,
+            "metrics": metrics,
+            "pass": (
+                metrics["lexer_tokens_per_sec"] >= budget["lexer_tokens_per_sec_min"]
+                and metrics["parser_nodes_per_sec"] >= budget["parser_nodes_per_sec_min"]
+                and metrics["interpreter_evals_per_sec"] >= budget["interpreter_evals_per_sec_min"]
+            ),
+        }
+        REPORT_FILE.parent.mkdir(parents=True, exist_ok=True)
+        REPORT_FILE.write_text(json.dumps(result, indent=2), encoding="utf-8")
+        print(json.dumps(result, indent=2))
+        return 0 if result["pass"] else 1
+    except Exception as e:
+        print(f"[perf_baseline] ERROR: {e}")
+        import traceback
+        traceback.print_exc()
+        return 1
 
 
 if __name__ == "__main__":
