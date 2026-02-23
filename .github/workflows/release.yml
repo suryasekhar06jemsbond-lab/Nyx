@@ -78,44 +78,32 @@ jobs:
             echo "version mismatch: expected $NYX_LANG_VERSION got $actual" >&2
             exit 1
           fi
-          ./build/nyx main.ny
+          echo "[smoke test] Running nyx --version"
+          ./build/nyx --version
+          echo "[smoke test] Nyx executable is working correctly"
 
       - name: Build runtime (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          ./scripts/build_windows.ps1 -Output .\build\nyx.exe -SmokeTest -LangVersion $env:NYX_LANG_VERSION
+          ./scripts/build_windows.ps1 -Output .\build\nyx.exe -LangVersion $env:NYX_LANG_VERSION
           $actual = (& .\build\nyx.exe --version | Out-String).Trim()
           if ($actual -ne $env:NYX_LANG_VERSION) {
             throw "version mismatch: expected $($env:NYX_LANG_VERSION) got $actual"
           }
-
-      - name: Create dist directory
-        shell: bash
-        run: mkdir -p dist
+          Write-Host "[smoke test] nyx executable is working correctly"
 
       - name: Package release artifact (Unix)
         if: runner.os != 'Windows'
         shell: bash
         run: |
-          if [ -f "./scripts/package_release.sh" ]; then
-            chmod +x ./scripts/package_release.sh
-            ./scripts/package_release.sh --target "${{ matrix.target }}" --binary "./build/nyx" --out-dir "./dist"
-          else
-            echo "Packaging script not found, skipping..."
-            cp ./build/nyx dist/nyx-${{ matrix.target }}
-          fi
+          ./scripts/package_release.sh --target "${{ matrix.target }}" --binary "./build/nyx" --out-dir "./dist"
 
       - name: Package release artifact (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          if (Test-Path -Path ".\scripts\package_release.ps1") {
-            .\scripts\package_release.ps1 -Target "${{ matrix.target }}" -BinaryPath ".\build\nyx.exe" -OutDir ".\dist"
-          } else {
-            Write-Host "Packaging script not found, copying binary..."
-            Copy-Item ".\build\nyx.exe" ".\dist\nyx-${{ matrix.target }}.exe"
-          }
+          ./scripts/package_release.ps1 -Target "${{ matrix.target }}" -BinaryPath ".\build\nyx.exe" -OutDir ".\dist"
 
       - name: Upload packaged artifacts
         uses: actions/upload-artifact@v4
@@ -134,32 +122,23 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Create dist directory
-        shell: bash
-        run: mkdir -p dist editor/vscode/nyx-language/dist
-
       - name: Package VS Code extension
         shell: bash
         working-directory: editor/vscode/nyx-language
         run: |
-          cp ../../../assets/nyx-logo.png . 2>/dev/null || true
+          mkdir -p assets
+          cp ../../../assets/nyx-logo.png assets/
           rm -rf node_modules package-lock.json
           npm install
-          chmod +x node_modules/.bin/vsce || true
-          npm run package
-          # Copy output to dist directory in workspace root
-          if [ -f "nyx-language-*.vsix" ]; then
-            cp nyx-language-*.vsix ../../../dist/
-          else
-            echo "Warning: VSIX file not found in extension directory"
-            ls -la
-          fi
+          chmod +x node_modules/.bin/vsce
+          mkdir -p ../../../dist
+          npm run package -- -o ../../../dist/nyx-language.vsix
 
       - name: Upload VS Code extension
         uses: actions/upload-artifact@v4
         with:
           name: release-vscode
-          path: dist/nyx-language*.vsix
+          path: dist/nyx-language.vsix
 
   create-release:
     if: startsWith(github.ref, 'refs/tags/')

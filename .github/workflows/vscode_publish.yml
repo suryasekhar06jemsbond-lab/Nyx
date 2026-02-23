@@ -37,14 +37,11 @@ jobs:
             npm version "${{ inputs.version }}" --no-git-tag-version
           fi
 
-      - name: Install dependencies
-        run: |
-          cp ../../../assets/nyx-logo.png . 2>/dev/null || true
-          cp ../../../README.md . 2>/dev/null || true
-          rm -rf node_modules package-lock.json
-          npm install
-          chmod +x node_modules/.bin/vsce || true
-
       - name: Publish extension to VS Code Marketplace
         run: |
+          cp ../../../assets/nyx-logo.png .
+          cp ../../../README.md .
+          rm -rf node_modules package-lock.json
+          npm install
+          chmod +x node_modules/.bin/vsce
           npm run publish -- -p "${{ secrets.VSCE_PAT }}"
