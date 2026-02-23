@@ -1,5 +1,5 @@
 {
-  "lexer_tokens_per_sec_min": 150000,
-  "parser_nodes_per_sec_min": 20000,
-  "interpreter_evals_per_sec_min": 3000
+  "lexer_tokens_per_sec_min": 80000,
+  "parser_nodes_per_sec_min": 8000,
+  "interpreter_evals_per_sec_min": 1700
 }

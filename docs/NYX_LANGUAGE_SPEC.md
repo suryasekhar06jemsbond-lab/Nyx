@@ -44,7 +44,43 @@ Nyx is a **compiled language** that can be compiled ahead-of-time (AOT) or just-
 
 ## B. Full Syntax Specification
 
-*This section will link to the detailed syntax specification in `syntax.md` and the formal grammar in `grammar.ebnf`.*
+### Statement Terminators (Semicolons)
+
+**Semicolons are OPTIONAL in Nyx.** The parser accepts both styles seamlessly:
+
+```nyx
+// ✅ With semicolons (explicit style)
+let x = 5;
+let y = 10;
+let result = x + y;
+
+// ✅ Without semicolons (implicit style)
+let x = 5
+let y = 10
+let result = x + y
+
+// ✅ Mixed style (your preference)
+let x = 5;
+let y = 10
+let result = x + y;
+```
+
+**Implementation:**
+- Semicolons act as **optional terminators**, not required delimiters
+- Statement boundaries are inferred from newlines and context
+- Semicolons ARE required in C-style for-loop headers: `for (init; cond; incr)`
+- Multiple statements on one line require semicolons: `let x = 1; let y = 2;`
+
+**Supported Statement Types:**
+- Variable declarations: `let`, `const`
+- Return statements: `return value`
+- Expression statements: function calls, assignments
+- Control flow: `if`, `while`, `for` bodies
+- All other statements
+
+**Documentation:** See [SEMICOLON_USAGE.md](SEMICOLON_USAGE.md) and [SEMICOLON_QUICK_REFERENCE.md](SEMICOLON_QUICK_REFERENCE.md) for complete details.
+
+*Additional syntax details will be documented in `syntax.md` and the formal grammar in `grammar.ebnf`.*
 
 ## C. LOC-Reduction Features
 

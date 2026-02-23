@@ -27,7 +27,7 @@ async function ensureNyxInstalled(): Promise<string> {
     
     // Check if nyx is already in PATH
     try {
-        execSync('nyx --version', { stdio: 'ignore' });
+        cp.execSync('nyx --version', { stdio: 'ignore' });
         return 'nyx';
     } catch {
         // nyx not in PATH, install it
@@ -60,7 +60,7 @@ async function ensureNyxInstalled(): Promise<string> {
         // For Windows, we need to set user PATH
         if (isWindows) {
             try {
-                execSync(`setx PATH "${installDir};%PATH%"`, { stdio: 'ignore' });
+                cp.execSync(`setx PATH "${installDir};%PATH%"`, { stdio: 'ignore' });
             } catch {
                 // Fallback: create a wrapper script
             }

@@ -271,7 +271,6 @@ export class NyxDebugSession extends LoggingDebugSession {
 			// Mock variables for demonstration
 			variables.push({
 				name: "demo_var",
-				type: "string",
 				value: "\"Hello Nyx\"",
 				variablesReference: 0
 			});

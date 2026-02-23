@@ -1,0 +1,221 @@
+{
+  "Function": {
+    "prefix": ["fn", "function"],
+    "body": [
+      "fn ${1:name}(${2:params}) {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Function definition"
+  },
+  "Let Variable": {
+    "prefix": ["let", "var"],
+    "body": [
+      "let ${1:name} = ${0}"
+    ],
+    "description": "Variable declaration with type inference"
+  },
+  "Const Variable": {
+    "prefix": ["const"],
+    "body": [
+      "const ${1:name} = ${0}"
+    ],
+    "description": "Constant declaration"
+  },
+  "If Statement": {
+    "prefix": ["if"],
+    "body": [
+      "if (${1:condition}) {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "If statement"
+  },
+  "If-Else Statement": {
+    "prefix": ["ifelse"],
+    "body": [
+      "if (${1:condition}) {",
+      "\t${2}",
+      "} else {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "If-else statement"
+  },
+  "While Loop": {
+    "prefix": ["while"],
+    "body": [
+      "while (${1:condition}) {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "While loop"
+  },
+  "For Loop": {
+    "prefix": ["for"],
+    "body": [
+      "for (let ${1:i} = 0; ${1:i} < ${2:limit}; ${1:i} = ${1:i} + 1) {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "C-style for loop"
+  },
+  "For-In Loop": {
+    "prefix": ["forin"],
+    "body": [
+      "for (${1:item} in ${2:collection}) {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "For-in loop"
+  },
+  "Class Definition": {
+    "prefix": ["class"],
+    "body": [
+      "class ${1:Name} {",
+      "\tpub let ${2:field}: ${3:Type}",
+      "",
+      "\tpub fn new(${4:params}) -> Self {",
+      "\t\treturn Self {",
+      "\t\t\t${2}: ${5:value}",
+      "\t\t}",
+      "\t}",
+      "",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Class definition"
+  },
+  "Match Expression": {
+    "prefix": ["match"],
+    "body": [
+      "match ${1:expression} {",
+      "\t${2:pattern} => ${3:result},",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Match expression"
+  },
+  "Try-Catch": {
+    "prefix": ["try"],
+    "body": [
+      "try {",
+      "\t${1}",
+      "} catch (${2:err}) {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Try-catch block"
+  },
+  "Array Literal": {
+    "prefix": ["array", "[]"],
+    "body": [
+      "[${1:elements}]${0}"
+    ],
+    "description": "Array literal"
+  },
+  "Hash Literal": {
+    "prefix": ["hash", "map", "{}"],
+    "body": [
+      "{",
+      "\t\"${1:key}\": ${2:value}${0}",
+      "}"
+    ],
+    "description": "Hash/Map literal"
+  },
+  "Lambda Function": {
+    "prefix": ["lambda", "fn =>"],
+    "body": [
+      "fn(${1:x}) { ${0:x} }${2}"
+    ],
+    "description": "Lambda/anonymous function"
+  },
+  "Import Statement": {
+    "prefix": ["import"],
+    "body": [
+      "import \"${1:module}\"${0}"
+    ],
+    "description": "Import module"
+  },
+  "Use Statement": {
+    "prefix": ["use"],
+    "body": [
+      "use ${1:module}${0}"
+    ],
+    "description": "Use module in scope"
+  },
+  "Type Annotation": {
+    "prefix": ["type", ":"],
+    "body": [
+      ": ${1:Type}${0}"
+    ],
+    "description": "Type annotation"
+  },
+  "Generic Type": {
+    "prefix": ["generic", "<>"],
+    "body": [
+      "<${1:T}>{{0}}"
+    ],
+    "description": "Generic type parameter"
+  },
+  "Print Statement": {
+    "prefix": ["print"],
+    "body": [
+      "print(${1:value})${0}"
+    ],
+    "description": "Print to output"
+  },
+  "Print Line": {
+    "prefix": ["println"],
+    "body": [
+      "println(${1:value})${0}"
+    ],
+    "description": "Print line to output"
+  },
+  "Return Statement": {
+    "prefix": ["return"],
+    "body": [
+      "return ${0}"
+    ],
+    "description": "Return from function"
+  },
+  "Trait Definition": {
+    "prefix": ["trait"],
+    "body": [
+      "trait ${1:Name} {",
+      "\tfn ${2:method}(${3:params}) -> ${4:Type}",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Trait/interface definition"
+  },
+  "Async Function": {
+    "prefix": ["async"],
+    "body": [
+      "async fn ${1:name}(${2:params}) {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Async function"
+  },
+  "Await Expression": {
+    "prefix": ["await"],
+    "body": [
+      "await ${1:promise}${0}"
+    ],
+    "description": "Await async operation"
+  },
+  "Documentation Comment": {
+    "prefix": ["doc", "///"],
+    "body": [
+      "/// ${1:Description}",
+      "/// ",
+      "/// # Example",
+      "/// ```nyx",
+      "/// ${2:example}",
+      "/// ```",
+      "${0}"
+    ],
+    "description": "Documentation comment"
+  }
+}

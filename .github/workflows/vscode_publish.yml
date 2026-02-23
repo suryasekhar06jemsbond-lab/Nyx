@@ -21,7 +21,6 @@ env:
 
 jobs:
   publish:
-    if: ${{ env.VSCE_PAT != '' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -89,6 +88,7 @@ jobs:
           echo "✅ Package created successfully"
 
       - name: Publish to VS Code Marketplace
+        if: ${{ env.VSCE_PAT != '' }}
         run: |
           echo "🚀 Publishing Nyx Language Support v$VERSION to VS Code Marketplace..."
           npx vsce publish -p "$VSCE_PAT" --packagePath "nyx-language-$VERSION.vsix"
