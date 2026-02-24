@@ -1,5 +1,5 @@
 param(
-    [string]$Repo = 'suryasekhar06jemsbond-lab/cyber',
+    [string]$Repo = 'suryasekhar06jemsbond-lab/Nyx',
     [string]$Version = 'latest',
     [string]$InstallRoot = "$HOME\\AppData\\Local\\Programs\\nyx",
     [string]$InstallDir,

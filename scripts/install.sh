@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-NYX_REPO="${NYX_REPO:-suryasekhar06jemsbond-lab/cyber}"
+NYX_REPO="${NYX_REPO:-suryasekhar06jemsbond-lab/Nyx}"
 NYX_VERSION="${NYX_VERSION:-latest}"
 NYX_INSTALL_DIR="${NYX_INSTALL_DIR:-$HOME/.local/bin}"
 NYX_HOME="${NYX_HOME:-$HOME/.local/share/nyx}"

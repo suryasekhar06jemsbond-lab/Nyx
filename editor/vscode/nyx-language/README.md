@@ -32,19 +32,34 @@
 | **VS Code Extension** | [**⬇ nyx-language-6.0.0.vsix**](https://github.com/suryasekhar06jemsbond-lab/Nyx/releases/latest/download/nyx-language-6.0.0.vsix) | ~4.2 MB | Syntax highlighting, IntelliSense, debugging |
 | **Source Code** | [**⬇ Source (zip)**](https://github.com/suryasekhar06jemsbond-lab/Nyx/archive/refs/tags/v6.0.0.zip) | — | Full source with all 117 engines & 98 stdlib modules |
 
-**Quick Install (Windows):**
+**One-Line Install (Recommended):**
+
+> These scripts download the latest `nyx` binary from GitHub Releases and install it to your PATH automatically.
+
+**Windows (PowerShell):**
 ```powershell
-# Download nyx.exe and add to PATH (one command)
+irm https://raw.githubusercontent.com/suryasekhar06jemsbond-lab/Nyx/main/scripts/install.ps1 | iex
+```
+
+**Linux / macOS (Shell):**
+```bash
+curl -fsSL https://raw.githubusercontent.com/suryasekhar06jemsbond-lab/Nyx/main/scripts/install.sh | sh
+```
+
+**Manual Download (Windows):**
+```powershell
+# Download nyx.exe and add to PATH
+mkdir "$env:LOCALAPPDATA\Programs\nyx" -Force
 Invoke-WebRequest -Uri "https://github.com/suryasekhar06jemsbond-lab/Nyx/releases/latest/download/nyx-windows-x64.exe" -OutFile "$env:LOCALAPPDATA\Programs\nyx\nyx.exe"
 [Environment]::SetEnvironmentVariable("PATH", "$env:LOCALAPPDATA\Programs\nyx;$env:PATH", "User")
 
-# Verify installation
+# Restart terminal, then:
 nyx --version
 ```
 
-**Quick Install (VS Code Extension):**
+**Install VS Code Extension:**
 ```bash
-# Install directly from VSIX
+# Download and install the VSIX
 code --install-extension https://github.com/suryasekhar06jemsbond-lab/Nyx/releases/latest/download/nyx-language-6.0.0.vsix
 ```
 
