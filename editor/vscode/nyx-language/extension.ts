@@ -71,7 +71,7 @@ async function ensureNyxInstalled(): Promise<string> {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-    console.log('Nyx Language Support v6.0.0 activated!');
+    console.log('Nyx Language Support v6.0.1 activated!');
     
     // Try to ensure nyx is available
     ensureNyxInstalled().then(nyxPath => {
@@ -299,11 +299,11 @@ export function activate(context: vscode.ExtensionContext) {
     // 9. nyx.updateExtension - Update extension
     context.subscriptions.push(vscode.commands.registerCommand('nyx.updateExtension', async () => {
         vscode.window.showInformationMessage(
-            'Nyx Language Support v6.0.0 - Check VS Code Extensions for updates',
+            'Nyx Programming Language v6.0.1 - Check Extensions for updates',
             'Open Extensions'
         ).then(selection => {
             if (selection === 'Open Extensions') {
-                vscode.commands.executeCommand('workbench.extensions.action.showExtensionsWithIds', ['Nyx.nyx-language']);
+                vscode.commands.executeCommand('workbench.extensions.action.showExtensionsWithIds', ['SuryaSekharRoy.nyx-language']);
             }
         });
         NYX_OUTPUT_CHANNEL.appendLine('[Update] Check for updates via Extensions panel');
@@ -346,7 +346,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }));
     
-    NYX_OUTPUT_CHANNEL.appendLine('Nyx Language Support v6.0.0 activated successfully');
+    NYX_OUTPUT_CHANNEL.appendLine('Nyx Language Support v6.0.1 activated successfully');
     NYX_OUTPUT_CHANNEL.appendLine('All 9 commands ready: run, build, format, check, debug, createProject, showDocs, installDependencies, updateExtension');
 }
 

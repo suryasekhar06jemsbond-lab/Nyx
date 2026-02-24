@@ -1,9 +1,9 @@
 {
   "name": "nyx-language",
-  "displayName": "Nyx Language Support",
+  "displayName": "Nyx Programming Language",
   "description": "Complete language support for Nyx - Multi-paradigm compiled programming language with syntax highlighting, IntelliSense, debugging, and build tools",
-  "version": "6.0.0",
-  "publisher": "Nyx",
+  "version": "6.0.1",
+  "publisher": "SuryaSekharRoy",
   "license": "MIT",
   "icon": "nyx-logo.png",
   "repository": {
@@ -44,9 +44,12 @@
     "onCommand:nyx.run",
     "onCommand:nyx.build",
     "onCommand:nyx.format",
+    "onCommand:nyx.showDocs",
     "workspaceContains:**/*.ny"
   ],
   "main": "./out/extension.js",
+  "browser": "./web/extension.js",
+  "extensionKind": ["workspace", "ui"],
   "contributes": {
     "languages": [
       {

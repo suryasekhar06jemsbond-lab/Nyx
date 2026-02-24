@@ -3,3 +3,13 @@
 **/.vscode/**
 **/*.log
 node_modules/**
+*.vsix
+extension.ts
+debugAdapter.ts
+nyxDebug.ts
+tsconfig.json
+.vscodeignore_new
+CHANGELOG.new.md
+language-configuration.new.json
+README_FULL.md
+**/*.map
