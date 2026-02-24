@@ -25,12 +25,13 @@
 ## Table of Contents
 
 <details>
-<summary><strong>Click to expand full table of contents</strong></summary>
+<summary><strong>Click to expand full table of contents (40+ chapters)</strong></summary>
 
 - [Why Nyx?](#-why-nyx)
+- [Architecture Overview](#-architecture-overview)
 - [Installation](#installation)
 - [VS Code Extension Features](#-vs-code-extension-features)
-- **The Complete Nyx Language Guide**
+- **The Complete Nyx Language Guide — 30 Chapters**
   - [Chapter 1: Your First Nyx Program](#-chapter-1-your-first-nyx-program)
   - [Chapter 2: Variables & Data Types](#-chapter-2-variables--data-types)
   - [Chapter 3: Operators](#-chapter-3-operators)
@@ -51,22 +52,153 @@
   - [Chapter 18: FFI & C Interop](#-chapter-18-ffi--c-interop)
   - [Chapter 19: Testing & Debugging](#-chapter-19-testing--debugging)
   - [Chapter 20: File I/O & Networking](#-chapter-20-file-io--networking)
-- [All 98 Standard Library Modules](#-standard-library-98-modules)
-- [All 117 Engines](#-all-117-engines)
-- [All Built-in Functions](#-all-built-in-functions)
-- [All Keywords](#-all-keywords)
-- [Performance Benchmarks](#-performance-benchmarks)
-- [Real-World Examples](#-real-world-examples)
-- [CLI Reference](#-cli-reference)
-- [Migration Guides](#-migration-from-other-languages)
-- [2-Month Mastery Roadmap](#-2-month-mastery-roadmap)
-- [FAQ](#-faq)
+  - [Chapter 21: Enums & Structs](#-chapter-21-enums--structs)
+  - [Chapter 22: Iterators & Generators](#-chapter-22-iterators--generators)
+  - [Chapter 23: Macros & Metaprogramming](#-chapter-23-macros--metaprogramming)
+  - [Chapter 24: Compile-Time Computation](#-chapter-24-compile-time-computation-comptime)
+  - [Chapter 25: Advanced Type System](#-chapter-25-advanced-type-system)
+  - [Chapter 26: Decorators & Attributes](#-chapter-26-decorators--attributes)
+  - [Chapter 27: Unsafe & Raw Memory](#-chapter-27-unsafe--raw-memory)
+  - [Chapter 28: Cryptography](#-chapter-28-cryptography)
+  - [Chapter 29: Database & Storage](#-chapter-29-database--storage)
+  - [Chapter 30: GUI & Desktop Applications](#-chapter-30-gui--desktop-applications)
+- **Complete Reference**
+  - [All 109 Standard Library Modules (Full API)](#-standard-library-109-modules--full-api-reference)
+  - [All 117 Engines (Full Details)](#-all-117-engines)
+  - [All Built-in Functions](#-all-built-in-functions)
+  - [All 150+ Token Types](#-all-150-token-types)
+  - [All Keywords (80+)](#-all-keywords-80)
+  - [Formal Grammar (EBNF)](#-formal-grammar-ebnf)
+  - [Interpreter Architecture](#-interpreter-architecture)
+  - [Native C Compiler](#-native-c-compiler)
+  - [DFAS — Dynamic Field Arithmetic System](#-dfas--dynamic-field-arithmetic-system)
+  - [NYPM Package Manager](#-nypm-package-manager)
+  - [Production Configuration](#-production-configuration)
+- **Guides & Resources**
+  - [Performance Benchmarks](#-performance-benchmarks)
+  - [Real-World Examples (10+)](#-real-world-examples)
+  - [CLI Reference](#-cli-reference)
+  - [Migration from 6 Languages](#-migration-from-other-languages)
+  - [2-Month Mastery Roadmap](#-2-month-mastery-roadmap)
+  - [FAQ](#-faq)
 
 </details>
 
 ---
 
-## 🌟 Why Nyx?
+## � Architecture Overview
+
+Nyx has **three execution modes** — choose whatever fits your use case:
+
+```
+┌──────────────────────────────────────────────────────┐
+│                   YOUR .ny FILE                      │
+└─────────────────────┬────────────────────────────────┘
+                      │
+          ┌───────────┼───────────┐
+          ▼           ▼           ▼
+   ┌─────────┐  ┌──────────┐  ┌──────────┐
+   │  Native  │  │  Python  │  │   Web    │
+   │ Compiler │  │Interpre- │  │ Runtime  │
+   │  (C99)   │  │  ter     │  │ (HTTP)   │
+   └────┬─────┘  └────┬─────┘  └────┬─────┘
+        ▼              ▼              ▼
+   ┌─────────┐  ┌──────────┐  ┌──────────┐
+   │  .exe   │  │ Evaluated│  │ HTTP     │
+   │ binary  │  │ in Python│  │ Server   │
+   └─────────┘  └──────────┘  └──────────┘
+```
+
+| Mode | Command | Use Case | Speed |
+|------|---------|----------|-------|
+| **Native C Compiler** | `make && ./build/nyx file.ny` | Production, max performance | v3.3.3, compiled to machine code |
+| **Python Interpreter** | `python run.py file.ny` | Development, prototyping | Full language features |
+| **Web Runtime** | `python nyx_runtime.py site.ny` | Web apps, HTTP servers | Threading HTTP server |
+
+### How The Interpreter Works
+
+```
+Source Code (.ny)
+     │
+     ▼
+┌─────────┐    ┌─────────┐    ┌──────────────┐    ┌────────────┐
+│  Lexer   │───▶│ Parser  │───▶│  AST (60+    │───▶│ Interpreter│
+│ (530 ln) │    │(650 ln) │    │  node types) │    │  (551 ln)  │
+└─────────┘    └─────────┘    └──────────────┘    └────────────┘
+     │              │                                    │
+     ▼              ▼                                    ▼
+ 150+ Token    Pratt Parser                     Scoped Environment
+  Types       11 Precedence                      with built-ins
+               Levels                            & std/lib imports
+```
+
+### Lexer Features
+- Unicode identifiers
+- Hash (`#`), C++ (`//`), C block (`/* */`) comments
+- String escape sequences, raw strings (`r"..."`), byte strings (`b"..."`), f-strings (`f"...{expr}..."`)
+- Multiline strings (`"""..."""`)
+- Hex (`0xFF`), octal (`0o77`), binary (`0b1010`) numeric literals
+- Token hooks, trivia tracking, error recovery, state save/restore
+
+### Parser Features
+- **Pratt parser** with 11 precedence levels (LOWEST → INDEX)
+- Extensible via `register_prefix()`, `register_infix()`, `register_statement()`
+- Error recovery via `_synchronize_statement()` / `_synchronize_expression()`
+- 60+ AST node types (see [AST Reference](#-interpreter-architecture))
+
+### Project Structure
+
+```
+Nyx/
+├── run.py                    # Main entry point: python run.py file.ny
+├── nyx_runtime.py            # Web runtime server for HTTP apps
+├── nyx.bat / nyx.sh          # Platform launchers
+├── Makefile                  # Native compiler build: make → build/nyx
+├── package.json              # Project metadata (v5.5.0)
+├── ny.registry               # Package registry index
+├── nypm.config               # Package manager config
+├── nypm.js                   # Package manager (12 commands)
+│
+├── src/                      # Core interpreter (Python)
+│   ├── lexer.py              # 530 lines — tokenizer
+│   ├── parser.py             # 650 lines — Pratt parser
+│   ├── ast_nodes.py          # 900 lines — 60+ AST node types
+│   ├── interpreter.py        # 551 lines — evaluator
+│   └── token_types.py        # 680 lines — 150+ token types
+│
+├── native/                   # Native C compiler
+│   └── nyx.c                 # C99 compiler (v3.3.3)
+│
+├── stdlib/                   # 109 standard library modules
+│   ├── math.ny, io.ny, json.ny, http.ny, crypto.ny, ...
+│   └── dfas/                 # Dynamic Field Arithmetic System (10 files)
+│
+├── engines/                  # 117 specialized engines
+│   ├── nyai/, nygpu/, nyweb/, nygame/, ...
+│
+├── compiler/                 # Bootstrap compiler
+│   ├── bootstrap.ny          # Self-hosting bootstrap
+│   ├── v3_seed.ny            # V3 seed compiler
+│   └── v3_compiler_template.c
+│
+├── language/                 # Language specification
+│   ├── grammar.ebnf          # Complete formal grammar
+│   ├── types.md              # Full type system spec
+│   ├── ownership.md          # Ownership & borrowing model
+│   └── concurrency.md        # Concurrency model spec
+│
+├── examples/                 # Example programs
+├── tests/                    # 180+ test files
+├── benchmarks/               # Performance benchmarks
+├── docs/                     # 70+ documentation files
+├── tools/                    # Nyx Studio, crypto CLI, etc.
+├── configs/production/       # AAA game engine production configs
+└── editor/vscode/            # VS Code extension
+```
+
+---
+
+## �🌟 Why Nyx?
 
 > *"Learn one language. Build everything. Replace your entire stack."*
 
@@ -1842,137 +1974,1899 @@ ws.close()
 
 ---
 
-## 📚 Standard Library (98 Modules)
+## � Chapter 21: Enums & Structs
 
-> **All modules are native and free to use. No `nypm install` needed. Just `import` and go.**
+### Basic Enums
 
-### Core
+```nyx
+enum Direction {
+    North,
+    South,
+    East,
+    West
+}
 
-| Module | Import | Key Functions |
-|--------|--------|--------------|
-| **types** | `import std/types` | `type_of()`, `is_int()`, `is_string()`, `is_array()`, `is_null()` |
-| **class** | `import std/class` | `object_new()`, `class_new()`, `class_instantiate()` |
-| **ffi** | `import std/ffi` | `open()`, `symbol()`, `call()`, `malloc()`, `free()` |
-| **c** | `import std/c` | Low-level C interop |
+let heading = Direction.North
+
+match heading {
+    case Direction.North => print("Going north!")
+    case Direction.South => print("Going south!")
+    case Direction.East => print("Going east!")
+    case Direction.West => print("Going west!")
+}
+```
+
+### Enums with Associated Data
+
+```nyx
+enum Shape {
+    Circle(radius: float),
+    Rectangle(width: float, height: float),
+    Triangle(base: float, height: float),
+    Point
+}
+
+fn area(shape: Shape) -> float = match shape {
+    case Shape.Circle(r) => 3.14159 * r * r
+    case Shape.Rectangle(w, h) => w * h
+    case Shape.Triangle(b, h) => 0.5 * b * h
+    case Shape.Point => 0.0
+}
+
+let shapes = [
+    Shape.Circle(5.0),
+    Shape.Rectangle(4.0, 6.0),
+    Shape.Triangle(3.0, 8.0),
+    Shape.Point
+]
+for s in shapes {
+    print("Area: " + str(area(s)))
+}
+```
+
+### Structs
+
+```nyx
+struct Point {
+    x: float,
+    y: float
+}
+
+struct Color {
+    r: u8,
+    g: u8,
+    b: u8,
+    a: u8 = 255   # Default value
+}
+
+let p = Point { x: 10.0, y: 20.0 }
+let c = Color { r: 255, g: 128, b: 0 }  # a defaults to 255
+
+print(p.x)  # 10.0
+print(c.a)  # 255
+```
+
+### Struct Methods via `impl`
+
+```nyx
+struct Vector2D {
+    x: float,
+    y: float
+}
+
+impl Vector2D {
+    fn new(x: float, y: float) -> Vector2D {
+        return Vector2D { x: x, y: y }
+    }
+
+    fn magnitude(self) -> float {
+        return sqrt(self.x * self.x + self.y * self.y)
+    }
+
+    fn normalize(self) -> Vector2D {
+        let mag = self.magnitude()
+        return Vector2D { x: self.x / mag, y: self.y / mag }
+    }
+
+    fn dot(self, other: Vector2D) -> float {
+        return self.x * other.x + self.y * other.y
+    }
+
+    fn add(self, other: Vector2D) -> Vector2D {
+        return Vector2D { x: self.x + other.x, y: self.y + other.y }
+    }
+
+    fn scale(self, factor: float) -> Vector2D {
+        return Vector2D { x: self.x * factor, y: self.y * factor }
+    }
+}
+
+let v1 = Vector2D.new(3.0, 4.0)
+print(v1.magnitude())    # 5.0
+print(v1.normalize())    # Vector2D { x: 0.6, y: 0.8 }
+print(v1.dot(Vector2D.new(1.0, 0.0)))  # 3.0
+```
+
+### Type Aliases
+
+```nyx
+type UserId = int
+type Email = str
+type Callback = fn(int) -> bool
+type Matrix = [[float]]
+type Result<T> = Ok(T) | Err(str)
+```
+
+---
+
+## 📘 Chapter 22: Iterators & Generators
+
+### Generators with `yield`
+
+```nyx
+fn fibonacci() {
+    let mut a = 0
+    let mut b = 1
+    loop {
+        yield a
+        let temp = a
+        a = b
+        b = temp + b
+    }
+}
+
+# First 10 fibonacci numbers
+for i, fib in fibonacci() |> take(10) {
+    print(str(i) + ": " + str(fib))
+}
+```
+
+### Infinite Sequences
+
+```nyx
+fn naturals(start = 0) {
+    let mut n = start
+    loop {
+        yield n
+        n = n + 1
+    }
+}
+
+fn primes() {
+    for n in naturals(2) {
+        let mut is_prime = true
+        for d in 2..n {
+            if n % d == 0 {
+                is_prime = false
+                break
+            }
+        }
+        if is_prime { yield n }
+    }
+}
+
+# First 20 primes
+let first_20_primes = primes() |> take(20) |> collect()
+print(first_20_primes)
+# [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71]
+```
+
+### Iterator Combinators
+
+```nyx
+# Chain iterators
+let combined = [1, 2, 3] |> chain([4, 5, 6]) |> collect()
+# [1, 2, 3, 4, 5, 6]
+
+# Zip two iterators
+let pairs = [1, 2, 3] |> zip(["a", "b", "c"]) |> collect()
+# [(1, "a"), (2, "b"), (3, "c")]
+
+# Enumerate
+let indexed = ["x", "y", "z"] |> enumerate() |> collect()
+# [(0, "x"), (1, "y"), (2, "z")]
+
+# Take / skip / step
+let slice = 0..100 |> skip(10) |> take(5) |> collect()
+# [10, 11, 12, 13, 14]
+
+# Flat map
+let words = ["hello world", "foo bar"]
+    |> flat_map(|s| s.split(" "))
+    |> collect()
+# ["hello", "world", "foo", "bar"]
+```
+
+---
+
+## 📘 Chapter 23: Macros & Metaprogramming
+
+### Declarative Macros
+
+```nyx
+macro vec!(...items) {
+    let arr = []
+    for item in items {
+        push(arr, item)
+    }
+    arr
+}
+
+let v = vec!(1, 2, 3, 4, 5)
+print(v)  # [1, 2, 3, 4, 5]
+```
+
+### Code Generation Macros
+
+```nyx
+macro derive_debug!(T) {
+    impl T {
+        fn debug(self) -> str {
+            let fields = reflect(T).fields()
+            let parts = []
+            for f in fields {
+                push(parts, f.name + ": " + str(self[f.name]))
+            }
+            return type_name(T) + " { " + join(parts, ", ") + " }"
+        }
+    }
+}
+
+@derive_debug!
+struct User {
+    name: str,
+    age: int,
+    email: str
+}
+
+let u = User { name: "Nyx", age: 1, email: "nyx@lang.dev" }
+print(u.debug())
+# User { name: Nyx, age: 1, email: nyx@lang.dev }
+```
+
+### Hygienic Macros
+
+Nyx macros are **hygienic** — variables inside a macro don't leak into surrounding scope:
+
+```nyx
+macro swap!(a, b) {
+    let temp = a
+    a = b
+    b = temp
+}
+
+let mut x = 10
+let mut y = 20
+swap!(x, y)
+print(x)  # 20
+print(y)  # 10
+# 'temp' does NOT exist here — it's scoped to the macro
+```
+
+---
+
+## 📘 Chapter 24: Compile-Time Computation (comptime)
+
+### Comptime Functions
+
+```nyx
+import std/comptime
+
+# Computed at compile time, not runtime
+comptime fn fibonacci(n: int) -> int {
+    if n <= 1 { return n }
+    return fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+# This is a constant — computed during compilation
+const FIB_20 = fibonacci(20)  # 6765, computed at compile time
+
+# Generate lookup tables at compile time
+comptime fn generate_lookup_table(size: int) -> [int] {
+    let table = []
+    for i in 0..size {
+        push(table, i * i)
+    }
+    return table
+}
+
+const SQUARES = generate_lookup_table(256)
+```
+
+### Static Assertions
+
+```nyx
+# Checked at compile time
+static_assert(sizeof(int) == 8, "int must be 8 bytes")
+static_assert(alignof(float) >= 4, "float must be 4-byte aligned")
+
+comptime fn assert_size(T: type, expected: int) {
+    static_assert(sizeof(T) == expected)
+}
+```
+
+### Compile-Time Code Generation
+
+```nyx
+import std/comptime
+
+comptime fn generate_accessors(T: type) {
+    let fields = reflect(T).fields()
+    for f in fields {
+        # Generate getter
+        generate_code("fn get_" + f.name + "(self) -> " + f.type_name + " { return self." + f.name + " }")
+        # Generate setter
+        generate_code("fn set_" + f.name + "(self, val: " + f.type_name + ") { self." + f.name + " = val }")
+    }
+}
+
+comptime fn generate_builder(T: type) {
+    # Auto-generates a Builder pattern for any struct
+    let fields = reflect(T).fields()
+    generate_code("class " + type_name(T) + "Builder {")
+    for f in fields {
+        generate_code("    " + f.name + ": Option<" + f.type_name + "> = None")
+    }
+    for f in fields {
+        generate_code("    fn " + f.name + "(self, val: " + f.type_name + ") -> Self { self." + f.name + " = Some(val); return self }")
+    }
+    generate_code("    fn build(self) -> " + type_name(T) + " { ... }")
+    generate_code("}")
+}
+```
+
+### Compile-Time Reflection
+
+```nyx
+import std/comptime
+
+# Inspect any type at compile time
+let info = Reflect.new(MyStruct)
+print(info.type_name())     # "MyStruct"
+print(info.type_size())     # 24
+print(info.type_align())    # 8
+print(info.fields())        # [FieldInfo { name: "x", ... }, ...]
+print(info.methods())       # [MethodInfo { name: "new", ... }, ...]
+print(info.traits())        # [TraitInfo { name: "Debug", ... }, ...]
+print(info.implements_trait("Debug"))  # true
+```
+
+---
+
+## 📘 Chapter 25: Advanced Type System
+
+### Dependent Types
+
+```nyx
+import std/types_advanced
+
+# Vec with compile-time-known length
+let v3: Vec<float, 3> = Vec.new()  # A vector that MUST have exactly 3 elements
+v3.push(1.0)
+v3.push(2.0)
+v3.push(3.0)
+# v3.push(4.0)  # COMPILE ERROR: Vec<float, 3> is full
+
+# Append preserves length information
+let v5: Vec<float, 5> = v3.append(Vec.from([4.0, 5.0]))  # 3 + 2 = 5
+```
+
+### Refinement Types
+
+```nyx
+import std/types_advanced
+
+# A type that only accepts positive numbers
+struct Positive {
+    fn check(value: int) -> bool = value > 0
+}
+
+let x: Refined<int, Positive> = Refined.new(42)   # OK
+# let y: Refined<int, Positive> = Refined.new(-1) # COMPILE ERROR
+
+# Use as regular int
+let val = x.get()  # 42
+```
+
+### Union Types
+
+```nyx
+type StringOrInt = str | int
+type Primitive = int | float | bool | str | null
+
+fn process(value: StringOrInt) {
+    match value {
+        case s: str => print("String: " + s)
+        case n: int => print("Number: " + str(n))
+    }
+}
+```
+
+### Generic Constraints
+
+```nyx
+trait Hashable {
+    fn hash(self) -> int
+}
+
+trait Comparable {
+    fn compare(self, other: Self) -> int
+}
+
+# Generic with multiple constraints
+fn sorted_unique<T: Hashable + Comparable>(items: [T]) -> [T] {
+    return items |> unique() |> sort()
+}
+
+# Where clause for complex constraints
+fn merge<K, V>(a: Map<K, V>, b: Map<K, V>) -> Map<K, V>
+    where K: Hashable + Comparable,
+          V: Clone
+{
+    let result = a.clone()
+    for (k, v) in b.items() {
+        result[k] = v.clone()
+    }
+    return result
+}
+```
+
+### Higher-Kinded Types
+
+```nyx
+# F is a type constructor (like Array, Option, Result...)
+trait Functor<F> {
+    fn map<A, B>(self: F<A>, f: fn(A) -> B) -> F<B>
+}
+
+trait Monad<M> extends Functor<M> {
+    fn pure<A>(value: A) -> M<A>
+    fn flat_map<A, B>(self: M<A>, f: fn(A) -> M<B>) -> M<B>
+}
+```
+
+### Optional Type (`T?` syntax)
+
+```nyx
+# Nullable type shorthand
+let name: str? = get_user_name()  # Might be null
+
+# Safe navigation
+let city = user?.address?.city   # Returns null if any part is null
+
+# Null coalescing
+let display_name = name ?? "Anonymous"
+
+# Unwrap with default
+let age = user?.age.unwrap_or(0)
+```
+
+---
+
+## 📘 Chapter 26: Decorators & Attributes
+
+### Function Decorators
+
+```nyx
+@deprecated("Use new_function instead")
+fn old_function() {
+    # ...
+}
+
+@inline
+fn fast_add(a: int, b: int) -> int = a + b
+
+@test
+fn test_addition() {
+    eq(fast_add(2, 3), 5)
+}
+
+# Custom decorator
+fn memoize(func) {
+    let mut cache = {}
+    return fn(...args) {
+        let key = str(args)
+        if !has(cache, key) {
+            cache[key] = func(...args)
+        }
+        return cache[key]
+    }
+}
+
+@memoize
+fn expensive_computation(n) {
+    # Only computed once per unique n
+    return fibonacci(n)
+}
+```
+
+### Struct/Class Attributes
+
+```nyx
+@derive(Debug, Clone, PartialEq)
+struct Config {
+    host: str,
+    port: int,
+    max_connections: int = 100
+}
+
+@serializable
+@validate
+class User {
+    @required
+    name: str
+
+    @required @format("email")
+    email: str
+
+    @min(0) @max(150)
+    age: int
+}
+```
+
+---
+
+## 📘 Chapter 27: Unsafe & Raw Memory
+
+### Unsafe Blocks
+
+```nyx
+import std/systems_extended
+
+# Unsafe code is explicitly marked
+unsafe {
+    let ptr = _sys_malloc(256)
+    _sys_memset(ptr, 0, 256)
+    _sys_poke(ptr, 0, 42)
+    let val = _sys_peek(ptr, 0)
+    print(val)  # 42
+    _sys_free(ptr)
+}
+```
+
+### Raw Pointer Operations
+
+```nyx
+import std/systems_extended
+
+unsafe {
+    # Allocate
+    let ptr = _sys_malloc(1024)
+    let zeroed = _sys_calloc(256, 4)  # 256 × 4 bytes, zeroed
+    let resized = _sys_realloc(ptr, 2048)
+
+    # Copy/move memory
+    _sys_memcpy(dest, src, 512)
+    _sys_memmove(dest, src, 512)  # Handles overlapping
+
+    # Compare memory
+    let cmp = _sys_memcmp(a, b, 64)  # 0 if equal
+
+    # Volatile reads/writes (won't be optimized away)
+    let val = _sys_volatile_read(mmio_addr)
+    _sys_volatile_write(mmio_addr, 0xFF)
+
+    # Cache control
+    _sys_cache_flush(ptr, 64)
+    _sys_cache_invalidate(ptr, 64)
+    _sys_prefetch(ptr)
+}
+```
+
+### Bit Manipulation
+
+```nyx
+import std/systems_extended
+
+bit_set(value, 3)       # Set bit 3
+bit_clear(value, 5)     # Clear bit 5
+bit_toggle(value, 0)    # Toggle bit 0
+bit_test(value, 7)      # Test bit 7 → true/false
+
+let mask = bit_mask(4, 8)          # Mask bits 4-8
+let extracted = bit_extract_bits(value, 4, 8)  # Extract bits 4-8
+
+popcount(0xFF)          # 8 — count set bits
+leading_zeros(0x0F)     # 28 — count leading zeros
+trailing_zeros(0xF0)    # 4 — count trailing zeros
+```
+
+### Platform Detection
+
+```nyx
+import std/systems_extended
+
+let platform = get_platform()  # "windows", "linux", "macos"
+let arch = get_arch()          # "x86_64", "aarch64", "riscv64"
+```
+
+---
+
+## 📘 Chapter 28: Cryptography
+
+### Hashing (20+ Algorithms — All Built-in)
+
+```nyx
+import std/crypto
+
+# Common hash functions
+let h1 = sha256("hello world")
+let h2 = sha512("hello world")
+let h3 = sha3_256("hello world")
+let h4 = blake2b("hello world")
+let h5 = blake3("hello world")
+let h6 = md5("hello world")
+let h7 = sha1("hello world")
+
+# Fast non-crypto hashes
+let h8 = fnv1a32("hello")
+let h9 = fnv1a64("hello")
+let h10 = djb2("hello")
+let h11 = crc32("hello")
+let h12 = crc32_fast("hello")    # Hardware-accelerated
+let h13 = murmur3_32("hello", 42)
+let h14 = murmur3_128("hello", 42)
+
+# Combine hashes
+let combined = hash_combine(h8, h9)
+```
+
+### Ciphers
+
+```nyx
+import std/crypto
+
+# XOR encryption
+let encrypted = xor_encrypt("secret message", "mykey")
+let decrypted = xor_decrypt(encrypted, "mykey")
+
+# Caesar cipher
+let shifted = caesar_cipher("HELLO", 3)  # "KHOOR"
+
+# Vigenère cipher
+let vig_enc = vigenere_encrypt("ATTACKATDAWN", "LEMON")
+let vig_dec = vigenere_decrypt(vig_enc, "LEMON")
+
+# ROT13
+let rotated = rot13("Hello World")
+```
+
+### Hardware-Accelerated Crypto (AES-NI)
+
+```nyx
+import std/crypto_hw
+
+# Check CPU support
+if AES_NI.is_supported() {
+    # AES-128 CBC encryption (hardware-accelerated)
+    let key = [0x2b, 0x7e, 0x15, 0x16, ...]  # 16 bytes
+    let iv = [0x00, 0x01, 0x02, 0x03, ...]    # 16 bytes
+    let plaintext = [0x6b, 0xc1, ...]
+
+    let ciphertext = AES_NI.encrypt_cbc(plaintext, key, iv)
+    let decrypted = AES_NI.decrypt_cbc(ciphertext, key, iv)
+
+    # AES-GCM (authenticated encryption)
+    let result = AES_NI.encrypt_gcm(plaintext, key, iv, aad)
+    # result contains ciphertext + authentication tag
+}
+
+# Hardware SHA
+if SHA_EXT.is_supported() {
+    let digest = SHA_EXT.sha256(data)  # Hardware-accelerated SHA-256
+    let sha1_digest = SHA_EXT.sha1(data)
+}
+
+# Hardware CRC32C
+if CRC32C.is_supported() {
+    let checksum = CRC32C.crc32_u32(0, data)
+}
+```
+
+---
+
+## 📘 Chapter 29: Database & Storage
+
+### Key-Value Store
+
+```nyx
+import std/database
+
+let store = KVStore()
+store.put("user:1", {name: "Alice", age: 30})
+store.put("user:2", {name: "Bob", age: 25})
+
+let user = store.get("user:1")
+print(user.name)  # "Alice"
+
+# Query
+let young_users = store.query(|k, v| v.age < 28)
+store.create_index("age")
+```
+
+### File-Backed Persistent Store
+
+```nyx
+import std/database
+
+let db = FileKVStore("mydata.json")
+db.load()
+db.put("config", {theme: "dark", lang: "nyx"})
+db.save()
+# Data persists across restarts
+```
+
+### Relational Tables
+
+```nyx
+import std/database
+
+let db = Database()
+let users = db.create_table("users", {
+    id: "int",
+    name: "str",
+    email: "str",
+    age: "int"
+})
+
+users.insert({id: 1, name: "Alice", age: 30, email: "alice@example.com"})
+users.insert({id: 2, name: "Bob", age: 25, email: "bob@example.com"})
+users.insert({id: 3, name: "Charlie", age: 35, email: "charlie@example.com"})
+
+# Queries
+let adults = users.select(|row| row.age >= 18)
+let names = users.select(|row| true) |> map(|row| row.name)
+
+# Aggregations
+let avg_age = users.avg("age")
+let total_users = users.count()
+let oldest = users.max("age")
+
+# Order and limit
+let top_3 = users.order_by("age").limit(3)
+
+# Group by
+let by_age = users.group_by("age")
+
+# Create index for fast lookups
+users.create_index("email")
+```
+
+### Document Store (NoSQL)
+
+```nyx
+import std/database
+
+let docs = DocumentStore()
+docs.insert({name: "Nyx", type: "language", version: 6})
+docs.insert({name: "Python", type: "language", version: 3})
+
+let languages = docs.find({type: "language"})
+let nyx = docs.find_one({name: "Nyx"})
+
+docs.create_index("name")
+let fast_lookup = docs.find_by_index("name", "Nyx")
+```
+
+### Redis Client
+
+```nyx
+import std/redis
+
+let client = RedisClient("localhost", 6379)
+client.connect()
+
+# String operations
+client.set("greeting", "Hello, Nyx!")
+let val = client.get("greeting")
+
+# List operations
+client.lpush("queue", "task1")
+client.lpush("queue", "task2")
+let task = client.rpop("queue")
+
+# Hash operations
+client.hset("user:1", "name", "Alice")
+client.hset("user:1", "age", "30")
+let name = client.hget("user:1", "name")
+
+# Set operations
+client.sadd("tags", "nyx")
+client.sadd("tags", "language")
+let members = client.smembers("tags")
+
+# Pub/Sub
+client.subscribe("events")
+client.publish("events", "user_logged_in")
+
+client.disconnect()
+```
+
+### Caching
+
+```nyx
+import std/cache
+
+# LRU Cache (Least Recently Used)
+let cache = LRUCache(1000, 3600)  # 1000 max entries, 1 hour TTL
+cache.set("user:1", {name: "Alice"})
+let user = cache.get("user:1")  # Cache hit
+
+# Check stats
+let stats = cache.stats()
+print(stats.hits)
+print(stats.misses)
+print(stats.hit_rate)
+
+# LFU Cache (Least Frequently Used)
+let lfu = LFUCache(500, 1800)
+lfu.set("hot_data", compute_expensive())
+```
+
+---
+
+## 📘 Chapter 30: GUI & Desktop Applications
+
+### Creating a Window
+
+```nyx
+import std/gui
+
+let app = Application()
+let window = Window("My Nyx App", 800, 600)
+
+window.resizable(true)
+window.minsize(400, 300)
+
+# Add widgets
+window.add_label("title", "Welcome to Nyx!", {font_size: 24, bold: true})
+window.add_button("click_me", "Click Me!", fn() {
+    print("Button clicked!")
+})
+
+# Text input
+window.add_entry("name_input", {placeholder: "Enter your name..."})
+window.add_button("submit", "Submit", fn() {
+    let name = window.get_value("name_input")
+    window.update_label("title", "Hello, " + name + "!")
+})
+
+# Menu bar
+window.create_menu("File", [
+    {label: "New", shortcut: "Ctrl+N", action: fn() { new_file() }},
+    {label: "Open", shortcut: "Ctrl+O", action: fn() { open_file() }},
+    {label: "Save", shortcut: "Ctrl+S", action: fn() { save_file() }},
+    {label: "---"},  # Separator
+    {label: "Exit", action: fn() { app.quit() }}
+])
+
+# Toolbar
+window.create_toolbar([
+    {icon: "new", tooltip: "New File", action: new_file},
+    {icon: "open", tooltip: "Open File", action: open_file},
+    {icon: "save", tooltip: "Save File", action: save_file}
+])
+
+# Status bar
+window.create_statusbar("Ready")
+
+# Event binding
+window.bind("resize", fn(event) {
+    print("Window resized to " + str(event.width) + "x" + str(event.height))
+})
+
+# Timers
+window.set_timer(1000, fn() {
+    window.update_statusbar("Updated: " + str(time.now()))
+})
+
+app.run(window)
+```
+
+### Game Development
+
+```nyx
+import std/game
+
+# Full game engine — colors, keys, surfaces, clock
+let BLACK = game.BLACK
+let WHITE = game.WHITE
+let RED = game.RED
+
+let game_window = Game("My Nyx Game", 800, 600)
+let clock = Clock()
+
+class Player {
+    fn init(self) {
+        self.x = 400
+        self.y = 300
+        self.speed = 5
+        self.health = 100
+    }
+
+    fn update(self, keys) {
+        if keys[game.K_w] { self.y = self.y - self.speed }
+        if keys[game.K_s] { self.y = self.y + self.speed }
+        if keys[game.K_a] { self.x = self.x - self.speed }
+        if keys[game.K_d] { self.x = self.x + self.speed }
+        self.x = clamp(self.x, 0, 800)
+        self.y = clamp(self.y, 0, 600)
+    }
+
+    fn draw(self, surface) {
+        surface.fill_rect(self.x - 16, self.y - 16, 32, 32, RED)
+    }
+}
+
+let player = Player()
+
+# Game loop
+game_window.run(fn(surface, events, keys) {
+    surface.fill(BLACK)
+    player.update(keys)
+    player.draw(surface)
+    clock.tick(60)  # 60 FPS
+})
+```
+
+### Data Visualization
+
+```nyx
+import std/visualize
+
+# 140+ named colors, 8 palettes, 12 gradient maps
+# Full matplotlib/plotly-equivalent plotting
+
+let data = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+let chart = BarChart(data, {
+    title: "Squares",
+    x_label: "n",
+    y_label: "n²",
+    color_palette: "viridis"
+})
+chart.save("squares.png")
+```
+
+---
+
+## 📚 Standard Library (109 Modules — Full API Reference)
+
+> **All 109 modules are native and free to use. No `nypm install` needed. Just `import` and go.**
+
+### Core Modules
+
+<details>
+<summary><strong>types</strong> — <code>import std/types</code></summary>
+
+| Function | Description |
+|----------|-------------|
+| `type_of(value)` | Returns type name as string |
+| `is_int(value)` | Check if integer |
+| `is_bool(value)` | Check if boolean |
+| `is_string(value)` | Check if string |
+| `is_array(value)` | Check if array |
+| `is_function(value)` | Check if function |
+| `is_null(value)` | Check if null |
+</details>
+
+<details>
+<summary><strong>class</strong> — <code>import std/class</code></summary>
+
+| Function | Description |
+|----------|-------------|
+| `object_new()` | Create empty object |
+| `object_set(obj, key, value)` | Set property |
+| `object_get(obj, key)` | Get property |
+| `class_new(name)` | Create class |
+| `class_with_ctor(name, ctor)` | Class with constructor |
+| `class_set_method(cls, name, fn)` | Add method |
+| `class_name(cls)` | Get class name |
+| `class_instantiate0/1/2(cls, ...)` | Create instance |
+| `class_call0/1/2(obj, method, ...)` | Call method |
+</details>
+
+<details>
+<summary><strong>ffi</strong> — <code>import std/ffi</code> — Foreign Function Interface</summary>
+
+| Function | Description |
+|----------|-------------|
+| `open(lib_path)` | Load shared library (.so/.dll/.dylib) |
+| `close(lib)` | Unload library |
+| `symbol(lib, name)` | Get function pointer |
+| `call(fn_ptr, ret_type, ...args)` | Call foreign function |
+| `call_with_types(fn_ptr, ret, arg_types, ...args)` | Call with explicit types |
+| `malloc(size)` | Allocate C memory |
+| `free(ptr)` | Free C memory |
+| `to_c_string(str)` | Convert to C string |
+| `from_c_string(ptr)` | Convert from C string |
+| `to_c_array(arr, type)` | Convert to C array |
+| `type_size(type)` | Get type size in bytes |
+| `peek(ptr, type)` | Read from pointer |
+| `poke(ptr, value, type)` | Write to pointer |
+| `address_of(value)` | Get address |
+| `ptr_add(ptr, offset)` | Pointer arithmetic |
+| `as_void_ptr(ptr)` | Cast to void* |
+
+**Classes:** `Library`, `CFunction`, `CType`, `CStruct`, `Callback`, `VariadicFunction`, `VTable`, `CUnion`, `BitField`, `PackedStruct`, `CallbackTrampoline`, `LazySymbol`, `LibraryCache`, `OpaquePtr`, `ArrayMarshaller`
+
+**Type Constants:** `TYPE_VOID`, `TYPE_INT8/16/32/64`, `TYPE_UINT8/16/32/64`, `TYPE_FLOAT32/64`, `TYPE_POINTER`, `TYPE_STRING`
+</details>
+
+<details>
+<summary><strong>c</strong> — <code>import std/c</code> — Direct C Interop</summary>
+
+| Class | Key Methods |
+|-------|------------|
+| `CLibrary(path)` | `.func(name, ret, args)`, `.var(name, type)`, `.close()` |
+| `CFunction(lib, name, ret, args)` | `.call(...args)` |
+| `CVar(lib, name, type)` | `.get()`, `.set(value)` |
+| `Struct(name)` | `.add(field, type)`, `.create()`, `.size_of()` |
+| `CStructInstance` | `.get(field)`, `.set(field, value)`, `.address()`, `.free()` |
+| `CCallback(fn, ret, args)` | `.call(...)`, `.free()` |
+
+**Type Constants:** `C_CHAR`, `C_SHORT`, `C_INT`, `C_LONG`, `C_LONGLONG`, `C_FLOAT`, `C_DOUBLE`, `C_POINTER`, `C_SIZE_T`, `C_SIGNED`, `C_UNSIGNED`
+</details>
 
 ### Math & Science
 
-| Module | Import | Key Functions |
-|--------|--------|--------------|
-| **math** | `import std/math` | `PI`, `E`, `sqrt()`, `sin()`, `cos()`, `tan()`, `log()`, `ceil()`, `floor()`, `round()`, `pow()`, `factorial()`, `gcd()`, `lcm()`, `fibonacci()` |
-| **science** | `import std/science` | Scientific computing utilities |
-| **symbolic** | `import std/symbolic` | Symbolic math expressions |
-| **fft** | `import std/fft` | Fast Fourier Transform |
-| **blas** | `import std/blas` | Linear algebra (BLAS interface) |
+<details>
+<summary><strong>math</strong> — <code>import std/math</code> — 100+ Functions</summary>
+
+**22 Constants:** `PI`, `E`, `TAU`, `INF`, `NAN`, `PHI` (golden ratio), `SQRT2`, `SQRT3`, `LN2`, `LN10`, `LOG2E`, `LOG10E`, `EULER_GAMMA`, `CATALAN`, `GLAISHER_KINKELIN`, `APERY`, `KHINCHIN`, `FRANSEN_ROBINSON`, `MEISSEL_MERTENS`, `BERNSTEIN`, `GAUSS_CONSTANT`, `LEMNISCATE`
+
+| Category | Functions |
+|----------|-----------|
+| **Basic** | `abs`, `min`, `max`, `clamp`, `sign` |
+| **Rounding** | `floor`, `ceil`, `round`, `round_n`, `trunc` |
+| **Powers/Roots** | `sqrt`, `cbrt`, `pow`, `ipow`, `hypot`, `hypot3`, `hypot_n` |
+| **Logarithms** | `log`, `log2`, `log10`, `logb`, `exp`, `expm1`, `log1p` |
+| **Trigonometry** | `sin`, `cos`, `tan`, `cot`, `sec`, `csc` |
+| **Inverse Trig** | `asin`, `acos`, `atan`, `atan2` |
+| **Hyperbolic** | `sinh`, `cosh`, `tanh`, `asinh`, `acosh`, `atanh` |
+| **Angle Conv.** | `radians`, `degrees` |
+| **Number Theory** | `gcd`, `lcm`, `factorial`, `fibonacci`, `is_prime`, `prime_sieve` |
+| **Special** | `gamma`, `lgamma`, `beta`, `erf`, `erfc`, `zeta` |
+</details>
+
+<details>
+<summary><strong>science</strong> — <code>import std/science</code> — Scientific Computing</summary>
+
+| Class | Key Methods |
+|-------|------------|
+| `Vector(data)` | `.len()`, `.get/set(idx)`, `.add/sub/scale/dot/cross(other)`, `.magnitude()`, `.normalize()`, `.angle(other)`, `.distance(other)`, `.project_onto(other)`, `.to_array()` |
+| `Matrix(rows, cols, data)` | `.get/set(r,c)`, `.row(...)`, `.multiply(...)`, `.determinant()`, `.inverse()`, `.transpose()` |
+
+**Constructors:** `vector(data)`, `zeros(n)`, `ones(n)`, `random_vector(n)`
+</details>
+
+<details>
+<summary><strong>symbolic</strong> — <code>import std/symbolic</code> — Computer Algebra</summary>
+
+| Class | Key Methods |
+|-------|------------|
+| `Symbol(name)` | `.simplify()`, `.expand()`, `.factor()`, `.collect(var)`, `.subs(old, new)`, `.diff(var)`, `.integrate(var)`, `.evalf(precision)` |
+| Checks | `.is_number()`, `.is_symbol()`, `.is_constant()`, `.is_real()`, `.is_complex()`, `.is_positive()`, `.is_negative()`, `.is_integer()`, `.is_even()`, `.is_odd()`, `.is_prime()`, `.is_finite()`, `.is_infinite()`, `.is_zero()` |
+| Operators | `Add`, `Sub`, `Mul`, `Div`, `Pow` — expression tree nodes |
+
+```nyx
+import std/symbolic
+let x = Symbol("x")
+let expr = x**2 + 2*x + 1
+print(expr.factor())      # (x + 1)^2
+print(expr.diff(x))       # 2*x + 2
+print(expr.integrate(x))  # x^3/3 + x^2 + x
+print(expr.subs(x, 3))    # 16
+```
+</details>
+
+<details>
+<summary><strong>fft</strong> — <code>import std/fft</code> — Fast Fourier Transform</summary>
+
+| Function | Description |
+|----------|-------------|
+| `complex(re, im)` | Create complex number |
+| `c_add/sub/mul/scale/abs/conj/div(...)` | Complex arithmetic |
+| `fft(signal)` / `ifft(signal)` | Forward/inverse FFT |
+| `rfft(signal)` / `irfft(signal)` | Real-valued FFT |
+| `fft2d(matrix)` / `ifft2d(matrix)` | 2D FFT |
+| `power_spectrum(signal)` | Power spectral density |
+| `magnitude_spectrum(signal)` | Magnitude |
+| `phase_spectrum(signal)` | Phase |
+| `hann_window/hamming_window/blackman_window(n)` | Window functions |
+| `apply_window(signal, window)` | Apply window |
+| `autocorrelation(signal)` | Auto-correlation |
+| `convolve(a, b)` | Convolution |
+| `xcorr(a, b)` | Cross-correlation |
+| `find_peaks(spectrum)` | Peak detection |
+| `filtfilt/filter(b, a, x)` | Digital filtering |
+| `dct/idct(signal)` | Discrete cosine transform |
+</details>
+
+<details>
+<summary><strong>blas</strong> — <code>import std/blas</code> — Linear Algebra (BLAS/LAPACK)</summary>
+
+| Level | Functions |
+|-------|-----------|
+| **BLAS Level 1** | `dot(x,y)`, `nrm2(x)`, `asum(x)`, `iamax(x)`, `scal(alpha,x)`, `axpy(alpha,x,y)` |
+| **BLAS Level 2** | `gemv(alpha,A,x,beta,y)`, `symv(alpha,A,x,beta,y)` |
+| **BLAS Level 3** | `gemm(alpha,A,B,beta,C)`, `symm(...)`, `trsm(...)` |
+| **LAPACK** | `getrf(A)` (LU), `gesv(A,B)` (solve), `getri(A)` (inverse), `syev(A)` (eigenvalues), `gesdd(A)` (SVD), `geqrf(A)` (QR), `potrf(A)` (Cholesky), `gecon(A)` (condition number) |
+</details>
+
+<details>
+<summary><strong>precision</strong> — <code>import std/precision</code> — Arbitrary Precision</summary>
+
+| Function | Description |
+|----------|-------------|
+| `bigfloat_from_str(value)` | Parse big float from string |
+| `bigfloat_from_int(value)` | Create from integer |
+| `bigfloat_from_float(value)` | Create from float |
+| `bigfloat_to_string(bf)` | Convert to string |
+| `bigfloat_add(a, b)` | Add big floats |
+| `bigfloat_mul(a, b)` | Multiply big floats |
+| `bigfloat_div(a, b)` | Divide big floats |
+
+**Struct:** `BigFloat(mantissa, exponent, precision, sign)`
+</details>
+
+<details>
+<summary><strong>sparse</strong> — <code>import std/sparse</code> — Sparse Matrices</summary>
+
+| Function | Description |
+|----------|-------------|
+| `csr_from_dense(matrix)` | Create CSR from dense matrix |
+| `coo_from_dense(matrix)` | Create COO from dense matrix |
+| `coo_to_csr(coo)` | Convert COO to CSR |
+| `csr_get(csr, r, c)` | Get element |
+| `csr_mv(csr, vec)` | Sparse matrix-vector multiply |
+| `csr_mm(a, b)` | Sparse matrix-matrix multiply |
+
+**Formats:** CSR, CSC, COO, LIL
+</details>
 
 ### Data Structures
 
-| Module | Import | Key Functions |
-|--------|--------|--------------|
-| **collections** | `import std/collections` | `LinkedList`, `Stack`, `Queue`, `TreeSet`, `HashMap` |
-| **algorithm** | `import std/algorithm` | `sort()`, `binary_search()`, `reverse()`, `find()` |
-| **string** | `import std/string` | `upper()`, `lower()`, `split()`, `join()`, `replace()`, `trim()` |
+<details>
+<summary><strong>algorithm</strong> — <code>import std/algorithm</code> — 23 Functions</summary>
+
+| Function | Description |
+|----------|-------------|
+| `sort(arr)` | Sort array |
+| `sort_with(arr, compare_fn)` | Sort with comparator |
+| `find(arr, value)` | Find value |
+| `find_if(arr, predicate)` | Find by predicate |
+| `binary_search(arr, value)` | Binary search |
+| `filter(arr, predicate)` | Filter |
+| `map(arr, transform)` | Transform |
+| `reduce(arr, initial, reducer)` | Fold/reduce |
+| `union(a, b)` | Set union |
+| `intersection(a, b)` | Set intersection |
+| `difference(a, b)` | Set difference |
+| `flatten(arr)` | Flatten nested |
+| `chunk(arr, size)` | Split into chunks |
+| `zip(a, b)` | Zip two arrays |
+| `any(arr, predicate)` | Any match |
+| `all(arr, predicate)` | All match |
+| `none(arr, predicate)` | None match |
+| `count(arr, predicate)` | Count matches |
+| `shuffle(arr)` | Random shuffle |
+| `sample(arr, n)` | Random sample |
+| `unique(arr)` | Unique elements |
+| `unique_with(arr, key_fn)` | Unique by key |
+| `reverse(arr)` | Reverse |
+</details>
+
+<details>
+<summary><strong>collections</strong> — <code>import std/collections</code> — Advanced Data Structures</summary>
+
+| Class | Key Methods |
+|-------|------------|
+| `LinkedList` | `.append(val)`, `.prepend(val)`, `.insert(idx, val)`, `.remove(idx)`, `.get(idx)`, `.set(idx, val)`, `.contains(val)`, `.index_of(val)`, `.clear()`, `.is_empty()`, `.to_list()`, `.reverse()`, `.for_each(fn)`, `.map(fn)`, `.filter(fn)`, `.reduce(init, fn)` |
+| `CircularLinkedList` | Same as LinkedList |
+| `BinarySearchTree` | `.insert(key, val)`, `.remove(key)`, AVL rotations, self-balancing |
+| `TreeNode` | `.left`, `.right`, `.key`, `.value`, `.height` |
+</details>
+
+<details>
+<summary><strong>string</strong> — <code>import std/string</code></summary>
+
+| Function | Description |
+|----------|-------------|
+| `upper(s)` / `lower(s)` | Case conversion |
+| `capitalize(s)` / `title(s)` | Capitalize first/each word |
+| `swapcase(s)` | Swap upper/lower |
+| `strip/lstrip/rstrip(s)` | Trim whitespace |
+| `strip_chars(s, chars)` | Trim specific chars |
+| `split(s, sep)` | Split by separator |
+| `join(arr, sep)` | Join array to string |
+| `replace(s, old, new)` | Replace substring |
+| `contains(s, sub)` | Check substring |
+| `starts_with/ends_with(s, prefix)` | prefix/suffix check |
+| `index_of(s, sub)` | Find position |
+| `count(s, sub)` | Count occurrences |
+| `repeat(s, n)` | Repeat string |
+| `pad_left/pad_right(s, width, char)` | Padding |
+| `center(s, width, char)` | Center text |
+| `is_digit/alpha/alnum/space/upper/lower(s)` | Character tests |
+| `encode/decode(s, encoding)` | Encoding conversion |
+| Unicode, regex, fuzzy matching, Levenshtein distance available |
+</details>
 
 ### I/O & Serialization
 
-| Module | Import | Key Functions |
-|--------|--------|--------------|
-| **io** | `import std/io` | `read_file()`, `write_file()`, `read_lines()`, `mkdir()`, `file_exists()` |
-| **json** | `import std/json` | `parse()`, `stringify()`, `pretty()` |
-| **xml** | `import std/xml` | XML parsing and generation |
-| **compress** | `import std/compress` | Compression/decompression |
+<details>
+<summary><strong>io</strong> — <code>import std/io</code> — File I/O (25+ functions)</summary>
+
+| Function | Description |
+|----------|-------------|
+| `read_file(path)` | Read entire file |
+| `read_lines(path)` | Read as line array |
+| `read_nlines(path, n)` | Read first N lines |
+| `write_file(path, data)` | Write file |
+| `append_file(path, data)` | Append to file |
+| `file_exists(path)` | Check existence |
+| `file_size(path)` | Get size in bytes |
+| `copy_file(src, dst)` | Copy file |
+| `move_file(src, dst)` | Move/rename file |
+| `delete_file(path)` | Delete file |
+| `mkdir(path)` / `mkdir_p(path)` | Create directory (recursive) |
+| `list_dir(path)` | List directory contents |
+| `file_ext/file_stem(path)` | Get extension/stem |
+| `dirname/basename(path)` | Path components |
+| `join_path(a, b)` | Join paths |
+| `normalize_path(path)` | Normalize path |
+| `abs_path(path)` | Absolute path |
+| `file_info(path)` | Full file info |
+| `is_absolute(path)` | Check if absolute |
+| `rel_path(path, base)` | Relative path |
+
+| Class | Key Methods |
+|-------|------------|
+| `File(path, mode)` | `.read(n)`, `.read_line()`, `.read_lines()`, `.write(data)`, `.write_line(line)`, `.seek(pos)`, `.tell()`, `.flush()`, `.close()`, `.is_closed()`, `.is_eof()` |
+| `BufferedWriter(file, buf_size)` | `.write(data)`, `.flush()`, `.close()` |
+| `BufferedReader(file, buf_size)` | `.read(n)`, `.read_line()`, `.close()` |
+| `FileWatcher(path)` | `.has_changed()`, `.wait_for_change()` |
+| `TempFile(prefix)` | `.write(data)`, `.read()`, `.close()`, `.unlink()` |
+| `DirectoryWalker(path)` | `.walk()` — recursive walk |
+</details>
+
+<details>
+<summary><strong>json</strong> — <code>import std/json</code></summary>
+
+| Function | Description |
+|----------|-------------|
+| `parse(str)` | Parse JSON string to object |
+| `stringify(value)` | Convert to JSON string |
+| `pretty(value, indent)` | Pretty-print JSON |
+</details>
+
+<details>
+<summary><strong>xml</strong> — <code>import std/xml</code></summary>
+
+| Class | Key Methods |
+|-------|------------|
+| `XMLParser` | `.parse(xmlString)` → `XMLDocument` |
+| `XMLDocument` | DOM access |
+| `XMLElement(name, attrs, children)` | `.get_attr()`, `.find_all()`, `.text()` |
+| `XMLText(text)` | Text node |
+
+**Node Types:** `ELEMENT_NODE`, `TEXT_NODE`, `CDATA_NODE`, `COMMENT_NODE`, `DOCUMENT_NODE`, `DOCUMENT_TYPE_NODE`, `PROCESSING_INSTRUCTION_NODE`
+</details>
+
+<details>
+<summary><strong>compress</strong> — <code>import std/compress</code></summary>
+
+| Function | Description |
+|----------|-------------|
+| `gzip_compress(data)` | Gzip compress |
+| `gzip_decompress(data)` | Gzip decompress |
+| `zip_create(entries)` | Create ZIP archive |
+| `tar_create(entries)` | Create TAR archive |
+| `lz77_compress(data)` | LZ77 compress |
+| `lz77_decompress(data)` | LZ77 decompress |
+</details>
+
+<details>
+<summary><strong>config</strong> — <code>import std/config</code> — Multi-format Config</summary>
+
+| Function | Description |
+|----------|-------------|
+| `parse_toml/yaml/ini(str)` | Parse config string |
+| `load_toml/yaml/ini(path)` | Load from file |
+| `save_toml/yaml/ini(config, path)` | Save to file |
+| `to_toml/yaml/ini(config)` | Convert to string |
+| `get(config, key)` | Get value |
+| `get_nested(config, key)` | Dot-notation access |
+| `get_string/int/float/bool/table/list(config, key)` | Typed access |
+</details>
+
+<details>
+<summary><strong>serialization</strong> — <code>import std/serialization</code></summary>
+
+Formats: `FORMAT_BINARY`, `FORMAT_MSGPACK`, `FORMAT_PROTOBUF`, `FORMAT_JSON`, `FORMAT_CBOR`, `FORMAT_UBJSON`
+
+| Class | Methods |
+|-------|---------|
+| `BinarySerializer` | `.serialize(value)`, `.deserialize(data)` |
+</details>
+
+<details>
+<summary><strong>regex</strong> — <code>import std/regex</code> — Regular Expressions</summary>
+
+| Function | Description |
+|----------|-------------|
+| `compile(pattern)` | Compile regex pattern |
+| `match(regex, text)` | Match against text |
+| `match_text(regex, text)` | Full text match |
+| `find_all(regex, text)` | Find all matches |
+| `groups(match)` | Get capture groups |
+| `replace_all(regex, text, replacement)` | Replace all matches |
+</details>
+
+<details>
+<summary><strong>validator</strong> — <code>import std/validator</code> — Data Validation</summary>
+
+| Class | Methods |
+|-------|---------|
+| `Validator` | `.validate(value)`, `.addRule(field, rule)`, `.clearRules()` |
+| `SchemaValidator(schema)` | `.validate(value)` — JSON Schema-like validation |
+| `ValidationResult` | `.isValid()`, `.hasErrors()`, `.getErrors()`, `.getErrorMessages()` |
+
+**Built-in Formats:** email, url, date, datetime, time, ip, ipv4, ipv6, uuid, phone, credit_card, isbn, hex_color
+</details>
 
 ### Networking
 
-| Module | Import | Key Functions |
-|--------|--------|--------------|
-| **http** | `import std/http` | `request()`, `parse_url()`, GET/POST/PUT/DELETE |
-| **web** | `import std/web` | `Router`, `get()`, `post()`, middleware, path params |
-| **socket** | `import std/socket` | TCP/UDP sockets, WebSocket |
-| **network** | `import std/network` | Network utilities |
+<details>
+<summary><strong>http</strong> — <code>import std/http</code></summary>
+
+| Function | Description |
+|----------|-------------|
+| `request(url, options, callback)` | Make HTTP request |
+| `get(url, callback)` | GET request |
+| `parse_url(url)` | Parse URL |
+| `parse_http_response(raw)` | Parse raw response |
+</details>
+
+<details>
+<summary><strong>web</strong> — <code>import std/web</code> — Web Framework</summary>
+
+| Class | Methods |
+|-------|---------|
+| `Router` | `.get/post/put/delete/patch(path, handler)`, `.use(middleware)`, `.group(prefix, routes_fn)` |
+| `Request` | `.method`, `.path`, `.query`, `.headers`, `.body`, `.params`, `.cookies`, `.json`, `.header/param/query_param/cookie(name)`, `.is_json()`, `.is_html()` |
+| `Response` | `.status(code)`, `.header(name, value)`, `.json(data)`, `.html(content)`, `.text(content)` |
+</details>
+
+<details>
+<summary><strong>socket</strong> — <code>import std/socket</code> — TCP/UDP/WebSocket</summary>
+
+| Class | Methods |
+|-------|---------|
+| `TCPSocket` | `.connect(host, port)`, `.send(data)`, `.recv(size)`, `.close()`, `.is_connected()` |
+| `TCPServer(port)` | `.accept()`, `.close()`, `.is_running()`, `.set_reuse_addr(flag)` |
+| `UDPSocket` | `.bind(host, port)`, `.send_to(data, host, port)`, `.recv_from(size)`, `.close()` |
+| `WebSocket` | `.connect(url)`, `.send(msg)`, `.receive()`, `.close()` |
+
+**Functions:** `socket(family, type)`, `server(port)`, `accept(server)`, `connect(host, port)`, `send(sock, data)`, `recv(sock, size)`, `close(sock)`, `set_nonblocking/set_blocking(sock)`
+</details>
+
+<details>
+<summary><strong>network</strong> — <code>import std/network</code> — Advanced Networking</summary>
+
+| Class | Methods |
+|-------|---------|
+| `IPAddress(addr)` | `.isIPv4/IPv6()`, `.toString()`, `.toBytes()`, `.isLoopback/Private/Multicast()` |
+| `NetworkInterface(name)` | `.getIPv4/IPv6Address()` |
+| `Socket(af, type)` | Full POSIX socket API + state management |
+| `ServerSocket(af)` | `.bind/listen/accept/close(...)`, `.setBacklog/KeepAlive/NoDelay(...)` |
+| `DNSResolver` | `.resolve/resolveA/AAAA/CNAME/MX/NS/TXT/SRV(hostname)`, `.reverseLookup(ip)`, `.clearCache()` |
+
+**Protocols:** TCP, UDP, HTTP, HTTPS, FTP, SMTP, POP3, IMAP, SSH, WS, WSS
+
+**DNS Record Types:** A, AAAA, CNAME, MX, NS, TXT, SRV, SOA, PTR
+</details>
 
 ### Async & Concurrency
 
-| Module | Import | Key Functions |
-|--------|--------|--------------|
-| **async** | `import std/async` | `EventLoop`, `Future`, `run_until_complete()` |
-| **generator** | `import std/generator` | Coroutines and yield |
+<details>
+<summary><strong>async</strong> — <code>import std/async</code></summary>
+
+| Class | Methods |
+|-------|---------|
+| `EventLoop` | `.run()`, `.run_until_complete(future)`, `.create_task(coro)`, `.schedule(callback)`, `.stop()` |
+| `Future` | `.then(cb)`, `.catch(cb)`, `.finally(cb)`, `.resolve(value)`, `.reject(error)` |
+| `Promise` | `.resolve(value)`, `.reject(error)`, `.future()` |
+| `Task` | `.cancel()`, `.done()`, `.result()`, `.add_done_callback(cb)` |
+| `Semaphore(max)` | `.acquire()`, `.release()` |
+| `Lock` | `.acquire()`, `.release()` |
+| `Condition` | `.wait()`, `.notify()`, `.notify_all()` |
+
+| Function | Description |
+|----------|-------------|
+| `get_event_loop()` | Get current loop |
+| `create_task(coro)` | Create background task |
+| `async_sleep(seconds)` | Non-blocking sleep |
+| `gather(...futures)` | Wait for all |
+| `race(...futures)` | Wait for first |
+| `any(...futures)` | Wait for any success |
+| `all_settled(...futures)` | Wait for all to settle |
+</details>
+
+<details>
+<summary><strong>async_runtime</strong> — <code>import std/async_runtime</code> — Work-Stealing Runtime</summary>
+
+| Type | Description |
+|------|-------------|
+| `Future<T>` (trait) | `.poll(cx)` → `Poll<T>` |
+| `Poll<T>` (enum) | `Ready(T)` or `Pending` |
+| `Executor` (trait) | `.spawn(future)`, `.block_on(future)` |
+| `WorkStealingExecutor` | Multi-threaded work-stealing scheduler |
+| `AsyncTcpStream` | Async TCP stream |
+| `Reactor` | Async I/O reactor |
+</details>
 
 ### Cryptography
 
-| Module | Import | Key Functions |
-|--------|--------|--------------|
-| **crypto** | `import std/crypto` | `sha256()`, `aes_encrypt()`, `rsa_sign()`, `hmac()`, `pbkdf2()` |
-| **jwt** | `import std/jwt` | JWT encode/decode/verify |
-| **crypto_hw** | `import std/crypto_hw` | Hardware-accelerated crypto (AES-NI) |
+<details>
+<summary><strong>crypto</strong> — <code>import std/crypto</code> — 30+ Hash/Cipher Functions</summary>
+
+**Hash Functions:**
+| Function | Description |
+|----------|-------------|
+| `sha1/256/384/512(data)` | SHA family |
+| `sha3_224/256/384/512(data)` | SHA-3 family |
+| `blake2b/2s/3(data)` | BLAKE family |
+| `md5(data)` | MD5 |
+| `whirlpool(data)` | Whirlpool |
+| `tiger(data)` | Tiger hashing |
+| `fnv1a32/64(data)` | FNV-1a (fast) |
+| `djb2(data)` | DJB2 (fast) |
+| `crc32/crc32_fast/crc16/crc64_iso(data)` | CRC checksums |
+| `murmur3_32/128(data, seed)` | MurmurHash3 |
+| `hash_range(data, algo)` | Hash with named algorithm |
+| `hash_combine(h1, h2)` | Combine hashes |
+
+**Ciphers:**
+| Function | Description |
+|----------|-------------|
+| `xor_encrypt/decrypt(data, key)` | XOR cipher |
+| `rot13(data)` | ROT13 |
+| `caesar_cipher(data, shift)` | Caesar cipher |
+| `vigenere_encrypt/decrypt(data, key)` | Vigenère cipher |
+| `substitution_encrypt(data, key)` | Substitution cipher |
+</details>
+
+<details>
+<summary><strong>jwt</strong> — <code>import std/jwt</code> — JSON Web Tokens</summary>
+
+**Algorithms:** `HS256/384/512`, `RS256/384/512`, `ES256/384/512`, `PS256/384/512`
+
+| Class | Methods |
+|-------|---------|
+| `JWTHeader(alg)` | `.toJSON()`, `.toBase64URL()`, `.fromJSON()`, `.fromBase64URL()` |
+| `JWTPayload` | `.setIssuer/getIssuer(...)`, `.setSubject/getSubject(...)`, `.setAudience/getAudience(...)`, `.setExpiration/getExpiration(...)`, `.setNotBefore/getNotBefore(...)`, `.setIssuedAt/getIssuedAt(...)`, `.setJWTID/getJWTID(...)`, `.setClaim/getClaim/hasClaim/removeClaim(...)` |
+</details>
+
+<details>
+<summary><strong>crypto_hw</strong> — <code>import std/crypto_hw</code> — Hardware-Accelerated</summary>
+
+| Class | Key Methods |
+|-------|------------|
+| `AES_NI` | `.is_supported()`, `.encrypt/decrypt_block_128(...)`, `.expand_key_128(key)`, `.encrypt/decrypt_cbc(...)`, `.encrypt_gcm(...)`, `.ghash(...)` |
+| `SHA_EXT` | `.is_supported()`, `.sha1(data)`, `.sha256(data)` |
+| `CRC32C` | `.is_supported()`, `.crc32_u8/u32(...)` |
+</details>
 
 ### Database
 
-| Module | Import | Key Functions |
-|--------|--------|--------------|
-| **database** | `import std/database` | `KVStore`, `put()`, `get()`, `delete()`, `query()` |
-| **redis** | `import std/redis` | Redis client |
-| **cache** | `import std/cache` | Caching utilities |
+<details>
+<summary><strong>database</strong> — <code>import std/database</code> — Full Database Engine</summary>
+
+| Class | Methods |
+|-------|---------|
+| `KVStore` | `.put(k,v)`, `.get(k)`, `.delete(k)`, `.has(k)`, `.keys()`, `.values()`, `.items()`, `.clear()`, `.size()`, `.create_index(field)`, `.query(predicate)` |
+| `FileKVStore(path)` | `.load()`, `.save()`, `.put/get/delete(...)` |
+| `Table(name, schema)` | `.insert(row)`, `.select(where)`, `.update(where, set)`, `.delete(where)`, `.create_index(col)`, `.join(other, on)`, `.group_by(col)`, `.order_by(col)`, `.limit(n)`, `.count/sum/avg/min/max(col)` |
+| `Database` | `.create_table(name, schema)`, `.table(name)`, `.drop_table(name)`, `.tables()` |
+| `DocumentStore` | `.insert(doc)`, `.find(query)`, `.find_one(query)`, `.update(query, update)`, `.delete(query)`, `.create_index(field)`, `.find_by_index(field, value)`, `.count()` |
+</details>
+
+<details>
+<summary><strong>redis</strong> — <code>import std/redis</code> — Full Redis Client</summary>
+
+`RedisClient(host, port)` — `.connect()`, `.disconnect()`, `.isConnected()` + all Redis commands:
+
+**String:** `.get(key)`, `.set(key, value, ...)`, `.mget(keys)`, `.mset(pairs)`, `.incr/decr(key)`, `.append(key, value)`
+
+**List:** `.lpush/rpush(key, value)`, `.lpop/rpop(key)`, `.lrange(key, start, stop)`, `.llen(key)`
+
+**Set:** `.sadd(key, member)`, `.srem(key, member)`, `.smembers(key)`, `.sismember(key, member)`, `.sunion/sinter/sdiff(keys)`
+
+**Sorted Set:** `.zadd(key, score, member)`, `.zrange(key, start, stop)`, `.zscore(key, member)`
+
+**Hash:** `.hset/hget(key, field, value)`, `.hgetall(key)`, `.hdel(key, field)`, `.hexists(key, field)`
+
+**Pub/Sub:** `.subscribe(channel)`, `.publish(channel, message)`
+
+**Transaction:** `.multi()`, `.exec()`, `.discard()`
+</details>
+
+<details>
+<summary><strong>cache</strong> — <code>import std/cache</code></summary>
+
+| Class | Methods |
+|-------|---------|
+| `LRUCache(max_size, ttl)` | `.get(key)`, `.set(key, value, ttl)`, `.has(key)`, `.delete(key)`, `.clear()`, `.size()`, `.keys()`, `.values()`, `.items()`, `.stats()`, `.cleanup()` |
+| `LFUCache(max_size, ttl)` | Same API as LRU |
+| `CacheEntry(key, value, ttl)` | `.isExpired()`, `.touch()`, `.getAge()`, `.getTimeToLive()` |
+
+**Eviction Policies:** LRU, LFU, FIFO, LIFO, TTL, RANDOM
+</details>
 
 ### AI & Machine Learning
 
-| Module | Import | Key Functions |
-|--------|--------|--------------|
-| **tensor** | `import std/tensor` | `Tensor`, shape, strides, matmul, reshape |
-| **nn** | `import std/nn` | `Linear`, `Conv2d`, `relu()`, `softmax()`, `train()`, `eval()` |
-| **autograd** | `import std/autograd` | Automatic differentiation |
-| **train** | `import std/train` | Training loops, checkpoints |
-| **nlp** | `import std/nlp` | Natural language processing |
-| **dataset** | `import std/dataset` | Dataset loading and batching |
-| **serving** | `import std/serving` | Model serving and inference |
+<details>
+<summary><strong>tensor</strong> — <code>import std/tensor</code></summary>
+
+| Function | Description |
+|----------|-------------|
+| `tensor(data, dtype, requires_grad)` | Create tensor |
+| `zeros/ones/full(shape, ...)` | Create tensor with fill |
+| `eye(n, ...)` | Identity matrix |
+
+| Property | Description |
+|----------|-------------|
+| `.data`, `.dtype`, `.shape`, `.ndim`, `.strides`, `.grad`, `.requires_grad` | Tensor metadata |
+
+| Method | Description |
+|--------|-------------|
+| `.clone()`, `.to_list()`, `.print()` | Basic operations |
+</details>
+
+<details>
+<summary><strong>nn</strong> — <code>import std/nn</code> — Neural Networks</summary>
+
+| Class | Description |
+|-------|-------------|
+| `Module` | Base class with `.forward(x)`, `.parameters()`, `.named_parameters()`, `.train()`, `.eval()`, `.zero_grad()`, `.to(device)` |
+| `Parameter(data)` | Trainable parameter with `.zero_grad()` |
+| `Linear(in, out)` | Fully connected layer |
+| `Conv1d(in_ch, out_ch, kernel)` | 1D convolution |
+| `Conv2d(in_ch, out_ch, kernel)` | 2D convolution |
+
+**Activation functions:** `relu()`, `sigmoid()`, `tanh()`, `softmax()`, `leaky_relu()`, `gelu()`
+</details>
+
+<details>
+<summary><strong>autograd</strong> — <code>import std/autograd</code> — Automatic Differentiation</summary>
+
+| Function | Description |
+|----------|-------------|
+| `variable(data)` | Create differentiable variable |
+| `constant(data)` | Create non-differentiable constant |
+| `backward(var)` | Compute gradients (backpropagation) |
+| Math ops | `add/sub/mul/div/neg/pow/exp/log/sin/cos/tan/sqrt/relu/sigmoid/tanh/softmax/sum/mean/matmul/transpose/flatten/reshape/concat(...)` |
+| `linear_new(in_features, out_features)` | Create linear layer |
+</details>
+
+<details>
+<summary><strong>optimize</strong> — <code>import std/optimize</code> — Optimizers</summary>
+
+| Optimizer | Constructor | Method |
+|-----------|------------|--------|
+| Gradient Descent | `gradient_descent_new(lr)` | `minimize_gd(gd, fn, x0, iters)` |
+| Momentum | `momentum_new(lr, beta)` | `minimize_momentum(m, fn, x0, iters)` |
+| Adam | `adam_new(lr, beta1, beta2)` | `minimize_adam(adam, fn, x0, iters)` |
+| RMSprop | `rmsprop_new(lr, decay)` | `minimize_rmsprop(rms, fn, x0, iters)` |
+</details>
+
+<details>
+<summary><strong>dataset</strong> — <code>import std/dataset</code> — Data Loading</summary>
+
+| Type | Description |
+|------|-------------|
+| `Dataset` (trait) | Base dataset interface |
+| `InMemoryDataset` | In-memory dataset |
+| `LazyDataset` | Lazy-loading dataset |
+| `ChainDataset` | Concatenated datasets |
+| `Subset` | Dataset subset |
+| `CSVDataset` | Load from CSV |
+| `JSONDataset` | Load from JSON |
+| `ImageFolder` | Image directory loader |
+| `CacheDataset` | Cached dataset wrapper |
+| `DataLoader` | Batch iterator |
+| `PrefetchDataLoader` | Prefetching data loader |
+| `WeightedRandomSampler` | Weighted sampling |
+| `KFold` | K-fold cross-validation |
+
+**Transforms:** `Normalize`, `Resize`, `RandomCrop`, `RandomHorizontalFlip`, `RandomRotation`, `ColorJitter`, `RandomAffine`, `Compose`, `RandomErasing`, `ToTensor`
+</details>
+
+<details>
+<summary><strong>train</strong> — <code>import std/train</code> — Training Pipelines</summary>
+
+| Step Types | Description |
+|-----------|-------------|
+| `STEP_DATA` | Data loading step |
+| `STEP_PREPROCESS` | Preprocessing step |
+| `STEP_TRAIN` | Training step |
+| `STEP_EVALUATE` | Evaluation step |
+| `STEP_TRANSFORM` | Transform step |
+| `STEP_SAVE` | Checkpoint save step |
+
+| Function | Description |
+|----------|-------------|
+| `Pipeline(name, desc)` | Create training pipeline |
+| `add_step(pipeline, id, type, config, deps)` | Add step |
+| `run_pipeline(pipeline, context)` | Execute pipeline |
+</details>
+
+<details>
+<summary><strong>distributed</strong> — <code>import std/distributed</code> — Distributed Training</summary>
+
+| Function | Description |
+|----------|-------------|
+| `init_process_group(backend, world_size)` | Init distributed |
+| `get_rank()` / `get_world_size()` | Process info |
+| `barrier()` | Synchronize all processes |
+| `all_reduce/all_gather/reduce/broadcast/scatter/gather(tensor, op)` | Collective ops |
+| `data_parallel_new(model, ...)` | Data parallelism |
+| `ring_all_reduce(tensor)` | Ring all-reduce |
+| `federated_avg(models)` | Federated learning |
+| `compress_gradients(grads)` | Gradient compression |
+| `dist_adam_new/step(...)` | Distributed Adam optimizer |
+</details>
+
+<details>
+<summary><strong>nlp, serving, experiment, feature_store, hub, mlops, monitor</strong> — ML Operations</summary>
+
+Additional ML modules covering: NLP text processing, model serving (REST/gRPC), experiment tracking, feature stores with time-travel, model registry/hub, Kubernetes deployment generation, prediction monitoring and data drift detection.
+</details>
 
 ### Systems & Low-Level
 
-| Module | Import | Key Functions |
-|--------|--------|--------------|
-| **asm** | `import std/asm` | Inline assembly (x86, ARM, RISC-V) |
-| **simd** | `import std/simd` | SIMD vectorization (SSE, AVX, NEON) |
-| **atomics** | `import std/atomics` | Atomic ops, CAS, spinlocks, lock-free structures |
-| **allocators** | `import std/allocators` | Arena, Pool, Slab, FreeList allocators |
-| **smart_ptrs** | `import std/smart_ptrs` | Box, Rc, Arc, Weak, Cell, RefCell |
-| **ownership** | `import std/ownership` | Ownership and borrow system |
-| **paging** | `import std/paging` | Page tables, virtual memory |
-| **interrupts** | `import std/interrupts` | IDT, exception handlers |
-| **dma** | `import std/dma` | Direct Memory Access |
-| **process** | `import std/process` | Process management |
-| **hardware** | `import std/hardware` | CPU info, hardware access |
+<details>
+<summary><strong>allocators</strong> — <code>import std/allocators</code> — 5 Allocator Types</summary>
 
-### GUI & Graphics
+| Allocator | Constructor | Key Methods |
+|-----------|------------|------------|
+| `Arena(capacity)` | Bulk allocation | `.alloc(size)`, `.alloc_zeroed(size)`, `.alloc_array(count, size)`, `.reset()`, `.clear()`, `.destroy()`, `.used()`, `.available()`, `.utilization()` |
+| `Pool(block_size, count)` | Fixed-size objects | `.alloc()`, `.alloc_zeroed()`, `.free(ptr)`, `.destroy()`, `.available_blocks()`, `.allocated_blocks()`, `.utilization()` |
+| `Slab(sizes, counts)` | Size classes | `.alloc(size)`, `.alloc_zeroed(size)`, `.free(ptr)`, `.destroy()`, `.get_stats()` |
+| `Stack(capacity)` | Stack-based | `.alloc(size)`, `.free(ptr)`, `.push_marker()`, `.pop_marker()`, `.clear()`, `.destroy()` |
+| `FreeList(min, max)` | Free list | `.alloc(size)`, `.free(ptr)`, `.coalesce()`, `.destroy()` |
 
-| Module | Import | Key Functions |
-|--------|--------|--------------|
-| **gui** | `import std/gui` | `Application`, `Window`, widgets, menus, events |
-| **game** | `import std/game` | Sprites, physics, collision, game loop |
-| **visualize** | `import std/visualize` | Charts, plots, data visualization |
+**Constant:** `CACHE_LINE_SIZE = 64`
+</details>
 
-### VM & Hypervisor
+<details>
+<summary><strong>atomics</strong> — <code>import std/atomics</code> — Lock-Free Programming</summary>
 
-| Module | Import | Key Functions |
-|--------|--------|--------------|
-| **vm** | `import std/vm` | Virtual machine engine |
-| **hypervisor** | `import std/hypervisor` | Intel VMX/AMD SVM support |
-| **vm_devices** | `import std/vm_devices` | Virtual device emulation |
-| **vm_migration** | `import std/vm_migration` | Live VM migration |
+| Class | Methods |
+|-------|---------|
+| `AtomicI32(val)` | `.load(order)`, `.store(val, order)`, `.fetch_add/sub(val, order)`, `.compare_exchange(expected, desired, order)`, `.swap(val, order)` |
+| `AtomicI64(val)` | Same as AtomicI32 |
+| `AtomicBool(val)` | Same + `.toggle(order)` |
+| `AtomicPtr(ptr)` | Atomic pointer operations |
+| `Spinlock` | `.lock()`, `.unlock()`, `.try_lock()` |
+| `RwLock` | `.read_lock()`, `.write_lock()`, `.read_unlock()`, `.write_unlock()` |
+| `AtomicRefCount` | `.increment()`, `.decrement()`, `.get()` |
+| `LockFreeStack` | `.push(value)`, `.pop()` |
+| `LockFreeQueue` | `.enqueue(value)`, `.dequeue()` |
+
+**Memory Orders:** `RELAXED`, `ACQUIRE`, `RELEASE`, `ACQ_REL`, `SEQ_CST`
+
+**Functions:** `fence(order)`, `compiler_fence(order)`
+</details>
+
+<details>
+<summary><strong>simd</strong> — <code>import std/simd</code> — SIMD Vectorization</summary>
+
+| Class | Methods |
+|-------|---------|
+| `Vec2f(x, y)` | `.add/sub/mul(other)`, `.dot(other)` |
+| `Vec4f(x, y, z, w)` | `.add/sub/mul/mul_vec(other)`, `.dot(other)`, `.length()`, `.normalize()` |
+| `Vec8f(data)` | `.add/mul(other)` |
+| `SimdArrayOps(data)` | `.add(other)` |
+
+**ISA Detection:** `detect_simd_support()` → SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, AVX, AVX2, AVX-512, NEON, SVE, SVE2
+</details>
+
+<details>
+<summary><strong>asm</strong> — <code>import std/asm</code> — Inline Assembly</summary>
+
+**Builders:** `AsmBuilder`, `AsmOps`, `AsmTemplate`, `AsmARM`
+
+**Macros:** `asm!(template, ...)`, `asm_volatile!(template, ...)`, `asm_intel!(template, ...)`, `asm_att!(template, ...)`
+
+**Register Constants:** `ASM_REG_RAX/RBX/RCX/RDX/RSI/RDI/RSP/RBP/R8-R15`
+
+**Architectures:** x86/x86_64, ARM/AArch64, RISC-V
+</details>
+
+<details>
+<summary><strong>smart_ptrs</strong> — <code>import std/smart_ptrs</code></summary>
+
+| Smart Pointer | Description | Key Methods |
+|--------------|-------------|------------|
+| `Box<T>` | Single-owner heap alloc | `.new(val)`, `.from_raw(ptr)`, `.into_raw()`, `.leak()` — impl `Deref/DerefMut/Drop/Clone` |
+| `Rc<T>` | Reference-counted | `.new(val)`, `.strong_count()`, `.weak_count()`, `.downgrade()`, `.get_mut()`, `.make_mut()`, `.ptr_eq(other)` |
+| `Arc<T>` | Atomic ref-counted (thread-safe) | Same as Rc but thread-safe |
+</details>
+
+<details>
+<summary><strong>ownership</strong> — <code>import std/ownership</code></summary>
+
+| Class | Methods |
+|-------|---------|
+| `Lifetime` | `.new(name)`, `.outlives(other)`, `.is_subtype_of(other)`, `.intersect(other)`, `.static()` |
+| `LifetimeInference` | `.new()`, `.fresh_lifetime()`, `.add_outlives_constraint(a, b)`, `.solve()` |
+
+**Ownership States:** `Owned`, `Moved`, `Borrowed`, `BorrowedMut`, `PartiallyMoved`
+</details>
+
+<details>
+<summary><strong>paging, interrupts, dma, hardware, process, realtime, debug_hw</strong> — Kernel/OS Modules</summary>
+
+| Module | Description |
+|--------|-------------|
+| `paging` | Page table entries (4KB/2MB/1GB pages), `PageTableEntry`, `PageTable`, `PageMapper` with flags: PRESENT, WRITABLE, USER, WRITE_THROUGH, CACHE_DISABLE, ACCESSED, DIRTY, HUGE, GLOBAL, NO_EXECUTE |
+| `interrupts` | `IDT(size)`, `IDTEntry`, `InterruptFrame`, 22 exception types (DIVIDE_ERROR → CONTROL_PROTECTION), 16 IRQ lines |
+| `dma` | `DMAChannel`, `DMAController`, `ScatterGatherDMA`, `DMABuffer`, `DMABufferPool` |
+| `hardware` | `CPUID` (vendor, brand, feature detection: SSE/AVX/AES/VMX/SVM/RDRAND), `MSR` (16 MSR constants: IA32_APIC_BASE → KERNEL_GS_BASE), `CPURegisters` (CR0/CR2/CR3/CR4) |
+| `process` | `Process(pid)` with 20+ methods (`.is_running()`, `.terminate()`, `.cpu_times()`, `.memory_info()`, `.threads()`, `.connections()`), `Popen(cmd, args)` |
+| `realtime` | `CPUAffinity`, `ThreadPriority`, `SchedulingPolicy` (FIFO/RR/DEADLINE/SPORADIC), `RealTimeTask` |
+| `debug_hw` | `HardwareBreakpoint`, `DebugRegisters`, `StackUnwinder`, `PerfCounter`, `PerformanceMonitoring`, `ProcessorTrace`, `LastBranchRecord`, `MemoryTracer` with 16 performance counter types |
+</details>
+
+### VM & Hypervisor (10 Modules)
+
+<details>
+<summary><strong>vm, hypervisor, vm_devices, vm_acpi, vm_bios, vm_migration, vm_tpm, vm_hotplug, vm_metrics, vm_production</strong></summary>
+
+| Module | Description |
+|--------|-------------|
+| `vm` | Full VM engine: `VMConfig`, `GuestMemory(size)`, `VCPUState(id)`, `VirtualMachine(config)` — UEFI/BIOS boot, dirty page tracking, hypercalls |
+| `hypervisor` | Intel VMX: `VMX.is_supported/enable/vmxon/vmxoff/vmclear/vmptrld/vmlaunch/vmresume/vmread/vmwrite(...)`, EPT page tables, VM exit handling |
+| `vm_devices` | `Device(name)`, `DeviceBus`, `InterruptRouter`, `PIC8259` (full 8259A emulation), `PCIConfigSpace` |
+| `vm_acpi` | `ACPIWriter`, RSDP/RSDT/MADT/FADT table generation, ACPI S-states (S0-S5), C-states, D-states, thermal zones |
+| `vm_bios` | `BIOSDataArea`, `IVTSetup`, `E820MemoryMap` — x86 BIOS emulation with IVT, BDA, EBDA memory layout |
+| `vm_migration` | `DirtyPageTracker`, `LiveMigration` (pre-copy, iterative pre-copy, stop-and-copy), verification, progress tracking |
+| `vm_tpm` | TPM 2.0 device: PCR banks (SHA-256/384/512), NV storage, handle manager, CRB interface |
+| `vm_hotplug` | PCI hot-plug: `PCIHotplugSlot`, `PCIHotplugController` with insert/remove/enable callbacks |
+| `vm_metrics` | `PerformanceCounter`, `VMMetricsCollector`, `VMPerformanceMonitor` with standard counters (vmexits, CPUID/IO/MMIO/MSR exits, interrupt injections) |
+| `vm_production` | Builder pattern: `.memory(size).cpus(count).uefi(path).disk(path).nic(model).with_error_handling().with_logging().with_metrics().with_live_migration().with_pci_hotplug().with_tpm().with_iommu().build()` |
+</details>
+
+### GUI, Game & Visualization
+
+<details>
+<summary><strong>gui</strong> — <code>import std/gui</code></summary>
+
+| Class | Key Methods |
+|-------|------------|
+| `Application` | `.run()`, `.quit()`, `.add/remove_widget(w)`, `.create_menu/toolbar/statusbar(...)`, `.set/cancel_timer(...)`, `.bind(event, handler)`, `.update()`, `.render()` |
+| `Window(title, w, h)` | `.title/size/position/resizable/maxsize/minsize/aspect/state/attributes/transient(...)`, `.grab_set/release()`, `.focus/focus_force()`, `.bind/unbind(...)`, `.protocol(...)`, `.after(ms, fn)`, `.update()`, `.mainloop()`, `.destroy()` |
+</details>
+
+<details>
+<summary><strong>game</strong> — <code>import std/game</code> — Full Game Engine</summary>
+
+| Class | Key Methods |
+|-------|------------|
+| `Game(title, w, h)` | `.init_game()`, `.set_scene(scene)`, `.add/remove/get_group(name)`, `.run()`, `.handle_events()`, `.update()`, `.render()`, `.tick()`, `.cleanup()`, `.quit()`, `.set/get_caption(...)`, `.get_version/fps/time()` |
+| `Clock` | `.tick(fps)`, `.get_fps/time/rawtime()`, `.wait(ms)`, `.tick_busy_loop(fps)` |
+| `Surface(w, h)` | `.get/set_at(x, y, ...)`, `.blit(src, ...)`, `.fill/fill_rect(...)`, `.convert/convert_alpha()`, `.copy()`, `.scroll(...)`, `.set/get_colorkey/alpha/clip(...)`, `.lock/unlock()` |
+
+**8 Color Constants:** BLACK, WHITE, RED, GREEN, BLUE, YELLOW, CYAN, MAGENTA
+
+**Key Constants:** `K_BACKSPACE` through `K_F12`, `K_a`-`K_z`, arrow keys, modifier keys, mouse buttons, joystick buttons
+</details>
+
+<details>
+<summary><strong>visualize</strong> — <code>import std/visualize</code> — Charts & Plots</summary>
+
+**140+ named colors**, 8 color palettes (default, warm, cool, pastel, neon, earth, ocean, sunset), 12 gradient maps (viridis, plasma, inferno, magma, cividis, turbo, hot, cool, spring, copper, bone, gray)
+
+Full matplotlib/plotly-equivalent plotting library for bar charts, line charts, scatter plots, histograms, pie charts, heatmaps, and more.
+</details>
 
 ### DevOps & Tooling
 
-| Module | Import | Key Functions |
-|--------|--------|--------------|
-| **cli** | `import std/cli` | Argument parsing |
-| **config** | `import std/config` | Config file management |
-| **log** | `import std/log` | Logger with DEBUG/INFO/WARNING/ERROR/CRITICAL |
-| **debug** | `import std/debug` | Debugging utilities |
-| **test** | `import std/test` | `assert()`, `eq()`, `neq()`, `raises()`, test suites |
-| **bench** | `import std/bench` | Performance benchmarking |
-| **regex** | `import std/regex` | Regular expressions |
-| **time** | `import std/time` | Date, time, timers |
-| **cron** | `import std/cron` | Scheduled tasks |
-| **monitor** | `import std/monitor` | System monitoring |
+<details>
+<summary><strong>cli</strong> — <code>import std/cli</code> — Argument Parser</summary>
+
+| Type | Description |
+|------|-------------|
+| `ArgType` enum | `String`, `Int`, `Float`, `Bool`, `ListString`, `ListInt` |
+| `arg_string/int/float/bool(name, help)` | Create argument |
+| `with_short(arg, short)` | Add short flag |
+| `with_default(arg, default)` | Set default value |
+| `required(arg)` | Mark required |
+| `parser_new(name, version, desc)` | Create parser |
+| `add_argument(parser, arg)` | Add argument |
+| `parse_args(parser, args)` | Parse CLI args |
+| `print_help/usage/version(parser)` | Display info |
+| `confirm(prompt)` | Yes/no prompt |
+| `select(prompt, options)` | Selection prompt |
+| `ProgressBar` | `.update(n)`, `.draw()`, `.finish()` |
+| `Spinner` | `.next()`, `.draw()` |
+</details>
+
+<details>
+<summary><strong>log</strong> — <code>import std/log</code> — Logging Framework</summary>
+
+**Levels:** `DEBUG=10`, `INFO=20`, `WARNING=30`, `ERROR=40`, `CRITICAL=50`
+
+| Class | Methods |
+|-------|---------|
+| `Logger(name)` | `.set_level(level)`, `.add_handler(handler)`, `.set_formatter(fmt)`, `.add_filter(filter)`, `.debug/info/warning/error/critical/exception(msg)` |
+| `ConsoleHandler` | Console output with colors |
+| `FileHandler(path)` | File output |
+| `RotatingFileHandler(path, max_bytes, backup_count)` | Rotating file output |
+| `Formatter(format_str)` | Custom format |
+
+**Built-in Formatters:** `simple_formatter()`, `detailed_formatter()`, `json_formatter()`, `colored_formatter()`
+
+```nyx
+import std/log
+let logger = get_logger("myapp")
+logger.set_level(DEBUG)
+logger.add_handler(ConsoleHandler())
+logger.add_handler(FileHandler("app.log"))
+logger.info("Application started")
+logger.error("Something went wrong")
+```
+</details>
+
+<details>
+<summary><strong>test</strong> — <code>import std/test</code></summary>
+
+| Function | Description |
+|----------|-------------|
+| `assert(cond, msg)` | Assert true |
+| `eq(actual, expected, msg)` | Assert equal |
+| `neq(actual, expected, msg)` | Assert not equal |
+| `raises(fn, msg)` | Assert throws |
+| `approx(actual, expected, tolerance, msg)` | Assert approximate |
+| `contains_(container, item, msg)` | Assert contains |
+| `is_true/is_false(value, msg)` | Boolean assertions |
+| `is_null/is_not_null(value, msg)` | Null assertions |
+| `skip(msg)` | Skip test |
+| `test(name, fn)` | Define test |
+| `suite(name, tests)` | Test suite |
+| `results()` / `summary()` | Get/print results |
+</details>
+
+<details>
+<summary><strong>bench, debug, time, cron, formatter, monitor, metrics, lsp, parser, state_machine, generator, governance, experiment, ci</strong> — More Tools</summary>
+
+| Module | Description |
+|--------|-------------|
+| `bench` | Benchmark suites, GPU profiling, memory analysis, kernel fusion analysis, regression detection |
+| `debug` | `trace()`, `inspect()`, `deep_inspect()`, `breakpoint()`, `timed(fn)`, `memory()`, `memory_profile(fn)`, `profile(fn)`, `dd()`, `measure()`, hardware breakpoints, perf counters |
+| `time` | `now()`, `now_millis/micros/nanos()`, `sleep/sleep_ms/sleep_us/sleep_ns()`, `parse_iso()`, `to_components()`, `to_timestamp()`, `format_time()` |
+| `cron` | `CronExpression(expr)`, `CronJob(name, expr, fn)` — scheduled task execution |
+| `formatter` | Code formatter: `format_code(code, options)`, `format_file(path)`, `sort_imports(code)`, `add_import(code, module)`, `remove_unused_imports(code)` |
+| `monitor` | `MetricsCollector`, `LatencyTracker`, `PredictionMonitor`, `DataDriftDetector` |
+| `metrics` | Prometheus-compatible: `Counter`, `Gauge`, `Histogram`, `Summary`, `Timer` with labels and `.toPrometheus()` export |
+| `lsp` | Full Language Server Protocol implementation: initialize, completion, hover, definition, references, diagnostics |
+| `parser` | Combinator parser: `Parser(fn)` with `.map()`, `.flatMap()`, `.then()`, `.or()`, `.many()`, `.many1()`, `.between()`, `.sepBy()`, `.label()` |
+| `state_machine` | `StateMachine(name, initial)`, `State(name)` with entry/exit actions, transitions, guards, HSM support |
+| `generator` | File format generation: `.txt`, `.md`, `.csv`, `.rtf`, `.svg`, `.bmp`, `.png`, `.ico`, `.jpg`, `.pdf` |
+| `governance` | A/B testing: `ExperimentService`, `CanaryManager` |
+| `experiment` | ML experiment tracking: `Experiment(name)`, `ExperimentTracker`, dashboards, comparison, similarity |
+| `ci` | `TestCase/TestResult/TestSuite` — JUnit-style test framework with 25+ assertion methods |
+</details>
+
+### DFAS — Dynamic Field Arithmetic (10 modules in stdlib/dfas/)
+
+<details>
+<summary><strong>dfas/*</strong> — <code>import std/dfas</code> — Field Arithmetic System</summary>
+
+See [DFAS section below](#-dfas--dynamic-field-arithmetic-system) for full details.
+</details>
 
 ---
 
@@ -2125,6 +4019,476 @@ ws.close()
 
 ---
 
+## 🏗️ Formal Grammar (EBNF)
+
+> **Complete Extended Backus-Naur Form grammar for the Nyx programming language.**
+
+### Program Structure
+
+```ebnf
+program        = { statement } ;
+statement      = declaration | expression_stmt | control_flow | import_stmt
+               | class_decl | module_decl | try_stmt | raise_stmt
+               | assert_stmt | with_stmt | async_stmt | pass_stmt ;
+
+declaration    = let_decl | fn_decl | typealias_decl ;
+let_decl       = "let" [ "mut" ] identifier [ ":" type ] "=" expression ;
+fn_decl        = "fn" identifier "(" [ param_list ] ")" [ "->" type ] block ;
+typealias_decl = "typealias" identifier "=" type ;
+```
+
+### Expressions
+
+```ebnf
+expression     = assignment ;
+assignment     = ( postfix "=" ) assignment | logical_or ;
+logical_or     = logical_and { "||" logical_and } ;
+logical_and    = bitwise_or { "&&" bitwise_or } ;
+bitwise_or     = bitwise_xor { "|" bitwise_xor } ;
+bitwise_xor    = bitwise_and { "^" bitwise_and } ;
+bitwise_and    = equality { "&" equality } ;
+equality       = relational { ( "==" | "!=" ) relational } ;
+relational     = shift { ( "<" | ">" | "<=" | ">=" | "<=>" | "is" | "instanceof" ) shift } ;
+shift          = additive { ( "<<" | ">>" ) additive } ;
+additive       = multiplicative { ( "+" | "-" ) multiplicative } ;
+multiplicative = power { ( "*" | "/" | "%" | "//" ) power } ;
+power          = unary { "**" unary } ;
+unary          = ( "-" | "!" | "~" | "++" | "--" | "&" | "&mut" | "*" | "typeof"
+               | "sizeof" | "alignof" | "move" | "ref" ) unary | postfix ;
+postfix        = primary { call | index | member | "?" | "++" | "--" } ;
+call           = "(" [ arg_list ] ")" ;
+index          = "[" expression "]" ;
+member         = ( "." | "?." | "::" ) identifier ;
+```
+
+### Primary Expressions
+
+```ebnf
+primary        = literal | identifier | block | if_expr | switch_expr
+               | fn_literal | array_literal | object_literal | tuple_literal
+               | "(" expression ")" | comprehension | new_expr | "super"
+               | "self" | await_expr ;
+literal        = integer | float | string | boolean | "null" ;
+integer        = decimal | "0x" hex | "0o" octal | "0b" binary ;
+string         = '"' { char | escape } '"' | "'" { char | escape } "'"
+               | 'r"' { char } '"' | 'b"' { byte } '"' | 'f"' { char | "${" expression "}" } '"' ;
+```
+
+### Control Flow
+
+```ebnf
+if_expr        = "if" expression block { "elif" expression block } [ "else" block ] ;
+switch_expr    = "switch" expression "{" { case_clause } [ default_clause ] "}" ;
+match_expr     = "match" expression "{" { pattern "=>" expression "," } "}" ;
+while_stmt     = "while" expression block ;
+for_stmt       = "for" identifier "=" expression ";" expression ";" expression block ;
+for_in_stmt    = "for" pattern "in" expression block ;
+loop_stmt      = "loop" block ;
+```
+
+### Class & Struct Declarations
+
+```ebnf
+class_decl     = "class" identifier [ "<" type_params ">" ] [ "extends" type ]
+                 [ "implements" type { "," type } ] "{" { class_member } "}" ;
+struct_decl    = "struct" identifier [ "<" type_params ">" ] "{" { struct_field } "}" ;
+enum_decl      = "enum" identifier "{" enum_variant { "," enum_variant } "}" ;
+trait_decl     = "trait" identifier [ "<" type_params ">" ] "{" { method_sig } "}" ;
+impl_block     = "impl" [ "<" type_params ">" ] [ trait "for" ] type "{" { fn_decl } "}" ;
+```
+
+### Type System
+
+```ebnf
+type           = primitive_type | compound_type | ref_type | user_type
+               | generic_type | tuple_type | union_type | fn_type ;
+primitive_type = "int" | "i8" | "i16" | "i32" | "i64" | "u8" | "u16" | "u32" | "u64"
+               | "f32" | "f64" | "bool" | "char" | "str" | "void" | "null" | "never" ;
+ref_type       = ( "&" | "&mut" ) type ;
+generic_type   = identifier "<" type { "," type } ">" ;
+union_type     = type "|" type { "|" type } ;
+fn_type        = "fn" "(" [ type_list ] ")" "->" type ;
+```
+
+### Operator Precedence (12 Levels)
+
+| Level | Category | Operators | Associativity |
+|-------|----------|-----------|---------------|
+| 1 | Postfix | `()` `[]` `.` `?.` `::` `?` `++` `--` | Left |
+| 2 | Unary | `-` `!` `~` `++` `--` `&` `*` `typeof` `sizeof` | Right |
+| 3 | Power | `**` | Right |
+| 4 | Multiplicative | `*` `/` `%` `//` | Left |
+| 5 | Additive | `+` `-` | Left |
+| 6 | Shift | `<<` `>>` | Left |
+| 7 | Relational | `<` `>` `<=` `>=` `<=>` `is` `instanceof` | Left |
+| 8 | Equality | `==` `!=` | Left |
+| 9 | Bitwise AND/XOR/OR | `&` `^` `\|` | Left |
+| 10 | Logical AND | `&&` | Left |
+| 11 | Logical OR | `\|\|` | Left |
+| 12 | Assignment | `=` `+=` `-=` `*=` `/=` `%=` `**=` `&=` `\|=` `^=` `<<=` `>>=` | Right |
+
+---
+
+## 🧠 Interpreter Architecture
+
+> **The complete pipeline from source code to execution.**
+
+### Execution Pipeline
+
+```
+Source Code (.ny)
+     │
+     ▼
+┌─────────────┐
+│   Lexer     │  src/lexer.py (530 lines)
+│  Tokenizer  │  Unicode-aware, 150+ token types
+└─────┬───────┘
+      │ Token Stream
+      ▼
+┌─────────────┐
+│   Parser    │  src/parser.py (650 lines)
+│  Pratt      │  12-level precedence, extensible
+└─────┬───────┘
+      │ AST (Abstract Syntax Tree)
+      ▼
+┌─────────────┐
+│ Interpreter │  src/interpreter.py (551 lines)
+│  Evaluator  │  Tree-walking async evaluator
+└─────────────┘
+```
+
+### Lexer (src/lexer.py — 530 lines)
+
+The lexer converts source text into a stream of tokens with full Unicode support.
+
+**Features:**
+- Full Unicode identifier support (letters, digits, underscore)
+- Multi-line string literals with escape sequences: `\n`, `\t`, `\r`, `\\`, `\"`, `\'`, `\0`, `\a`, `\b`, `\f`, `\v`, `\x##`, `\u####`, `\U########`
+- Raw strings (`r"..."`) — no escape processing
+- Byte strings (`b"..."`) — byte-level data
+- F-strings (`f"..."`) — interpolated expressions with `${expr}`
+- Number literals: decimal, hex (`0x`), octal (`0o`), binary (`0b`), underscore separators (`1_000_000`)
+- Single-line (`//`, `#`) and multi-line (`/* */`) comments with nesting
+- Automatic line/column tracking for error reporting
+- Lookahead for multi-character operators (26 two/three-char tokens)
+
+### All 150+ Token Types (src/token_types.py — 680 lines)
+
+<details>
+<summary><strong>Click to expand full token type list</strong></summary>
+
+**Literals (9):**
+`ILLEGAL`, `EOF`, `IDENT`, `INT`, `FLOAT`, `STRING`, `BINARY`, `OCTAL`, `HEX`
+
+**Operators (26):**
+`ASSIGN`, `PLUS`, `MINUS`, `BANG`, `ASTERISK`, `SLASH`, `POWER`, `MODULO`, `FLOOR_DIVIDE`, `BITWISE_AND`, `BITWISE_OR`, `BITWISE_XOR`, `BITWISE_NOT`, `LEFT_SHIFT`, `RIGHT_SHIFT`, `LT`, `GT`, `LE`, `GE`, `EQ`, `NOT_EQ`, `LOGICAL_AND`, `LOGICAL_OR`, `COLON_ASSIGN`, `ARROW`, `SPACESHIP`
+
+**Compound Assignment (16):**
+`PLUS_ASSIGN`, `MINUS_ASSIGN`, `ASTERISK_ASSIGN`, `SLASH_ASSIGN`, `POWER_ASSIGN`, `MODULO_ASSIGN`, `FLOOR_DIVIDE_ASSIGN`, `BITWISE_AND_ASSIGN`, `BITWISE_OR_ASSIGN`, `BITWISE_XOR_ASSIGN`, `LEFT_SHIFT_ASSIGN`, `RIGHT_SHIFT_ASSIGN`, `LOGICAL_AND_ASSIGN`, `LOGICAL_OR_ASSIGN`, `NULL_COALESCE_ASSIGN`, `PIPELINE_ASSIGN`
+
+**Delimiters (11):**
+`COMMA`, `SEMICOLON`, `COLON`, `DOT`, `AT`, `LPAREN`, `RPAREN`, `LBRACE`, `RBRACE`, `LBRACKET`, `RBRACKET`
+
+**Special Operators (12):**
+`QUESTION_DOT`, `NULL_COALESCE`, `RANGE`, `RANGE_INCLUSIVE`, `SPREAD`, `PIPELINE`, `SAFE_CAST`, `ELVIS`, `DOUBLE_COLON`, `THIN_ARROW`, `FAT_ARROW`, `HASH`, `DOUBLE_HASH`, `QUESTION`, `INCREMENT`, `DECREMENT`
+
+**Keywords — Declaration (7):**
+`FUNCTION`, `LET`, `MUT`, `CONST`, `VAR`, `TRUE`, `FALSE`
+
+**Keywords — Control Flow (21):**
+`IF`, `ELSE`, `ELIF`, `RETURN`, `WHILE`, `FOR`, `IN`, `BREAK`, `CONTINUE`, `PRINT`, `MATCH`, `CASE`, `WHEN`, `WHERE`, `LOOP`, `DO`, `GOTO`, `DEFER`, `SWITCH`, `DEFAULT`
+
+**Keywords — OOP (11):**
+`CLASS`, `STRUCT`, `TRAIT`, `INTERFACE`, `IMPL`, `ENUM`, `SUPER`, `SELF`, `NEW`, `EXTENDS`, `IMPLEMENTS`
+
+**Keywords — Module (10):**
+`IMPORT`, `USE`, `FROM`, `AS`, `EXPORT`, `PUB`, `PRIV`, `MOD`, `NAMESPACE`, `PACKAGE`
+
+**Keywords — Error Handling (7):**
+`TRY`, `CATCH`, `EXCEPT`, `FINALLY`, `RAISE`, `THROW`, `ASSERT`
+
+**Keywords — Async (9):**
+`WITH`, `YIELD`, `ASYNC`, `AWAIT`, `SPAWN`, `CHANNEL`, `SELECT`, `LOCK`, `ACTOR`
+
+**Keywords — Types (9):**
+`TYPE`, `TYPEOF`, `INSTANCEOF`, `IS`, `STATIC`, `DYNAMIC`, `ANY`, `VOID`, `NEVER`
+
+**Keywords — Meta (13):**
+`PASS`, `NULL`, `NONE`, `UNDEFINED`, `MACRO`, `INLINE`, `UNSAFE`, `EXTERN`, `REF`, `MOVE`, `COPY`, `SIZEOF`, `ALIGNOF`, `GLOBAL`, `STATIC_ASSERT`, `COMPTIME`
+
+</details>
+
+### Parser (src/parser.py — 650 lines)
+
+A Pratt parser (top-down operator precedence) with 12 precedence levels.
+
+**Features:**
+- Configurable precedence/associativity for all operators
+- Extensible prefix/infix parse functions
+- Automatic error recovery with synchronization
+- Statement-level parsing for all 30+ statement types
+- Expression parsing handles all operators, calls, indexing, member access
+- Support for generic type parameters `<T>`
+- Pattern matching in `match`/`case` with destructuring
+
+### All 60+ AST Node Types (src/ast_nodes.py — 973 lines)
+
+<details>
+<summary><strong>Click to expand full AST node hierarchy</strong></summary>
+
+**Base:** `Node` → `Statement` / `Expression`
+
+**Program:** `Program` (list of statements)
+
+**Literals (8):** `IntegerLiteral`, `FloatLiteral`, `BinaryLiteral`, `OctalLiteral`, `HexLiteral`, `StringLiteral`, `BooleanLiteral`, `NullLiteral`
+
+**Expressions (19):** `Identifier`, `PrefixExpression`, `InfixExpression`, `AssignExpression`, `IfExpression`, `CallExpression`, `IndexExpression`, `RangeExpression`, `SpreadExpression`, `PipelineExpression`, `OptionalChainingExpression`, `NullCoalescingExpression`, `LambdaExpression`, `ComprehensionExpression`, `TernaryExpression`, `YieldExpression`, `AwaitExpression`, `DecoratorExpression`, `MacroInvocation`, `ComptimeExpression`
+
+**Collections (3):** `BlockStatement`, `ArrayLiteral`, `HashLiteral`, `FunctionLiteral`
+
+**Declarations (6):** `LetStatement`, `ReturnStatement`, `ExpressionStatement`, `ExportStatement`, `TypeAliasStatement`, `ModuleDeclaration`, `NamespaceDeclaration`
+
+**Control Flow (7):** `WhileStatement`, `ForStatement`, `ForInStatement`, `LoopStatement`, `BreakStatement`, `ContinueStatement`, `PassStatement`, `DeferStatement`
+
+**OOP (13):** `ClassStatement`, `StructDeclaration`, `StructField`, `EnumDeclaration`, `EnumVariant`, `TraitDeclaration`, `MethodSignature`, `ImplBlock`, `SuperExpression`, `SelfExpression`, `NewExpression`
+
+**Modules (5):** `ImportStatement`, `UseStatement`, `FromStatement`
+
+**Error Handling (3):** `TryStatement`, `RaiseStatement`, `AssertStatement`, `StaticAssertStatement`
+
+**Async (5):** `WithStatement`, `AsyncStatement`, `SelectStatement`, `SelectCase`, `GuardStatement`, `UnsafeBlock`
+
+**Pattern Matching (7):** `MatchExpression`, `CaseClause`, `Pattern`, `LiteralPattern`, `IdentifierPattern`, `StructPattern`, `ArrayPattern`, `WildcardPattern`
+
+**Types (7):** `TypeAnnotation`, `SimpleType`, `GenericType`, `UnionType`, `FunctionType`, `OptionalType`
+
+**Macros (2):** `MacroDefinition`, `MacroRule`
+
+**Extension:** `DynamicNode` — runtime-extensible via `NODE_REGISTRY`
+
+</details>
+
+### Interpreter (src/interpreter.py — 551 lines)
+
+An async tree-walking evaluator that directly executes the AST.
+
+**Built-in Functions (11):** `print`, `len`, `range`, `max`, `min`, `sum`, `abs`, `round`, `str`, `int`, `float`
+
+**Supported Operators:**
+- Arithmetic: `+`, `-`, `*`, `/`, `//`, `%`, `**`
+- Comparison: `==`, `!=`, `<`, `<=`, `>`, `>=`
+- Logical: `&&`, `||`, `!`
+- Member access: `.`
+- String concatenation via `+`
+- Array concatenation via `+`
+
+**Statement Evaluation:** Variable declarations, function definitions, class instantiation, method calls, if/elif/else, while, for, for-in, try/catch/finally, match/case, module/import, return/break/continue, yield, await, assignment (including compound `+=`, `-=`, etc.)
+
+**Entry Point:** `python run.py <file.ny>` — loads file → Lexer → Parser → async `evaluate()`
+
+---
+
+## 🔒 DFAS — Dynamic Field Arithmetic System
+
+> **A complete modular finite field arithmetic library for cryptographic and mathematical applications.**
+
+Located in `stdlib/dfas/` — 10 specialized modules.
+
+### Architecture
+
+```
+┌──────────────────────────────────────────────────┐
+│                  DFAS System                      │
+├──────────────────────────────────────────────────┤
+│  field_core.ny      - Field types & elements     │
+│  arithmetic.ny      - Field operations engine    │
+│  type_system.ny     - Type checking & inference  │
+│  safety.ny          - Security validation        │
+│  encryption.ny      - Field-based encryption     │
+│  compiler.ny        - Optimization compiler      │
+│  tests.ny           - Test suite                 │
+│  examples.ny        - Usage examples             │
+│  benchmarks.ny      - Performance benchmarks     │
+│  __init__.ny        - Module init                │
+└──────────────────────────────────────────────────┘
+```
+
+### field_core.ny — Types & Definitions
+
+```nyx
+// Field types
+enum FieldType {
+    PrimeField,        // GF(p) — prime fields
+    PolynomialField,   // GF(p^n) — extension fields
+    SecureField,       // Seed-generated secure fields
+    CustomField        // User-defined fields
+}
+
+// Reduction strategies
+enum ReductionType {
+    Standard,          // Basic modular reduction
+    Barrett,           // Barrett reduction (faster for known moduli)
+    Montgomery         // Montgomery multiplication (fastest for repeated ops)
+}
+
+// Field configuration
+struct FieldConfig {
+    field_type: FieldType,
+    modulus: int,
+    characteristic: int,
+    degree: int,
+    polynomial_coeffs: array,
+    seed: string,
+    reduction_method: ReductionType,
+    is_secure: bool,
+    field_id: string
+}
+
+// Field element
+struct FieldElement {
+    value: int,
+    field_config: FieldConfig,
+    montgomery_form: int,
+    is_normalized: bool
+}
+
+// Create fields
+let prime_field = FieldConfig.prime_field(17)           // GF(17)
+let ext_field = FieldConfig.polynomial_field(2, 8, [...]) // GF(2^8) — AES field
+let secure = FieldConfig.secure_field("myseed", 256)   // 256-bit secure field
+```
+
+### arithmetic.ny — Operations Engine
+
+```nyx
+// Arithmetic operations
+fn field_add(a: FieldElement, b: FieldElement) -> FieldElement
+fn field_sub(a: FieldElement, b: FieldElement) -> FieldElement
+fn field_mul(a: FieldElement, b: FieldElement) -> FieldElement
+fn field_div(a: FieldElement, b: FieldElement) -> FieldElement  // modular inverse + mul
+fn field_pow(a: FieldElement, exp: int) -> FieldElement         // fast exponentiation
+fn field_neg(a: FieldElement) -> FieldElement                   // additive inverse
+fn field_inv(a: FieldElement) -> FieldElement                   // multiplicative inverse
+
+// Montgomery operations (hardware-friendly)
+fn montgomery_multiply(a, b, params: MontgomeryParams) -> int
+fn to_montgomery(value, params) -> int
+fn from_montgomery(value, params) -> int
+```
+
+### encryption.ny — Field-Based Encryption
+
+```nyx
+// Block cipher using field arithmetic
+fn field_encrypt(plaintext: array, key: FieldElement, field: FieldConfig) -> array
+fn field_decrypt(ciphertext: array, key: FieldElement, field: FieldConfig) -> array
+
+// Stream cipher
+fn field_stream_encrypt(data: array, seed: string, field: FieldConfig) -> array
+
+// Key derivation
+fn field_derive_key(password: string, salt: string, field: FieldConfig) -> FieldElement
+```
+
+### safety.ny — Security Validation
+
+```nyx
+fn validate_field_security(config: FieldConfig) -> SecurityReport
+fn check_timing_resistance(operation: fn, field: FieldConfig) -> bool
+fn audit_field_operations(operations: array) -> AuditReport
+```
+
+---
+
+## 📦 NYPM — Nyx Package Manager
+
+> **Full-featured package manager inspired by npm/cargo/pip.**
+
+### Commands
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `nypm init` | Initialize new project | `nypm init my-project` |
+| `nypm install <pkg>` | Install a package | `nypm install json-parser` |
+| `nypm add <pkg>` | Alias for install | `nypm add http-server` |
+| `nypm remove <pkg>` | Remove a package | `nypm remove json-parser` |
+| `nypm rm <pkg>` | Alias for remove | `nypm rm http-server` |
+| `nypm update` | Update all packages | `nypm update` |
+| `nypm search <query>` | Search registry | `nypm search http` |
+| `nypm list` | List installed packages | `nypm list` |
+| `nypm info <pkg>` | Show package info | `nypm info json-parser` |
+| `nypm versions <pkg>` | List available versions | `nypm versions http-server` |
+| `nypm outdated` | Check for updates | `nypm outdated` |
+| `nypm publish` | Publish package to registry | `nypm publish` |
+| `nypm clean` | Clean node_modules cache | `nypm clean` |
+| `nypm doctor` | Diagnose issues | `nypm doctor` |
+
+### Configuration (nypm.config)
+
+```ini
+[registry]
+url = https://registry.nyxlang.org
+auth_token = 
+
+[defaults]
+save_exact = true
+production = false
+global_folder = ~/.nypm/global
+
+[network]
+timeout = 30000
+retries = 3
+proxy = 
+
+[cache]
+folder = ~/.nypm/cache
+max_size = 500MB
+```
+
+### Package Manifest (ny.registry)
+
+```toml
+[package]
+name = "my-nyx-project"
+version = "1.0.0"
+description = "My project"
+main = "main.ny"
+author = "Your Name"
+license = "MIT"
+repository = ""
+
+[dependencies]
+
+[devDependencies]
+
+[scripts]
+start = "nyx main.ny"
+test = "nyx test.ny"
+build = "nyx build main.ny"
+```
+
+---
+
+## ⚙️ Production Configuration
+
+> **AAA game engine-scale production configs (located in `configs/production/`).**
+
+| Config File | Description |
+|------------|-------------|
+| `team_roster.json` | 800+ person team structure: leads, engineers, artists, QA, DevOps |
+| `platform_cert.json` | Sony TRC, Microsoft XR, Nintendo Lotcheck, Apple Review, Google Play |
+| `multi_year_plan.json` | 3-year development roadmap with milestones |
+| `liveops_slo.json` | Service Level Objectives: 99.99% uptime, <100ms latency, 10M concurrent |
+| `hardware_matrix.json` | PS5, Xbox Series X/S, Steam Deck, Switch 2, PC min/rec/ultra specs |
+| `gta_scale_program.json` | Open-world game plan: 100km² map, 10K NPCs, 128-player multiplayer |
+| `gate_thresholds.json` | Quality gates: 60 FPS minimum, <3s load times, <0.1% crash rate |
+| `cook_profile.json` | Asset cooking: texture compression, mesh LODs, animation baking |
+| `content_targets.json` | Content requirements: 200+ hours gameplay, 50+ story missions |
+| `anti_cheat_rules.json` | Anti-cheat: memory scanning, packet validation, behavior analysis |
+| `engine_feature_contract.json` | Engine API stability guarantees across versions |
+
+---
+
 ## 🔧 All Built-in Functions
 
 > **These work everywhere with no imports. They are part of the language core.**
@@ -2193,17 +4557,59 @@ ws.close()
 
 ---
 
-## 🔑 All Keywords
+## 🔑 All Keywords (80+)
 
+### Declaration Keywords
 ```
-fn        let       mut       const     class     trait     impl
-struct    enum      if        else      match     switch    case
-default   for       while     loop      return    break     continue
-yield     throw     raise     async     await     spawn     import
-from      as        module    pub       use       try       catch
-finally   self      super     new       null      true      false
-with      in        is        not       and       or        type
-where     typealias extends   implements
+fn        let       mut       const     var       type      typealias
+```
+
+### Control Flow Keywords
+```
+if        else      elif      match     case      when      where
+switch    default   for       while     loop      do        return
+break     continue  goto      defer     pass
+```
+
+### OOP Keywords
+```
+class     struct    trait     interface impl      enum
+super     self      new       extends   implements
+```
+
+### Module Keywords
+```
+import    use       from      as        export    pub       priv
+mod       namespace package
+```
+
+### Error Handling Keywords
+```
+try       catch     except    finally   raise     throw     assert
+```
+
+### Async & Concurrency Keywords
+```
+async     await     yield     spawn     channel   select    lock
+actor     with
+```
+
+### Type System Keywords
+```
+typeof    instanceof is        static    dynamic   any
+void      never     ref       move      copy
+```
+
+### Meta & Advanced Keywords
+```
+null      none      undefined true      false     not       and
+or        in        macro     inline    unsafe    extern
+sizeof    alignof   global    static_assert       comptime
+```
+
+### Boolean & Null Literals
+```
+true      false     null      none      undefined
 ```
 
 ---
@@ -2473,6 +4879,423 @@ class Block {
 let genesis = Block(0, "Genesis Block", "0")
 genesis.mine(4)
 print("Blockchain started with genesis block!")
+```
+
+### Example 7: Web Scraper & Data Pipeline
+
+```nyx
+import std/http
+import std/json
+import std/io
+import std/string
+import std/regex
+
+# Fetch and parse multiple pages
+async fn scrape_page(url) {
+    let response = await http.get(url)
+    let data = json.parse(response.body)
+    return data.items
+        |> filter(|item| item.price > 0)
+        |> map(|item| {
+            name: string.strip(item.name),
+            price: item.price,
+            category: item.category,
+            url: url
+        })
+}
+
+# Process pipeline
+async fn main() {
+    let urls = [
+        "https://api.example.com/products?page=1",
+        "https://api.example.com/products?page=2",
+        "https://api.example.com/products?page=3"
+    ]
+
+    let results = await async.gather(...urls |> map(scrape_page))
+    let all_items = results |> flatten() |> sort_by(|x| x.price)
+
+    # Group by category
+    let grouped = {}
+    for item in all_items {
+        if !has(grouped, item.category) {
+            grouped[item.category] = []
+        }
+        push(grouped[item.category], item)
+    }
+
+    io.write_file("products.json", json.pretty(grouped))
+    print("Scraped " + str(len(all_items)) + " products in " + str(len(keys(grouped))) + " categories")
+}
+
+main()
+```
+
+### Example 8: Real-Time Chat Server
+
+```nyx
+import std/socket
+import std/json
+import std/async
+import std/time
+
+class ChatServer {
+    fn init(self, port) {
+        self.server = socket.TCPServer(port)
+        self.clients = {}
+        self.rooms = {"general": []}
+    }
+
+    async fn handle_client(self, client) {
+        let name = await client.recv(1024)
+        self.clients[name] = client
+        push(self.rooms["general"], name)
+        self.broadcast("general", name + " joined the chat!")
+
+        loop {
+            let msg = await client.recv(4096)
+            if !msg { break }
+
+            let data = json.parse(msg)
+            match data.type {
+                case "message" => {
+                    self.broadcast(data.room, name + ": " + data.text)
+                }
+                case "join_room" => {
+                    if !has(self.rooms, data.room) {
+                        self.rooms[data.room] = []
+                    }
+                    push(self.rooms[data.room], name)
+                }
+                case "dm" => {
+                    if has(self.clients, data.to) {
+                        self.clients[data.to].send(json.stringify({
+                            from: name, text: data.text, type: "dm",
+                            time: time.now()
+                        }))
+                    }
+                }
+            }
+        }
+
+        delete(self.clients, name)
+        self.broadcast("general", name + " left the chat.")
+    }
+
+    fn broadcast(self, room, message) {
+        for user in self.rooms[room] {
+            if has(self.clients, user) {
+                self.clients[user].send(json.stringify({
+                    text: message, room: room, time: time.now()
+                }))
+            }
+        }
+    }
+
+    async fn start(self) {
+        print("Chat server running on port " + str(self.server.port))
+        loop {
+            let client = await self.server.accept()
+            spawn self.handle_client(client)
+        }
+    }
+}
+
+let server = ChatServer(8080)
+server.start()
+```
+
+### Example 9: Machine Learning Inference Server
+
+```nyx
+import std/web
+import std/json
+import std/tensor
+import std/nn
+import std/time
+import std/log
+
+let logger = log.get_logger("ml-server")
+logger.set_level(log.INFO)
+
+# Load pre-trained model
+let model = nn.Module.load("model.nyx")
+model.eval()
+
+let router = web.Router()
+
+router.post("/predict", fn(req, res) {
+    let start = time.now_millis()
+    let input = json.parse(req.body)
+    let t = tensor.tensor(input.data, dtype: "float32")
+
+    let output = model.forward(t)
+    let prediction = output.to_list()
+
+    let elapsed = time.now_millis() - start
+    logger.info("Prediction in " + str(elapsed) + "ms")
+
+    res.json({
+        prediction: prediction,
+        confidence: max(prediction),
+        latency_ms: elapsed,
+        model_version: "1.0.0"
+    })
+})
+
+router.get("/health", fn(req, res) {
+    res.json({status: "healthy", uptime: time.now()})
+})
+
+print("ML Inference server on :8000")
+router.listen(8000)
+```
+
+### Example 10: Database Migration Tool
+
+```nyx
+import std/database
+import std/io
+import std/json
+import std/time
+import std/cli
+import std/log
+
+let logger = log.get_logger("migrate")
+
+class Migration {
+    fn init(self, version, name, up_fn, down_fn) {
+        self.version = version
+        self.name = name
+        self.up = up_fn
+        self.down = down_fn
+    }
+}
+
+class Migrator {
+    fn init(self, db_path) {
+        self.db = database.Database()
+        self.db.create_table("migrations", {
+            version: "int",
+            name: "string",
+            applied_at: "string"
+        })
+        self.migrations = []
+    }
+
+    fn add(self, version, name, up_fn, down_fn) {
+        push(self.migrations, Migration(version, name, up_fn, down_fn))
+    }
+
+    fn migrate_up(self) {
+        let applied = self.db.table("migrations").select({})
+            |> map(|r| r.version)
+
+        let pending = self.migrations
+            |> filter(|m| !applied.contains(m.version))
+            |> sort_by(|m| m.version)
+
+        for m in pending {
+            logger.info("Applying: " + m.name)
+            m.up(self.db)
+            self.db.table("migrations").insert({
+                version: m.version,
+                name: m.name,
+                applied_at: time.now()
+            })
+        }
+        logger.info(str(len(pending)) + " migrations applied")
+    }
+
+    fn migrate_down(self, steps) {
+        let applied = self.db.table("migrations").select({})
+            |> sort_by(|r| -r.version)
+            |> limit(steps)
+
+        for record in applied {
+            let m = self.migrations |> find(|m| m.version == record.version)
+            logger.info("Reverting: " + m.name)
+            m.down(self.db)
+            self.db.table("migrations").delete({version: m.version})
+        }
+    }
+}
+
+# Define migrations
+let migrator = Migrator("app.db")
+
+migrator.add(1, "create_users", fn(db) {
+    db.create_table("users", {
+        id: "int", name: "string", email: "string", created_at: "string"
+    })
+}, fn(db) {
+    db.drop_table("users")
+})
+
+migrator.add(2, "create_posts", fn(db) {
+    db.create_table("posts", {
+        id: "int", title: "string", body: "string",
+        author_id: "int", published: "bool"
+    })
+}, fn(db) {
+    db.drop_table("posts")
+})
+
+migrator.migrate_up()
+```
+
+### Example 11: File Watcher & Build System
+
+```nyx
+import std/io
+import std/time
+import std/process
+import std/log
+import std/string
+
+let logger = log.get_logger("builder")
+
+class BuildSystem {
+    fn init(self, watch_dir, build_cmd) {
+        self.watch_dir = watch_dir
+        self.build_cmd = build_cmd
+        self.file_times = {}
+        self.running = true
+    }
+
+    fn scan(self) {
+        let files = io.list_dir(self.watch_dir)
+            |> filter(|f| string.ends_with(f, ".ny"))
+
+        let changed = []
+        for file in files {
+            let path = io.join_path(self.watch_dir, file)
+            let info = io.file_info(path)
+            let prev = self.file_times[path]
+
+            if prev == null or prev != info.modified {
+                self.file_times[path] = info.modified
+                push(changed, path)
+            }
+        }
+        return changed
+    }
+
+    fn build(self, changed_files) {
+        logger.info("Building... (" + str(len(changed_files)) + " files changed)")
+        let start = time.now_millis()
+
+        let result = process.Popen(self.build_cmd, [])
+        let exit_code = result.wait()
+
+        let elapsed = time.now_millis() - start
+        if exit_code == 0 {
+            logger.info("Build succeeded in " + str(elapsed) + "ms")
+        } else {
+            logger.error("Build FAILED (exit " + str(exit_code) + ")")
+        }
+    }
+
+    fn watch(self) {
+        logger.info("Watching " + self.watch_dir + " for changes...")
+        while self.running {
+            let changed = self.scan()
+            if len(changed) > 0 {
+                self.build(changed)
+            }
+            time.sleep_ms(500)
+        }
+    }
+}
+
+let builder = BuildSystem("src/", "nyx build main.ny")
+builder.watch()
+```
+
+### Example 12: Concurrent Task Scheduler
+
+```nyx
+import std/async
+import std/time
+import std/collections
+import std/log
+
+let logger = log.get_logger("scheduler")
+
+enum TaskPriority { Low, Medium, High, Critical }
+
+class TaskScheduler {
+    fn init(self, max_workers) {
+        self.queue = collections.LinkedList()
+        self.workers = max_workers
+        self.active = 0
+        self.completed = 0
+        self.lock = async.Lock()
+    }
+
+    async fn submit(self, name, priority, task_fn) {
+        await self.lock.acquire()
+        self.queue.append({name: name, priority: priority, fn: task_fn})
+        self.lock.release()
+        logger.info("Queued: " + name)
+    }
+
+    async fn worker(self, id) {
+        loop {
+            await self.lock.acquire()
+            if self.queue.is_empty() {
+                self.lock.release()
+                await async.async_sleep(0.1)
+                continue
+            }
+            let task = self.queue.remove(0)
+            self.active = self.active + 1
+            self.lock.release()
+
+            logger.info("Worker " + str(id) + " running: " + task.name)
+            let start = time.now_millis()
+
+            try {
+                await task.fn()
+                let elapsed = time.now_millis() - start
+                logger.info(task.name + " completed in " + str(elapsed) + "ms")
+            } catch e {
+                logger.error(task.name + " failed: " + str(e))
+            }
+
+            self.active = self.active - 1
+            self.completed = self.completed + 1
+        }
+    }
+
+    async fn start(self) {
+        let workers = range(self.workers)
+            |> map(|id| spawn self.worker(id))
+        await async.gather(...workers)
+    }
+}
+
+async fn main() {
+    let scheduler = TaskScheduler(4)
+
+    await scheduler.submit("fetch-data", TaskPriority.High, async fn() {
+        await async.async_sleep(1.0)
+        print("Data fetched!")
+    })
+
+    await scheduler.submit("process-images", TaskPriority.Medium, async fn() {
+        await async.async_sleep(2.0)
+        print("Images processed!")
+    })
+
+    await scheduler.submit("send-emails", TaskPriority.Low, async fn() {
+        await async.async_sleep(0.5)
+        print("Emails sent!")
+    })
+
+    await scheduler.start()
+}
+main()
 ```
 
 ---
