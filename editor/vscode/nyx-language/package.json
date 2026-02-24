@@ -8,12 +8,12 @@
   "icon": "nyx-logo.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nyxlang/nyx-vscode-extension"
+    "url": "https://github.com/suryasekhar06jemsbond-lab/Nyx"
   },
   "bugs": {
-    "url": "https://github.com/nyxlang/nyx-vscode-extension/issues"
+    "url": "https://github.com/suryasekhar06jemsbond-lab/Nyx/issues"
   },
-  "homepage": "https://github.com/nyxlang/nyx-vscode-extension#readme",
+  "homepage": "https://github.com/suryasekhar06jemsbond-lab/Nyx#readme",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -46,7 +46,7 @@
     "onCommand:nyx.format",
     "workspaceContains:**/*.ny"
   ],
-  "main": "./extension.js",
+  "main": "./out/extension.js",
   "contributes": {
     "languages": [
       {

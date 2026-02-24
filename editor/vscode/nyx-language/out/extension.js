@@ -1,0 +1,608 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.activate = activate;
+exports.deactivate = deactivate;
+const vscode = require("vscode");
+const cp = require("child_process");
+const path = require("path");
+const fs = require("fs");
+const os = require("os");
+// Language mode identifier
+const NYX_MODE = { language: 'nyx', scheme: 'file' };
+const NYX_OUTPUT_CHANNEL = vscode.window.createOutputChannel('Nyx');
+const NYX_DIAGNOSTICS = vscode.languages.createDiagnosticCollection('nyx');
+// Get path to embedded nyx binary
+function getNyxPath() {
+    const extPath = __dirname;
+    const isWindows = process.platform === 'win32';
+    return path.join(extPath, isWindows ? 'nyx.exe' : 'nyx');
+}
+// Install nyx to PATH if not already available
+async function ensureNyxInstalled() {
+    const extPath = path.join(__dirname, 'nyx.exe');
+    // Check if bundled nyx exists
+    if (!fs.existsSync(extPath)) {
+        throw new Error('Nyx runtime not found in extension');
+    }
+    // Check if nyx is already in PATH
+    try {
+        cp.execSync('nyx --version', { stdio: 'ignore' });
+        return 'nyx';
+    }
+    catch {
+        // nyx not in PATH, install it
+    }
+    // Install to user's local bin directory
+    const isWindows = process.platform === 'win32';
+    const installDir = isWindows
+        ? path.join(os.homedir(), 'AppData', 'Local', 'Programs', 'nyx')
+        : path.join(os.homedir(), '.local', 'bin');
+    if (!fs.existsSync(installDir)) {
+        fs.mkdirSync(installDir, { recursive: true });
+    }
+    const destPath = isWindows
+        ? path.join(installDir, 'nyx.exe')
+        : path.join(installDir, 'nyx');
+    // Copy nyx to install directory
+    fs.copyFileSync(extPath, destPath);
+    if (!isWindows) {
+        fs.chmodSync(destPath, '755');
+    }
+    // Add to PATH (user environment)
+    const currentPath = process.env.PATH || '';
+    if (!currentPath.includes(installDir)) {
+        // For Windows, we need to set user PATH
+        if (isWindows) {
+            try {
+                cp.execSync(`setx PATH "${installDir};%PATH%"`, { stdio: 'ignore' });
+            }
+            catch {
+                // Fallback: create a wrapper script
+            }
+        }
+    }
+    return destPath;
+}
+function activate(context) {
+    console.log('Nyx Language Support v6.0.0 activated!');
+    // Try to ensure nyx is available
+    ensureNyxInstalled().then(nyxPath => {
+        console.log('Nyx runtime ready:', nyxPath);
+    }).catch(err => {
+        console.error('Failed to ensure nyx:', err);
+    });
+    // Register all 9 core commands
+    // 1. nyx.run - Execute Nyx files
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.run', async () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            vscode.window.showErrorMessage('No active file. Please open a .ny file to run.');
+            return;
+        }
+        const filePath = editor.document.uri.fsPath;
+        if (!filePath.endsWith('.ny') && !filePath.endsWith('.nx')) {
+            vscode.window.showErrorMessage('Please open a .ny or .nx file to run');
+            return;
+        }
+        // Save document before running
+        if (editor.document.isDirty) {
+            await editor.document.save();
+        }
+        const terminal = vscode.window.createTerminal('Nyx Run');
+        terminal.show();
+        terminal.sendText(`nyx "${filePath}"`);
+        NYX_OUTPUT_CHANNEL.appendLine(`[Run] Executing: ${filePath}`);
+    }));
+    // 2. nyx.build - Compile projects
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.build', async () => {
+        if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
+            vscode.window.showErrorMessage('No workspace folder open');
+            return;
+        }
+        const terminal = vscode.window.createTerminal('Nyx Build');
+        terminal.show();
+        terminal.sendText('nyx build .');
+        NYX_OUTPUT_CHANNEL.appendLine('[Build] Building project...');
+    }));
+    // 3. nyx.format - Format documents
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.format', async () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            vscode.window.showErrorMessage('No active file');
+            return;
+        }
+        if (editor.document.languageId !== 'nyx') {
+            vscode.window.showErrorMessage('Current file is not a Nyx file');
+            return;
+        }
+        // Save document before formatting
+        if (editor.document.isDirty) {
+            await editor.document.save();
+        }
+        const filePath = editor.document.uri.fsPath;
+        const terminal = vscode.window.createTerminal('Nyx Format');
+        terminal.show();
+        terminal.sendText(`nyx fmt "${filePath}"`);
+        NYX_OUTPUT_CHANNEL.appendLine(`[Format] Formatting: ${filePath}`);
+    }));
+    // 4. nyx.check - Check file for syntax errors
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.check', async () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            vscode.window.showErrorMessage('No active file');
+            return;
+        }
+        if (editor.document.languageId !== 'nyx') {
+            vscode.window.showErrorMessage('Current file is not a Nyx file');
+            return;
+        }
+        // Save document before checking
+        if (editor.document.isDirty) {
+            await editor.document.save();
+        }
+        const filePath = editor.document.uri.fsPath;
+        const terminal = vscode.window.createTerminal('Nyx Check');
+        terminal.show();
+        terminal.sendText(`nyx check "${filePath}"`);
+        NYX_OUTPUT_CHANNEL.appendLine(`[Check] Checking: ${filePath}`);
+    }));
+    // 5. nyx.debug - Debug file
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.debug', async () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            vscode.window.showErrorMessage('No active file');
+            return;
+        }
+        if (editor.document.languageId !== 'nyx') {
+            vscode.window.showErrorMessage('Current file is not a Nyx file');
+            return;
+        }
+        // Save document before debugging
+        if (editor.document.isDirty) {
+            await editor.document.save();
+        }
+        try {
+            const filePath = editor.document.uri.fsPath;
+            const debugConfig = {
+                type: 'nyx',
+                name: 'Nyx Debug',
+                request: 'launch',
+                program: filePath,
+                stopOnEntry: false,
+                console: 'integratedTerminal'
+            };
+            await vscode.debug.startDebugging(undefined, debugConfig);
+            NYX_OUTPUT_CHANNEL.appendLine(`[Debug] Debugging: ${filePath}`);
+        }
+        catch (err) {
+            // Fallback: Run in terminal with debug flag
+            const filePath = editor.document.uri.fsPath;
+            const terminal = vscode.window.createTerminal('Nyx Debug');
+            terminal.show();
+            terminal.sendText(`nyx debug "${filePath}"`);
+            NYX_OUTPUT_CHANNEL.appendLine(`[Debug] Debugging: ${filePath}`);
+        }
+    }));
+    // 6. nyx.createProject - Create new project
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.createProject', async () => {
+        const projectName = await vscode.window.showInputBox({
+            prompt: 'Enter project name',
+            value: 'my_nyx_project'
+        });
+        if (!projectName)
+            return;
+        const folderUri = await vscode.window.showOpenDialog({
+            canSelectFiles: false,
+            canSelectFolders: true,
+            canSelectMany: false,
+            openLabel: 'Select Parent Folder'
+        });
+        if (!folderUri || folderUri.length === 0)
+            return;
+        const parentPath = folderUri[0].fsPath;
+        const projectPath = path.join(parentPath, projectName);
+        try {
+            // Create project directory
+            if (!fs.existsSync(projectPath)) {
+                fs.mkdirSync(projectPath, { recursive: true });
+            }
+            // Create project files
+            fs.writeFileSync(path.join(projectPath, 'main.ny'), 'print("Hello, Nyx!");\n');
+            fs.writeFileSync(path.join(projectPath, 'nyx.mod'), `module "${projectName}" {\n\tversion "0.1.0"\n}\n`);
+            fs.writeFileSync(path.join(projectPath, 'README.md'), `# ${projectName}\n\nA new Nyx project.\n`);
+            vscode.window.showInformationMessage(`Project '${projectName}' created successfully!`);
+            // Open project in new window
+            vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(projectPath), true);
+            NYX_OUTPUT_CHANNEL.appendLine(`[Create] Project created: ${projectPath}`);
+        }
+        catch (err) {
+            vscode.window.showErrorMessage(`Failed to create project: ${err}`);
+            NYX_OUTPUT_CHANNEL.appendLine(`[Error] Failed to create project: ${err}`);
+        }
+    }));
+    // 7. nyx.showDocs - Open documentation
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.showDocs', async () => {
+        const docs = [
+            { label: 'Language Specification', url: 'https://github.com/suryasekhar06jemsbond-lab/Nyx/blob/main/docs/LANGUAGE_SPEC.md' },
+            { label: 'Getting Started', url: 'https://github.com/suryasekhar06jemsbond-lab/Nyx/blob/main/docs/BOOTSTRAP.md' },
+            { label: 'Examples', url: 'https://github.com/suryasekhar06jemsbond-lab/Nyx/tree/main/examples' },
+            { label: 'API Reference', url: 'https://github.com/suryasekhar06jemsbond-lab/Nyx/blob/main/docs/ARCHITECTURE.md' },
+            { label: 'GitHub Repository', url: 'https://github.com/suryasekhar06jemsbond-lab/Nyx' }
+        ];
+        const selected = await vscode.window.showQuickPick(docs, {
+            placeHolder: 'Select documentation to open'
+        });
+        if (selected) {
+            vscode.env.openExternal(vscode.Uri.parse(selected.url));
+            NYX_OUTPUT_CHANNEL.appendLine(`[Docs] Opened: ${selected.label}`);
+        }
+    }));
+    // 8. nyx.installDependencies - Install project dependencies
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.installDependencies', async () => {
+        if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
+            vscode.window.showErrorMessage('No workspace folder open');
+            return;
+        }
+        const terminal = vscode.window.createTerminal('Nyx Install');
+        terminal.show();
+        terminal.sendText('nypm install');
+        NYX_OUTPUT_CHANNEL.appendLine('[Install] Installing dependencies...');
+    }));
+    // 9. nyx.updateExtension - Update extension
+    context.subscriptions.push(vscode.commands.registerCommand('nyx.updateExtension', async () => {
+        vscode.window.showInformationMessage('Nyx Language Support v6.0.0 - Check VS Code Extensions for updates', 'Open Extensions').then(selection => {
+            if (selection === 'Open Extensions') {
+                vscode.commands.executeCommand('workbench.extensions.action.showExtensionsWithIds', ['Nyx.nyx-language']);
+            }
+        });
+        NYX_OUTPUT_CHANNEL.appendLine('[Update] Check for updates via Extensions panel');
+    }));
+    // Register CodeLens Provider
+    context.subscriptions.push(vscode.languages.registerCodeLensProvider({ language: 'nyx', scheme: 'file' }, new NyxCodeLensProvider()));
+    // Diagnostics
+    const diagnosticCollection = vscode.languages.createDiagnosticCollection('nyx');
+    context.subscriptions.push(diagnosticCollection);
+    subscribeToDocumentChanges(context, diagnosticCollection);
+    // Language Features
+    context.subscriptions.push(vscode.languages.registerHoverProvider(NYX_MODE, new NyxHoverProvider()));
+    context.subscriptions.push(vscode.languages.registerSignatureHelpProvider(NYX_MODE, new NyxSignatureHelpProvider(), '(', ','));
+    context.subscriptions.push(vscode.languages.registerCompletionItemProvider(NYX_MODE, new NyxCompletionItemProvider(), '.', ' '));
+    context.subscriptions.push(vscode.languages.registerDocumentSymbolProvider(NYX_MODE, new NyxDocumentSymbolProvider()));
+    context.subscriptions.push(vscode.languages.registerDefinitionProvider(NYX_MODE, new NyxDefinitionProvider()));
+    const legend = new vscode.SemanticTokensLegend(['class', 'function', 'variable', 'parameter'], ['declaration', 'readonly']);
+    context.subscriptions.push(vscode.languages.registerDocumentSemanticTokensProvider(NYX_MODE, new NyxSemanticTokensProvider(legend), legend));
+    context.subscriptions.push(vscode.languages.registerCodeActionsProvider(NYX_MODE, new NyxCodeActionProvider()));
+    context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider(NYX_MODE, new NyxDocumentFormattingEditProvider()));
+    context.subscriptions.push(vscode.languages.registerReferenceProvider(NYX_MODE, new NyxReferenceProvider()));
+    context.subscriptions.push(vscode.languages.registerRenameProvider(NYX_MODE, new NyxRenameProvider()));
+    // Test Controller
+    setupTestController(context);
+    // Terminal management
+    let runTerminal;
+    context.subscriptions.push(vscode.window.onDidCloseTerminal(t => {
+        if (t === runTerminal) {
+            runTerminal = undefined;
+        }
+    }));
+    NYX_OUTPUT_CHANNEL.appendLine('Nyx Language Support v6.0.0 activated successfully');
+    NYX_OUTPUT_CHANNEL.appendLine('All 9 commands ready: run, build, format, check, debug, createProject, showDocs, installDependencies, updateExtension');
+}
+function deactivate() {
+    console.log('Nyx extension deactivated');
+}
+class NyxCodeLensProvider {
+    provideCodeLenses(document) {
+        const codeLenses = [];
+        const text = document.getText();
+        // Look for 'function main('
+        const regex = /function\s+main\s*\(/g;
+        let match;
+        while ((match = regex.exec(text))) {
+            const position = document.positionAt(match.index);
+            const range = new vscode.Range(position, position);
+            const command = {
+                title: "$(play) Run",
+                command: "nyx.run.file",
+                arguments: [document.uri]
+            };
+            codeLenses.push(new vscode.CodeLens(range, command));
+            const debugCmd = {
+                title: "$(debug-alt) Debug",
+                command: "nyx.debug.file",
+                arguments: [document.uri]
+            };
+            codeLenses.push(new vscode.CodeLens(range, debugCmd));
+        }
+        return codeLenses;
+    }
+}
+// --- Providers Implementation ---
+class NyxHoverProvider {
+    provideHover(document, position) {
+        const range = document.getWordRangeAtPosition(position);
+        const word = document.getText(range);
+        // Simple mock for docstrings
+        if (word === 'print') {
+            return new vscode.Hover(new vscode.MarkdownString('**print**\n\nPrints values to stdout.'));
+        }
+        return null;
+    }
+}
+class NyxSignatureHelpProvider {
+    provideSignatureHelp(document, position) {
+        const line = document.lineAt(position).text;
+        const prefix = line.substring(0, position.character);
+        if (prefix.trim().endsWith('print(')) {
+            const signature = new vscode.SignatureInformation('print(...args: any)', 'Prints values to the console.');
+            signature.parameters = [new vscode.ParameterInformation('...args', 'Values to print')];
+            const help = new vscode.SignatureHelp();
+            help.signatures = [signature];
+            help.activeSignature = 0;
+            help.activeParameter = 0;
+            return help;
+        }
+        return null;
+    }
+}
+class NyxCompletionItemProvider {
+    provideCompletionItems(document, position) {
+        const completions = [];
+        // Keywords
+        ['var', 'let', 'if', 'else', 'function', 'class', 'return', 'import'].forEach(kw => {
+            completions.push(new vscode.CompletionItem(kw, vscode.CompletionItemKind.Keyword));
+        });
+        // Snippets
+        const funcSnippet = new vscode.CompletionItem('function', vscode.CompletionItemKind.Snippet);
+        funcSnippet.insertText = new vscode.SnippetString('function ${1:name}(${2:args}) {\n\t$0\n}');
+        funcSnippet.detail = 'Function definition';
+        completions.push(funcSnippet);
+        // Standard Library Snippets
+        const fsSnippet = new vscode.CompletionItem('fs.readFile', vscode.CompletionItemKind.Snippet);
+        fsSnippet.insertText = new vscode.SnippetString('fs.readFile("${1:path}")');
+        fsSnippet.detail = 'Read file content';
+        completions.push(fsSnippet);
+        const netSnippet = new vscode.CompletionItem('net.get', vscode.CompletionItemKind.Snippet);
+        netSnippet.insertText = new vscode.SnippetString('net.get("${1:url}")');
+        netSnippet.detail = 'HTTP GET request';
+        completions.push(netSnippet);
+        const jsonSnippet = new vscode.CompletionItem('json.parse', vscode.CompletionItemKind.Snippet);
+        jsonSnippet.insertText = new vscode.SnippetString('json.parse(${1:string})');
+        jsonSnippet.detail = 'Parse JSON string';
+        completions.push(jsonSnippet);
+        const dateSnippet = new vscode.CompletionItem('date.now', vscode.CompletionItemKind.Snippet);
+        dateSnippet.insertText = 'date.now()';
+        dateSnippet.detail = 'Get current ISO date';
+        completions.push(dateSnippet);
+        const colorSnippet = new vscode.CompletionItem('color.hexToRgb', vscode.CompletionItemKind.Snippet);
+        colorSnippet.insertText = new vscode.SnippetString('color.hexToRgb("${1:#ffffff}")');
+        colorSnippet.detail = 'Convert Hex to RGB';
+        completions.push(colorSnippet);
+        return completions;
+    }
+}
+class NyxDocumentSymbolProvider {
+    provideDocumentSymbols(document) {
+        const symbols = [];
+        const text = document.getText();
+        // Regex for functions: function name(...)
+        const funcRegex = /function\s+([a-zA-Z_]\w*)/g;
+        let match;
+        while ((match = funcRegex.exec(text))) {
+            const line = document.positionAt(match.index).line;
+            const range = new vscode.Range(line, 0, line, match[0].length);
+            const symbol = new vscode.DocumentSymbol(match[1], 'Function', vscode.SymbolKind.Function, range, range);
+            symbols.push(symbol);
+        }
+        // Regex for classes: class Name
+        const classRegex = /class\s+([a-zA-Z_]\w*)/g;
+        while ((match = classRegex.exec(text))) {
+            const line = document.positionAt(match.index).line;
+            const range = new vscode.Range(line, 0, line, match[0].length);
+            const symbol = new vscode.DocumentSymbol(match[1], 'Class', vscode.SymbolKind.Class, range, range);
+            symbols.push(symbol);
+        }
+        return symbols;
+    }
+}
+class NyxDefinitionProvider {
+    provideDefinition(document, position) {
+        const wordRange = document.getWordRangeAtPosition(position);
+        const word = document.getText(wordRange);
+        const text = document.getText();
+        // Simple search for declaration in same file
+        const regex = new RegExp(`(function|class|var|let)\\s+${word}\\b`);
+        const match = regex.exec(text);
+        if (match) {
+            const targetPos = document.positionAt(match.index);
+            return new vscode.Location(document.uri, targetPos);
+        }
+        return null;
+    }
+}
+class NyxSemanticTokensProvider {
+    constructor(legend) {
+        this.legend = legend;
+    }
+    provideDocumentSemanticTokens(document) {
+        const builder = new vscode.SemanticTokensBuilder(this.legend);
+        const text = document.getText();
+        // Highlight 'class' names
+        const classRegex = /class\s+([a-zA-Z_]\w*)/g;
+        let match;
+        while ((match = classRegex.exec(text))) {
+            const pos = document.positionAt(match.index + match[0].indexOf(match[1]));
+            builder.push(pos.line, pos.character, match[1].length, 0, 1); // 0=class, 1=declaration
+        }
+        return builder.build();
+    }
+}
+class NyxCodeActionProvider {
+    provideCodeActions(document, range, context) {
+        const actions = [];
+        // Example: If diagnostic says "Unknown variable 'math'", suggest import
+        context.diagnostics.forEach(diag => {
+            if (diag.message.includes("Unknown variable")) {
+                const action = new vscode.CodeAction('Add import for module', vscode.CodeActionKind.QuickFix);
+                action.edit = new vscode.WorkspaceEdit();
+                action.edit.insert(document.uri, new vscode.Position(0, 0), "import math;\n");
+                actions.push(action);
+            }
+        });
+        return actions;
+    }
+}
+class NyxDocumentFormattingEditProvider {
+    provideDocumentFormattingEdits(document, options, token) {
+        const edits = [];
+        // Basic formatter: Trim trailing whitespace
+        for (let i = 0; i < document.lineCount; i++) {
+            const line = document.lineAt(i);
+            if (line.text.endsWith(' ') || line.text.endsWith('\t')) {
+                edits.push(vscode.TextEdit.delete(new vscode.Range(i, line.text.trimRight().length, i, line.text.length)));
+            }
+        }
+        return edits;
+    }
+}
+class NyxReferenceProvider {
+    provideReferences(document, position, context, token) {
+        const range = document.getWordRangeAtPosition(position);
+        if (!range)
+            return [];
+        const word = document.getText(range);
+        const references = [];
+        const text = document.getText();
+        const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`\\b${escapedWord}\\b`, 'g');
+        let match;
+        while ((match = regex.exec(text))) {
+            const startPos = document.positionAt(match.index);
+            const endPos = document.positionAt(match.index + word.length);
+            references.push(new vscode.Location(document.uri, new vscode.Range(startPos, endPos)));
+        }
+        return references;
+    }
+}
+class NyxRenameProvider {
+    provideRenameEdits(document, position, newName, token) {
+        const range = document.getWordRangeAtPosition(position);
+        if (!range)
+            return null;
+        const word = document.getText(range);
+        const edit = new vscode.WorkspaceEdit();
+        const text = document.getText();
+        const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`\\b${escapedWord}\\b`, 'g');
+        let match;
+        while ((match = regex.exec(text))) {
+            const startPos = document.positionAt(match.index);
+            const endPos = document.positionAt(match.index + word.length);
+            edit.replace(document.uri, new vscode.Range(startPos, endPos), newName);
+        }
+        return edit;
+    }
+}
+// --- Diagnostics Logic ---
+function subscribeToDocumentChanges(context, emojiDiagnostics) {
+    if (vscode.window.activeTextEditor) {
+        refreshDiagnostics(vscode.window.activeTextEditor.document, emojiDiagnostics);
+    }
+    context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(editor => {
+        if (editor) {
+            refreshDiagnostics(editor.document, emojiDiagnostics);
+        }
+    }));
+    context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(e => refreshDiagnostics(e.document, emojiDiagnostics)));
+    context.subscriptions.push(vscode.workspace.onDidCloseTextDocument(doc => emojiDiagnostics.delete(doc.uri)));
+}
+function refreshDiagnostics(doc, collection) {
+    if (doc.languageId !== 'nyx')
+        return;
+    const diagnostics = [];
+    const config = vscode.workspace.getConfiguration('nyx');
+    const mode = config.get('analysis.typeCheckingMode');
+    const lintingEnabled = config.get('linting.enabled');
+    if (mode === 'off' || !lintingEnabled) {
+        collection.clear();
+        return;
+    }
+    for (let lineIndex = 0; lineIndex < doc.lineCount; lineIndex++) {
+        const lineOfText = doc.lineAt(lineIndex);
+        // Example check: Missing semicolon
+        if (lineOfText.text.trim().length > 0 &&
+            !lineOfText.text.trim().endsWith(';') &&
+            !lineOfText.text.trim().endsWith('{') &&
+            !lineOfText.text.trim().endsWith('}') &&
+            !lineOfText.text.startsWith('//')) {
+            const range = new vscode.Range(lineIndex, 0, lineIndex, lineOfText.text.length);
+            const diagnostic = new vscode.Diagnostic(range, "Missing semicolon", vscode.DiagnosticSeverity.Warning);
+            diagnostics.push(diagnostic);
+        }
+        // Example check: Strict mode 'var' usage
+        if (mode === 'strict' && lineOfText.text.includes('var ')) {
+            const index = lineOfText.text.indexOf('var ');
+            const range = new vscode.Range(lineIndex, index, lineIndex, index + 3);
+            const diagnostic = new vscode.Diagnostic(range, "Use 'let' or 'const' instead of 'var' in strict mode.", vscode.DiagnosticSeverity.Error);
+            diagnostics.push(diagnostic);
+        }
+    }
+    collection.set(doc.uri, diagnostics);
+}
+// --- Test Controller Logic ---
+function setupTestController(context) {
+    const controller = vscode.tests.createTestController('nyxTestController', 'Nyx Tests');
+    context.subscriptions.push(controller);
+    const runHandler = (request, token) => {
+        const run = controller.createTestRun(request);
+        const queue = [];
+        if (request.include) {
+            request.include.forEach(test => queue.push(test));
+        }
+        else {
+            controller.items.forEach(test => queue.push(test));
+        }
+        while (queue.length > 0 && !token.isCancellationRequested) {
+            const test = queue.pop();
+            if (request.exclude?.includes(test)) {
+                continue;
+            }
+            const start = Date.now();
+            run.started(test);
+            // Mock execution: Pass if name doesn't contain "fail"
+            if (test.id.includes('fail')) {
+                run.failed(test, new vscode.TestMessage('Test failed intentionally'), Date.now() - start);
+            }
+            else {
+                run.passed(test, Date.now() - start);
+            }
+            test.children.forEach(child => queue.push(child));
+        }
+        run.end();
+    };
+    controller.createRunProfile('Run', vscode.TestRunProfileKind.Run, runHandler);
+    // Simple discovery: look for functions starting with 'test_'
+    vscode.workspace.onDidOpenTextDocument(doc => parseTestsInDocument(doc, controller));
+    vscode.workspace.onDidChangeTextDocument(e => parseTestsInDocument(e.document, controller));
+    if (vscode.window.activeTextEditor) {
+        parseTestsInDocument(vscode.window.activeTextEditor.document, controller);
+    }
+}
+function parseTestsInDocument(doc, controller) {
+    if (doc.languageId !== 'nyx')
+        return;
+    const regex = /function\s+(test_[a-zA-Z0-9_]*)/g;
+    const text = doc.getText();
+    let match;
+    while ((match = regex.exec(text))) {
+        const name = match[1];
+        const id = `${doc.uri.toString()}::${name}`;
+        const line = doc.positionAt(match.index).line;
+        let testItem = controller.items.get(id);
+        if (!testItem) {
+            testItem = controller.createTestItem(id, name, doc.uri);
+            controller.items.add(testItem);
+        }
+        testItem.range = new vscode.Range(line, 0, line, match[0].length);
+    }
+}
+//# sourceMappingURL=extension.js.map

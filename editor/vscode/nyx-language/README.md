@@ -22,6 +22,38 @@
 
 ## Download
 
+<div align="center">
+
+### ⬇️ Latest Release — v6.0.0
+
+| Platform | Download | Size | Description |
+|----------|----------|------|-------------|
+| **Windows x64** | [**⬇ nyx-windows-x64.exe**](https://github.com/suryasekhar06jemsbond-lab/Nyx/releases/latest/download/nyx-windows-x64.exe) | ~418 KB | Native runtime — run `.ny` files directly |
+| **VS Code Extension** | [**⬇ nyx-language-6.0.0.vsix**](https://github.com/suryasekhar06jemsbond-lab/Nyx/releases/latest/download/nyx-language-6.0.0.vsix) | ~4.2 MB | Syntax highlighting, IntelliSense, debugging |
+| **Source Code** | [**⬇ Source (zip)**](https://github.com/suryasekhar06jemsbond-lab/Nyx/archive/refs/tags/v6.0.0.zip) | — | Full source with all 117 engines & 98 stdlib modules |
+
+**Quick Install (Windows):**
+```powershell
+# Download nyx.exe and add to PATH (one command)
+Invoke-WebRequest -Uri "https://github.com/suryasekhar06jemsbond-lab/Nyx/releases/latest/download/nyx-windows-x64.exe" -OutFile "$env:LOCALAPPDATA\Programs\nyx\nyx.exe"
+[Environment]::SetEnvironmentVariable("PATH", "$env:LOCALAPPDATA\Programs\nyx;$env:PATH", "User")
+
+# Verify installation
+nyx --version
+```
+
+**Quick Install (VS Code Extension):**
+```bash
+# Install directly from VSIX
+code --install-extension https://github.com/suryasekhar06jemsbond-lab/Nyx/releases/latest/download/nyx-language-6.0.0.vsix
+```
+
+> **All releases:** [github.com/suryasekhar06jemsbond-lab/Nyx/releases](https://github.com/suryasekhar06jemsbond-lab/Nyx/releases)
+
+</div>
+
+---
+
 ## Table of Contents
 
 <details>
@@ -235,23 +267,53 @@ Nyx/
 
 ### Install Nyx Runtime
 
+**Option 1 — Download Pre-built Binary (Fastest)**
+
+Download `nyx.exe` from the [**latest release**](https://github.com/suryasekhar06jemsbond-lab/Nyx/releases/latest):
+
+```powershell
+# Windows — one-liner install
+mkdir "$env:LOCALAPPDATA\Programs\nyx" -Force
+Invoke-WebRequest -Uri "https://github.com/suryasekhar06jemsbond-lab/Nyx/releases/latest/download/nyx-windows-x64.exe" -OutFile "$env:LOCALAPPDATA\Programs\nyx\nyx.exe"
+[Environment]::SetEnvironmentVariable("PATH", "$env:LOCALAPPDATA\Programs\nyx;$env:PATH", "User")
+# Restart terminal, then:
+nyx hello.ny
+```
+
+**Option 2 — Build from Source**
+
 ```bash
-# Clone and build from source
+# Clone and build
 git clone https://github.com/suryasekhar06jemsbond-lab/Nyx.git
 cd Nyx
 make
-./nyx hello.ny
+./build/nyx hello.ny
 
-# Windows
-nyx.bat hello.ny
+# Windows (with GCC or Clang installed)
+powershell -ExecutionPolicy Bypass -File scripts/build_windows.ps1 -Output build/nyx.exe
+.\build\nyx.exe hello.ny
+```
 
-# Or use the Python runtime
-python nyx_runtime.py hello.ny
+**Option 3 — Python Interpreter (no compilation needed)**
+
+```bash
+git clone https://github.com/suryasekhar06jemsbond-lab/Nyx.git
+cd Nyx
+python run.py hello.ny
 ```
 
 ### Install VS Code Extension
 
-**Option 1 — VS Code Marketplace (Recommended)**
+**Option 1 — Download VSIX from GitHub Releases (Recommended)**
+```bash
+# Download the latest VSIX
+# → https://github.com/suryasekhar06jemsbond-lab/Nyx/releases/latest/download/nyx-language-6.0.0.vsix
+
+# Install from file
+code --install-extension nyx-language-6.0.0.vsix
+```
+
+**Option 2 — VS Code Marketplace**
 ```
 1. Open VS Code
 2. Press Ctrl+Shift+X (Extensions)
@@ -259,26 +321,12 @@ python nyx_runtime.py hello.ny
 4. Click Install
 ```
 
-**Option 2 — Terminal Command**
-```bash
-code --install-extension SuryaSekHarRoy.nyx-language
-```
-
-**Option 3 — Download VSIX Manually**
-```bash
-# Download from GitHub Releases
-curl -L -o nyx-language.vsix https://github.com/suryasekhar06jemsbond-lab/Nyx/releases/latest/download/nyx-language.vsix
-
-# Install from file
-code --install-extension nyx-language.vsix
-```
-
-**Option 4 — Build from Source**
+**Option 3 — Build from Source**
 ```bash
 cd editor/vscode/nyx-language
 npm install
 npm run compile
-npm run package
+npx vsce package --no-dependencies
 code --install-extension nyx-language-6.0.0.vsix
 ```
 
